@@ -1,0 +1,9 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+
+trustLockfile: true
+
+allowBuilds:
+  esbuild: true
+  lightningcss: true

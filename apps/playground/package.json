@@ -1,0 +1,40 @@
+{
+  "name": "playground",
+  "private": true,
+  "type": "module",
+  "imports": {
+    "#/*": "./src/*"
+  },
+  "scripts": {
+    "dev": "vite dev --port 3000",
+    "generate-routes": "tsr generate",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.18",
+    "@tanstack/react-devtools": "^0.10.10",
+    "@tanstack/react-router": "^1.170.29",
+    "@tanstack/react-router-devtools": "^1.167.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "tailwindcss": "^4.1.18",
+    "@hackert-ui/core": "workspace:*",
+    "@hackert-ui/ui": "workspace:*",
+    "@hackert-ui/form": "workspace:*",
+    "@hackert-ui/hooks": "workspace:*",
+    "@hackert-ui/utils": "workspace:*"
+  },
+  "devDependencies": {
+    "@tanstack/devtools-vite": "^0.8.3",
+    "@tanstack/router-cli": "^1.167.30",
+    "@tanstack/router-plugin": "^1.168.32",
+    "@types/node": "^22.10.2",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^6.0.1",
+    "typescript": "6.0.3",
+    "vite": "^8.0.0"
+  }
+}

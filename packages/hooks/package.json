@@ -1,0 +1,56 @@
+{
+  "name": "@hackert-ui/hooks",
+  "version": "0.1.0",
+  "description": "React hooks for Hackert UI",
+  "keywords": [
+    "react",
+    "hooks"
+  ],
+  "license": "MIT",
+  "author": "tolu-c",
+  "homepage": "https://github.com/tolu-c/hackert-ui/tree/main/packages/hooks#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tolu-c/hackert-ui.git",
+    "directory": "packages/hooks"
+  },
+  "bugs": {
+    "url": "https://github.com/tolu-c/hackert-ui/issues"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.js",
+        "default": "./dist/index.js"
+      },
+      "./package.json": "./package.json"
+    }
+  },
+  "scripts": {
+    "build": "tsdown",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run --passWithNoTests"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0"
+  },
+  "devDependencies": {
+    "react": "19.2.8"
+  }
+}
