@@ -62,6 +62,19 @@ Merging that PR publishes to npm.
 1. Claim the `@hackert-ui` scope on npm.
 2. Add an automation token as the `NPM_TOKEN` repository secret.
 
+## Deploying the playground
+
+The playground deploys to Vercel from the repository root. `vercel.json` holds
+the install and build commands, the output directory, and the catch-all rewrite
+that keeps deep links working on a client-side router — Vercel checks the
+filesystem before rewriting, so hashed assets still serve normally.
+
+Point a Vercel project at this repo and leave **Root Directory** as the repo
+root, so the workspace packages resolve. Set the project's Node version to 22.18
+or newer, or 24.11 or newer: `.npmrc` sets `engine-strict=true`, so anything
+outside `engines.node` fails the install outright instead of warning. Everything
+else lives in `vercel.json`.
+
 ## Adding a component
 
 1. Create `packages/<pkg>/src/<Name>/<Name>.tsx` plus an `index.ts` barrel.

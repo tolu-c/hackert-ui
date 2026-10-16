@@ -55,8 +55,12 @@
 **Goal**: A deployable site demonstrating every component.
 **Success Criteria**: `pnpm build:playground` produces a deployable site importing from all five packages.
 **Tests**: Playground typechecks and builds.
-**Status**: In Progress — deploy target undecided
+**Status**: Completed
 
 - `AppProvider` moves to `__root.tsx`.
 - Demo routes exercising each package.
-- Static deploy config.
+- Static deploy config — Vercel, driven from `vercel.json` at the repo root.
+
+`@hackert-ui/utils` has no demo route; its overview card is non-navigational
+instead of linking back to `/`, which was a dead self-link. `cn` is exercised
+by every themed `Button` the playground renders.

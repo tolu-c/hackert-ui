@@ -21,14 +21,16 @@ const PACKAGES = [
   {
     to: "/hooks",
     name: "@hackert-ui/hooks",
-    blurb: "Stateful helpers — useDisclosure.",
+    blurb: "Stateful helpers — useDisclosure, useDebouncedValue.",
   },
   {
-    to: "/",
+    to: null,
     name: "@hackert-ui/utils",
-    blurb: "Framework-agnostic helpers. No React dependency.",
+    blurb: "Framework-agnostic helpers — cn. No React dependency.",
   },
 ] as const;
+
+const CARD = "rounded-lg border border-slate-200 p-5";
 
 function Overview() {
   return (
@@ -42,16 +44,28 @@ function Overview() {
       </header>
 
       <div className="grid gap-4 sm:grid-cols-2">
-        {PACKAGES.map((pkg) => (
-          <Link
-            key={pkg.name}
-            to={pkg.to}
-            className="rounded-lg border border-slate-200 p-5 transition-colors hover:border-slate-400"
-          >
-            <code className="text-sm font-medium">{pkg.name}</code>
-            <p className="mt-2 text-sm text-slate-500">{pkg.blurb}</p>
-          </Link>
-        ))}
+        {PACKAGES.map((pkg) => {
+          const body = (
+            <>
+              <code className="text-sm font-medium">{pkg.name}</code>
+              <p className="mt-2 text-sm text-slate-500">{pkg.blurb}</p>
+            </>
+          );
+
+          return pkg.to === null ? (
+            <div key={pkg.name} className={`${CARD} border-dashed`}>
+              {body}
+            </div>
+          ) : (
+            <Link
+              key={pkg.name}
+              to={pkg.to}
+              className={`${CARD} transition-colors hover:border-slate-400`}
+            >
+              {body}
+            </Link>
+          );
+        })}
       </div>
     </div>
   );
