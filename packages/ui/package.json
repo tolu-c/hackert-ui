@@ -50,9 +50,13 @@
     "test": "vitest run --passWithNoTests"
   },
   "peerDependencies": {
+    "@hackert-ui/core": "^0.1.0",
+    "@hackert-ui/utils": "^0.1.0",
     "react": "^19.0.0"
   },
   "devDependencies": {
+    "@hackert-ui/core": "workspace:*",
+    "@hackert-ui/utils": "workspace:*",
     "react": "19.2.8"
   }
 }

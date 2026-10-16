@@ -86,26 +86,34 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { AppProvider, DEFAULT_THEME, useAppTheme } from "@hackert-ui/core";
 import { Button, Card } from "@hackert-ui/ui";
 import { Input } from "@hackert-ui/form";
-import { useDisclosure } from "@hackert-ui/hooks";
+import { useDebouncedValue, useDisclosure } from "@hackert-ui/hooks";
+import { cn } from "@hackert-ui/utils";
+import { DateInput } from "@hackert-ui/dates";
 
 assert.deepEqual(Object.keys(await import("@hackert-ui/core")).sort(), [
   "AppProvider",
   "DEFAULT_THEME",
   "useAppTheme",
+  "useSafeAppTheme",
 ]);
 
 function Probe() {
   const theme = useAppTheme();
   const [opened] = useDisclosure(true);
   assert.equal(opened, true);
+  assert.equal(useDebouncedValue("x"), "x");
   return h(Card, null, h(Button, null, theme.colors.primary));
 }
 
 const markup = renderToStaticMarkup(h(AppProvider, null, h(Probe)));
-assert.equal(
+assert.match(markup, /^<div><button type="button" class="my-button cursor-pointer" style="/);
+assert.ok(
+  markup.includes(\`background-color:\${DEFAULT_THEME.colors.primary}\`),
   markup,
-  \`<div><button type="button">\${DEFAULT_THEME.colors.primary}</button></div>\`,
 );
+
+assert.equal(cn("px-2", "px-4"), "px-4");
+assert.equal(renderToStaticMarkup(h(DateInput)), "<div>DateInput</div>");
 
 assert.match(renderToStaticMarkup(h(Input, { label: "Email" })), /<label for=/);
 console.log("smoke ok for react@${version}");

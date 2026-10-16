@@ -14,7 +14,9 @@ import {
 
 const ThemeContext = createContext<Readonly<AppTheme> | undefined>(undefined);
 
-export const useSafeAppTheme = () => use(ThemeContext) ?? DEFAULT_THEME;
+export function useSafeAppTheme(): Readonly<AppTheme> {
+  return use(ThemeContext) ?? DEFAULT_THEME;
+}
 
 export function useAppTheme(): Readonly<AppTheme> {
   const theme = use(ThemeContext);

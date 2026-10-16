@@ -147,6 +147,12 @@ importers:
 
   packages/ui:
     devDependencies:
+      '@hackert-ui/core':
+        specifier: workspace:*
+        version: link:../core
+      '@hackert-ui/utils':
+        specifier: workspace:*
+        version: link:../utils
       react:
         specifier: 19.2.8
         version: 19.2.8
