@@ -2,7 +2,7 @@
 
 import { cleanup, render } from "@testing-library/react";
 import { memo } from "react";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vite-plus/test";
 
 import { AppProvider, DEFAULT_THEME, useAppTheme } from "../index";
 import type { AppTheme } from "../theme/types";
@@ -48,9 +48,7 @@ describe("AppProvider", () => {
     );
 
     expect(observedTheme?.colors.primary).toBe("#000000");
-    expect(observedTheme?.colors.secondary).toBe(
-      DEFAULT_THEME.colors.secondary,
-    );
+    expect(observedTheme?.colors.secondary).toBe(DEFAULT_THEME.colors.secondary);
     expect(observedTheme?.radius).toEqual(DEFAULT_THEME.radius);
     expect(observedTheme?.spacing).toEqual(DEFAULT_THEME.spacing);
     expect(observedTheme?.fontFamily).toBe(DEFAULT_THEME.fontFamily);
@@ -91,9 +89,7 @@ describe("AppProvider", () => {
       return null;
     }
 
-    expect(() => render(<Probe />)).toThrow(
-      "useAppTheme must be used within AppProvider",
-    );
+    expect(() => render(<Probe />)).toThrow("useAppTheme must be used within AppProvider");
   });
 
   it("keeps the context value stable when its inputs are unchanged", () => {

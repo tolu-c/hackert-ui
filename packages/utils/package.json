@@ -3,25 +3,25 @@
   "version": "0.1.0",
   "description": "Framework-agnostic utilities for Hackert UI",
   "keywords": [
-    "utils",
-    "typescript"
+    "typescript",
+    "utils"
   ],
+  "homepage": "https://github.com/tolu-c/hackert-ui/tree/main/packages/utils#readme",
+  "bugs": {
+    "url": "https://github.com/tolu-c/hackert-ui/issues"
+  },
   "license": "MIT",
   "author": "tolu-c",
-  "homepage": "https://github.com/tolu-c/hackert-ui/tree/main/packages/utils#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tolu-c/hackert-ui.git",
     "directory": "packages/utils"
   },
-  "bugs": {
-    "url": "https://github.com/tolu-c/hackert-ui/issues"
-  },
-  "type": "module",
-  "sideEffects": false,
   "files": [
     "dist"
   ],
+  "type": "module",
+  "sideEffects": false,
   "exports": {
     ".": {
       "types": "./src/index.ts",
@@ -30,7 +30,6 @@
     "./package.json": "./package.json"
   },
   "publishConfig": {
-    "access": "public",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
     "exports": {
@@ -40,12 +39,13 @@
         "default": "./dist/index.js"
       },
       "./package.json": "./package.json"
-    }
+    },
+    "access": "public"
   },
   "scripts": {
-    "build": "tsdown",
+    "build": "vp pack",
     "typecheck": "tsc -p tsconfig.json",
-    "test": "vitest run --passWithNoTests"
+    "test": "vp test run --passWithNoTests"
   },
   "dependencies": {
     "clsx": "^2.1.1",

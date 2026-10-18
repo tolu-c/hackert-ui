@@ -1,5 +1,5 @@
 import { act, renderHook } from "@testing-library/react";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import { useDebouncedValue } from "./useDebouncedValue";
 
 beforeEach(() => {
@@ -18,10 +18,9 @@ describe("useDebouncedValue", () => {
   });
 
   it("updates only after the delay has elapsed", () => {
-    const { result, rerender } = renderHook(
-      ({ value }) => useDebouncedValue(value, 200),
-      { initialProps: { value: "a" } },
-    );
+    const { result, rerender } = renderHook(({ value }) => useDebouncedValue(value, 200), {
+      initialProps: { value: "a" },
+    });
 
     rerender({ value: "b" });
     act(() => vi.advanceTimersByTime(199));
@@ -32,10 +31,9 @@ describe("useDebouncedValue", () => {
   });
 
   it("restarts the delay when the value changes again", () => {
-    const { result, rerender } = renderHook(
-      ({ value }) => useDebouncedValue(value, 200),
-      { initialProps: { value: "a" } },
-    );
+    const { result, rerender } = renderHook(({ value }) => useDebouncedValue(value, 200), {
+      initialProps: { value: "a" },
+    });
 
     rerender({ value: "b" });
     act(() => vi.advanceTimersByTime(150));

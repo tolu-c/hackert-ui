@@ -38,8 +38,8 @@ function Overview() {
       <header className="mb-10">
         <h1 className="text-3xl font-bold tracking-tight">hackert-ui</h1>
         <p className="mt-3 max-w-2xl text-slate-600">
-          A shared React component library, split into packages so a project can
-          take only what it needs.
+          A shared React component library, split into packages so a project can take only what it
+          needs.
         </p>
       </header>
 

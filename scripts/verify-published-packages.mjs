@@ -5,14 +5,7 @@
 // in-repo tests can see, because they resolve TypeScript source directly.
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
-import {
-  mkdir,
-  mkdtemp,
-  readdir,
-  readFile,
-  rm,
-  writeFile,
-} from "node:fs/promises";
+import { mkdir, mkdtemp, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -33,14 +26,9 @@ try {
 
   for (const directory of packageDirectories) {
     const packageDirectory = join(packagesRoot, directory);
-    const manifest = JSON.parse(
-      await readFile(join(packageDirectory, "package.json"), "utf8"),
-    );
+    const manifest = JSON.parse(await readFile(join(packageDirectory, "package.json"), "utf8"));
 
-    assert.ok(
-      !manifest.private,
-      `${manifest.name} is marked private and cannot be published`,
-    );
+    assert.ok(!manifest.private, `${manifest.name} is marked private and cannot be published`);
     assert.equal(
       manifest.publishConfig?.access,
       "public",
@@ -51,14 +39,8 @@ try {
     await mkdir(packDestination, { recursive: true });
 
     const before = new Set(await readdir(packDestination).catch(() => []));
-    run(
-      "pnpm",
-      ["pack", "--pack-destination", packDestination],
-      packageDirectory,
-    );
-    const created = (await readdir(packDestination)).find(
-      (f) => !before.has(f),
-    );
+    run("pnpm", ["pack", "--pack-destination", packDestination], packageDirectory);
+    const created = (await readdir(packDestination)).find((f) => !before.has(f));
     assert.ok(created, `pnpm pack produced no tarball for ${manifest.name}`);
 
     tarballs[manifest.name] = join(packDestination, created);
@@ -120,11 +102,7 @@ console.log("smoke ok for react@${version}");
 `,
     );
 
-    run(
-      "pnpm",
-      ["install", "--ignore-workspace", "--no-lockfile"],
-      fixtureDirectory,
-    );
+    run("pnpm", ["install", "--ignore-workspace", "--no-lockfile"], fixtureDirectory);
     run("node", ["smoke.mjs"], fixtureDirectory);
   }
 } finally {

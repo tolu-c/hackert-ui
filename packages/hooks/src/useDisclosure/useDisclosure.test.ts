@@ -1,6 +1,6 @@
 import { act, renderHook } from "@testing-library/react";
 import { StrictMode } from "react";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vite-plus/test";
 import { useDisclosure } from "./useDisclosure";
 
 describe("useDisclosure", () => {
@@ -32,9 +32,7 @@ describe("useDisclosure", () => {
   it("notifies callbacks and still updates state", () => {
     const onOpen = vi.fn();
     const onClose = vi.fn();
-    const { result } = renderHook(() =>
-      useDisclosure(false, { onOpen, onClose }),
-    );
+    const { result } = renderHook(() => useDisclosure(false, { onOpen, onClose }));
 
     act(() => result.current[1].open());
     expect(result.current[0]).toBe(true);

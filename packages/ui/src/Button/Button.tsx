@@ -43,11 +43,7 @@ export function Button({
     <button
       {...buttonProps}
       type={type}
-      className={cn(
-        "my-button",
-        { "cursor-pointer": cursorPointer },
-        className,
-      )}
+      className={cn("my-button", { "cursor-pointer": cursorPointer }, className)}
       style={{ ...themed, ...style }}
     >
       {children}

@@ -2,7 +2,7 @@
 
 import { AppProvider, DEFAULT_THEME } from "@hackert-ui/core";
 import { cleanup, render, screen } from "@testing-library/react";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vite-plus/test";
 
 import { Button } from "./Button";
 
@@ -16,17 +16,13 @@ describe("Button", () => {
       </AppProvider>,
     );
 
-    expect(screen.getByRole("button").style.backgroundColor).toBe(
-      "rgb(1, 2, 3)",
-    );
+    expect(screen.getByRole("button").style.backgroundColor).toBe("rgb(1, 2, 3)");
   });
 
   it("falls back to the default theme without a provider", () => {
     render(<Button>Save</Button>);
 
-    expect(screen.getByRole("button").style.borderRadius).toBe(
-      DEFAULT_THEME.radius.md,
-    );
+    expect(screen.getByRole("button").style.borderRadius).toBe(DEFAULT_THEME.radius.md);
   });
 
   it("lets the consumer's className and style win", () => {

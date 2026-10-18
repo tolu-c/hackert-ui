@@ -12,10 +12,10 @@ gap and the `0.x` peer-range strategy below are still open.
 `packages/core/src/AppProvider/AppProvider.tsx` holds a module-private
 `ThemeContext` and two readers:
 
-| Export | Behaviour outside `AppProvider` | Exported from `core/src/index.ts` |
-| --- | --- | --- |
-| `useAppTheme()` | throws | yes |
-| `useSafeAppTheme()` | falls back to `DEFAULT_THEME` | **no** |
+| Export              | Behaviour outside `AppProvider` | Exported from `core/src/index.ts` |
+| ------------------- | ------------------------------- | --------------------------------- |
+| `useAppTheme()`     | throws                          | yes                               |
+| `useSafeAppTheme()` | falls back to `DEFAULT_THEME`   | **no**                            |
 
 `resolveTheme` merges an `AppThemeOverride` one leaf at a time over the parent
 theme and freezes the result, so a nested `AppProvider` inherits everything it
@@ -183,9 +183,7 @@ Two lines, private to the package:
 
 ```ts
 // packages/ui/src/cx.ts
-export function cx(
-  ...values: readonly (string | false | null | undefined)[]
-): string {
+export function cx(...values: readonly (string | false | null | undefined)[]): string {
   return values.filter(Boolean).join(" ");
 }
 ```
@@ -235,7 +233,7 @@ hatch. That is what makes plain concatenation sufficient.
 
 ### Spread order
 
-The current component spreads `{...buttonProps}` *after* `className`, so a
+The current component spreads `{...buttonProps}` _after_ `className`, so a
 consumer's `className` silently replaces the built-in one rather than adding to
 it. The target shape inverts it: rest props first, then every prop the component
 controls, so `className` and `style` cannot be clobbered by accident and the
@@ -250,12 +248,12 @@ This is the honest limit of Path A. An inline `style` attribute beats any class
 selector, so a consumer's class cannot override a property the component paints
 inline:
 
-| Consumer writes | Result |
-| --- | --- |
-| `<Button className="tracking-wide" />` | works — component sets no `letter-spacing` |
-| `<Button style={{ borderRadius: 0 }} />` | works — spread order gives the consumer the last word |
-| `<Button className="rounded-none" />` | **class applies, inline `border-radius` still wins** |
-| `<Button className="hover:bg-blue-700" />` | **no effect** — see below |
+| Consumer writes                            | Result                                                |
+| ------------------------------------------ | ----------------------------------------------------- |
+| `<Button className="tracking-wide" />`     | works — component sets no `letter-spacing`            |
+| `<Button style={{ borderRadius: 0 }} />`   | works — spread order gives the consumer the last word |
+| `<Button className="rounded-none" />`      | **class applies, inline `border-radius` still wins**  |
+| `<Button className="hover:bg-blue-700" />` | **no effect** — see below                             |
 
 And the sharper limit: **inline styles cannot express `:hover`,
 `:focus-visible`, `:disabled`, or a media query.** A themed button with no hover
@@ -310,7 +308,7 @@ style={{ "--hui-button-bg": theme.colors[variant], ...style } as CSSProperties}
 — and its actual appearance lives in a `.hui-button` class that references those
 variables. Because the inline attribute now carries only variable definitions,
 it no longer wins the specificity fight over `background-color`, so a consumer's
-class *can* override it, and `:hover` works. It still requires shipping CSS, so
+class _can_ override it, and `:hover` works. It still requires shipping CSS, so
 it inherits that part of Path B's cost.
 
 ## Testing
@@ -408,7 +406,7 @@ None of these are applied.
 5. **A `variant` / `size` public API on `Button`** is an additive but permanent
    surface. Confirm the prop names before they are published.
 6. **A foreground-colour decision**, per the section above.
-7. **`@testing-library/jest-dom`** as a root devDependency *plus* a
+7. **`@testing-library/jest-dom`** as a root devDependency _plus_ a
    `setupFiles` entry in `vitest.shared.ts`, or matcher-free assertions in the
    new tests.
 

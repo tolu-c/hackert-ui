@@ -12,14 +12,11 @@ export interface UseDisclosureHandlers {
   readonly toggle: () => void;
 }
 
-export type UseDisclosureReturnValue = readonly [
-  boolean,
-  UseDisclosureHandlers,
-];
+export type UseDisclosureReturnValue = readonly [boolean, UseDisclosureHandlers];
 
 export function useDisclosure(
   initialState = false,
-  options?: UseDisclosureOptions | undefined,
+  options?: UseDisclosureOptions,
 ): UseDisclosureReturnValue {
   const [opened, setOpened] = useState(initialState);
 

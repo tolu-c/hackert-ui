@@ -2,13 +2,13 @@
 
 A personal React component library, split into packages so a project takes only what it needs.
 
-| Package               | What it holds                                         |
-| --------------------- | ----------------------------------------------------- |
-| `@hackert-ui/core`    | `AppProvider`, theme resolution, design tokens         |
-| `@hackert-ui/ui`      | Component primitives — `Button`, `Card`                |
-| `@hackert-ui/form`    | Form controls — `Input`                                |
-| `@hackert-ui/hooks`   | React hooks — `useDisclosure`                          |
-| `@hackert-ui/utils`   | Framework-agnostic helpers (no React dependency)       |
+| Package             | What it holds                                    |
+| ------------------- | ------------------------------------------------ |
+| `@hackert-ui/core`  | `AppProvider`, theme resolution, design tokens   |
+| `@hackert-ui/ui`    | Component primitives — `Button`, `Card`          |
+| `@hackert-ui/form`  | Form controls — `Input`                          |
+| `@hackert-ui/hooks` | React hooks — `useDisclosure`                    |
+| `@hackert-ui/utils` | Framework-agnostic helpers (no React dependency) |
 
 ## Getting started
 

@@ -1,9 +1,4 @@
-export {
-  AppProvider,
-  type AppProviderProps,
-  useAppTheme,
-  useSafeAppTheme,
-} from "./AppProvider";
+export { AppProvider, type AppProviderProps, useAppTheme, useSafeAppTheme } from "./AppProvider";
 export type {
   AppColorTheme,
   AppRadiusTheme,

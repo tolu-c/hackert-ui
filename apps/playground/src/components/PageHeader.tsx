@@ -4,11 +4,7 @@ interface PageHeaderProps {
   readonly description: string;
 }
 
-export function PageHeader({
-  title,
-  packageName,
-  description,
-}: PageHeaderProps) {
+export function PageHeader({ title, packageName, description }: PageHeaderProps) {
   return (
     <header className="mb-10">
       <h1 className="text-2xl font-bold tracking-tight">{title}</h1>

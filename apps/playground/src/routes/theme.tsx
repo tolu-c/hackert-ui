@@ -19,10 +19,7 @@ function ThemeRoute() {
       <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-5">
         {Object.entries(theme.colors).map(([name, value]) => (
           <div key={name} className="rounded-lg border border-slate-200 p-3">
-            <div
-              className="h-12 w-full rounded"
-              style={{ backgroundColor: value }}
-            />
+            <div className="h-12 w-full rounded" style={{ backgroundColor: value }} />
             <p className="mt-2 text-xs font-medium">{name}</p>
             <p className="text-xs text-slate-500">{value}</p>
           </div>
@@ -44,10 +41,7 @@ function ThemeRoute() {
       <div className="mt-4 flex flex-wrap gap-4">
         {Object.entries(theme.radius).map(([name, value]) => (
           <div key={name} className="text-center">
-            <div
-              className="h-16 w-16 border-2 border-slate-800"
-              style={{ borderRadius: value }}
-            />
+            <div className="h-16 w-16 border-2 border-slate-800" style={{ borderRadius: value }} />
             <p className="mt-2 text-xs text-slate-500">
               {name} · {value}
             </p>

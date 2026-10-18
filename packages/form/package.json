@@ -3,26 +3,26 @@
   "version": "0.1.0",
   "description": "React form components for Hackert UI",
   "keywords": [
-    "react",
     "forms",
+    "react",
     "ui"
   ],
+  "homepage": "https://github.com/tolu-c/hackert-ui/tree/main/packages/form#readme",
+  "bugs": {
+    "url": "https://github.com/tolu-c/hackert-ui/issues"
+  },
   "license": "MIT",
   "author": "tolu-c",
-  "homepage": "https://github.com/tolu-c/hackert-ui/tree/main/packages/form#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tolu-c/hackert-ui.git",
     "directory": "packages/form"
   },
-  "bugs": {
-    "url": "https://github.com/tolu-c/hackert-ui/issues"
-  },
-  "type": "module",
-  "sideEffects": false,
   "files": [
     "dist"
   ],
+  "type": "module",
+  "sideEffects": false,
   "exports": {
     ".": {
       "types": "./src/index.ts",
@@ -31,7 +31,6 @@
     "./package.json": "./package.json"
   },
   "publishConfig": {
-    "access": "public",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
     "exports": {
@@ -41,17 +40,18 @@
         "default": "./dist/index.js"
       },
       "./package.json": "./package.json"
-    }
+    },
+    "access": "public"
   },
   "scripts": {
-    "build": "tsdown",
+    "build": "vp pack",
     "typecheck": "tsc -p tsconfig.json",
-    "test": "vitest run --passWithNoTests"
-  },
-  "peerDependencies": {
-    "react": "^19.0.0"
+    "test": "vp test run --passWithNoTests"
   },
   "devDependencies": {
     "react": "19.2.8"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0"
   }
 }

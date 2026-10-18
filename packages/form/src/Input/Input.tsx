@@ -1,8 +1,7 @@
 import type { ComponentPropsWithoutRef } from "react";
 import { useId } from "react";
 
-export interface InputProps
-  extends Omit<ComponentPropsWithoutRef<"input">, "id"> {
+export interface InputProps extends Omit<ComponentPropsWithoutRef<"input">, "id"> {
   readonly label?: string | undefined;
 }
 

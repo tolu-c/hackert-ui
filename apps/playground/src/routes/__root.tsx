@@ -21,9 +21,7 @@ function RootComponent() {
       <div className="min-h-screen bg-white text-slate-900">
         <header className="border-b border-slate-200">
           <div className="mx-auto flex max-w-5xl flex-wrap items-center gap-6 px-6 py-4">
-            <span className="text-sm font-semibold tracking-tight">
-              hackert-ui
-            </span>
+            <span className="text-sm font-semibold tracking-tight">hackert-ui</span>
             <nav className="flex flex-wrap gap-4 text-sm">
               {NAV.map((item) => (
                 <Link
@@ -47,9 +45,7 @@ function RootComponent() {
 
       <TanStackDevtools
         config={{ position: "bottom-right" }}
-        plugins={[
-          { name: "TanStack Router", render: <TanStackRouterDevtoolsPanel /> },
-        ]}
+        plugins={[{ name: "TanStack Router", render: <TanStackRouterDevtoolsPanel /> }]}
       />
     </AppProvider>
   );
