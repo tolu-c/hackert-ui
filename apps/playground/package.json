@@ -10,7 +10,8 @@
     "generate-routes": "tsr generate",
     "build": "vp build",
     "preview": "vp preview",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vp test run --passWithNoTests"
   },
   "dependencies": {
     "@hackert-ui/core": "workspace:*",

@@ -144,7 +144,11 @@ open.
 2. Re-export the folder from `packages/<pkg>/src/index.ts`.
 3. Add `<Name>.test.tsx` beside it. Use Testing Library, with test APIs
    imported from `vite-plus/test`.
-4. Add a demo to the matching route in `apps/playground/src/routes/`.
+4. Add a playground page at `apps/playground/src/routes/<section>/<name>.tsx`
+   and an entry in that section's `items` in `apps/playground/src/catalog.ts`;
+   the header, sidebar and overview are generated from the catalog. For a
+   live "Usage" demo, declare its controls with `defineControls` and spread
+   `searchOptionsFor(CONTROLS)` into the route, as `routes/ui/button.tsx` does.
 5. Run `pnpm changeset`.
 
 ## Adding a package
@@ -168,8 +172,9 @@ open.
    `pnpm-lock.yaml`, then commit the lockfile. CI installs with
    `--frozen-lockfile`.
 5. **Showcase it.** Add `"@hackert-ui/<name>": "workspace:*"` to
-   `apps/playground/package.json`, then add a route in
-   `apps/playground/src/routes/` and a card in `routes/index.tsx`.
+   `apps/playground/package.json`, then add a section to
+   `apps/playground/src/catalog.ts` and a matching
+   `routes/<section>/route.tsx` layout, `index.tsx` redirect and pages.
 6. **Smoke-test the published build.** `test:published` packs every directory
    under `packages/` automatically. Also import and assert on at least one
    export in the smoke script inside `scripts/verify-published-packages.mjs`.

@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { CodeBlock } from "./CodeBlock";
 
 interface DemoProps {
   readonly title: string;
@@ -9,14 +10,16 @@ interface DemoProps {
 
 export function Demo({ title, description, source, children }: DemoProps) {
   return (
-    <section className="mb-10">
-      <h2 className="text-lg font-semibold tracking-tight">{title}</h2>
+    <section className="mt-12">
+      <h2 className="text-xl font-semibold tracking-tight">{title}</h2>
       <p className="mt-1 text-sm text-slate-500">{description}</p>
-      <div className="mt-4 rounded-lg border border-slate-200">
-        <div className="flex flex-wrap items-center gap-3 p-6">{children}</div>
-        <pre className="overflow-x-auto border-t border-slate-200 bg-slate-50 p-4 text-xs text-slate-700">
-          <code>{source}</code>
-        </pre>
+      <div className="mt-4 overflow-hidden rounded-xl border border-slate-200">
+        <div className="flex min-h-32 flex-wrap items-center justify-center gap-3 p-8">
+          {children}
+        </div>
+        <div className="border-t border-slate-200">
+          <CodeBlock code={source} />
+        </div>
       </div>
     </section>
   );
