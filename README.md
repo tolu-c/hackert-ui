@@ -158,9 +158,11 @@ open.
    `"access": "public"`), `files` and `scripts` as they are.
 3. **Declare dependencies by how they should ship.** The build bundles
    anything that is not a runtime dependency.
-   - `react` and other `@hackert-ui/*` packages go in **`peerDependencies`**
-     (for example `"^0.1.0"`), plus the same package in **`devDependencies`**
-     as `workspace:*` so it resolves inside the repo.
+   - `react` and other `@hackert-ui/*` packages go in **`peerDependencies`**,
+     plus the same package in **`devDependencies`** as `workspace:*` so it
+     resolves inside the repo. Internal peers use `">=0.1.0 <1.0.0"`, not
+     `"^0.1.0"`: a caret on `0.x` makes Changesets bump the dependent to a
+     major on every minor of the peer.
    - Third-party runtime libraries go in **`dependencies`**.
 4. **Install and verify.** Run `pnpm install` to link the package and update
    `pnpm-lock.yaml`, then commit the lockfile. CI installs with

@@ -2,7 +2,7 @@ import type { AppTheme, AppThemeOverride } from "./types";
 
 export function resolveTheme(
   baseTheme: Readonly<AppTheme>,
-  override?: AppThemeOverride | undefined,
+  override?: AppThemeOverride,
 ): Readonly<AppTheme> {
   if (!override) {
     return baseTheme;

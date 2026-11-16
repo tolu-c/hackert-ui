@@ -2,7 +2,7 @@ import { useDisclosure } from "@hackert-ui/hooks";
 import { Button } from "@hackert-ui/ui";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { DEMO_BUTTON, Demo } from "#/components/Demo";
+import { Demo } from "#/components/Demo";
 import { PageHeader } from "#/components/PageHeader";
 
 export const Route = createFileRoute("/hooks")({ component: HooksRoute });
@@ -29,13 +29,11 @@ function HooksRoute() {
       >
         <div className="w-full">
           <div className="flex flex-wrap items-center gap-3">
-            <Button className={DEMO_BUTTON} onClick={handlers.open}>
-              open
-            </Button>
-            <Button className={DEMO_BUTTON} onClick={handlers.close}>
+            <Button onClick={handlers.open}>open</Button>
+            <Button variant="secondary" onClick={handlers.close}>
               close
             </Button>
-            <Button className={DEMO_BUTTON} onClick={handlers.toggle}>
+            <Button variant="secondary" onClick={handlers.toggle}>
               toggle
             </Button>
             <span className="text-sm text-slate-500">

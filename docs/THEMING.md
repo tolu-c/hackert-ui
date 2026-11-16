@@ -3,9 +3,35 @@
 How a component in `packages/ui` reads the theme that `AppProvider` resolves,
 and what happens to a consumer's `className` and `style` once it does.
 
-Path A has since landed: `core` exports `useSafeAppTheme`, `ui` peers on
-`core`, and `Button` reads the theme through context. The foreground-colour
-gap and the `0.x` peer-range strategy below are still open.
+## Current state
+
+This note records the design discussion. What shipped:
+
+- **The middle position, not Path A.** `Button` reads the theme through
+  context, but its inline `style` carries only `--hui-*` custom properties.
+  The rules live in a stylesheet (`packages/ui/src/Button/button-styles.ts`)
+  that `Button` renders as a React 19 `<style href precedence>`: hoisted to
+  `<head>`, deduped, SSR-safe, no consumer import. It sits in
+  `@layer components`, so consumer utilities override it by the normal
+  cascade, and `:hover`, `:active`, `:focus-visible` and `:disabled` all work.
+  The flip side: any **unlayered** rule beats a layered one, so an app-level
+  `button { … }` reset, or Tailwind v3's unlayered preflight, overrides these
+  styles. Tailwind v4 (layered preflight) is the verified setup.
+- **Foreground gap: closed by derivation, not tokens.** `core`'s
+  `useVariantColors(variant)` parses the theme colour (hex, `rgb()` or
+  `oklch()`; anything else throws) and derives text, hover and active colours
+  for WCAG contrast. See `packages/core/src/theme/color.ts`.
+- **Duplicate core: cannot split the context.** `ThemeContext` is stored on
+  `globalThis` under `Symbol.for("@hackert-ui/core/ThemeContext")`, so every
+  copy shares it, and a copy loaded from a different file logs a
+  `console.error`. The build never bundles `@hackert-ui/*`, and the smoke test
+  asserts `ui`'s dist imports core.
+- **`0.x` peer ranges: decided.** Packages version in lockstep (Changesets
+  `fixed`), and internal peers are `>=0.1.0 <1.0.0` with
+  `onlyUpdatePeerDependentsWhenOutOfRange`, so a minor stays a minor.
+
+The sections below are the original analysis and describe the code before
+these changes.
 
 ## What `core` exposes today
 

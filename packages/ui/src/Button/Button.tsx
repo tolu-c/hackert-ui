@@ -3,9 +3,11 @@ import {
   type AppRadiusTheme,
   type AppSpacingTheme,
   useSafeAppTheme,
+  useVariantColors,
 } from "@hackert-ui/core";
 import { cn } from "@hackert-ui/utils";
 import type { ComponentPropsWithoutRef, CSSProperties, ReactNode } from "react";
+import { BUTTON_CSS } from "./button-styles";
 
 export type ButtonVariant = keyof AppColorTheme;
 export type ButtonSize = keyof AppSpacingTheme;
@@ -16,8 +18,17 @@ export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
   readonly variant?: ButtonVariant | undefined;
   readonly size?: ButtonSize | undefined;
   readonly radius?: ButtonRadius | undefined;
-  readonly cursorPointer?: boolean | undefined;
 }
+
+// Vertical padding sits one spacing step below the horizontal padding.
+const BLOCK_PADDING: Readonly<Record<ButtonSize, ButtonSize>> = {
+  xs: "xs",
+  sm: "xs",
+  md: "sm",
+  lg: "md",
+  xl: "lg",
+  "2xl": "xl",
+};
 
 export function Button({
   type = "button",
@@ -27,26 +38,36 @@ export function Button({
   className,
   style,
   children,
-  cursorPointer = true,
   ...buttonProps
 }: ButtonProps) {
   const theme = useSafeAppTheme();
+  const colors = useVariantColors(variant);
 
-  const themed: CSSProperties = {
-    backgroundColor: theme.colors[variant],
-    borderRadius: theme.radius[radius],
-    fontFamily: theme.fontFamily,
-    border: "none",
-  };
+  const themed = {
+    "--hui-bg": colors.background,
+    "--hui-fg": colors.foreground,
+    "--hui-bg-hover": colors.hoverBackground,
+    "--hui-fg-hover": colors.hoverForeground,
+    "--hui-bg-active": colors.activeBackground,
+    "--hui-radius": theme.radius[radius],
+    "--hui-font": theme.fontFamily,
+    "--hui-py": theme.spacing[BLOCK_PADDING[size]],
+    "--hui-px": theme.spacing[size],
+  } as CSSProperties;
 
   return (
-    <button
-      {...buttonProps}
-      type={type}
-      className={cn("my-button", { "cursor-pointer": cursorPointer }, className)}
-      style={{ ...themed, ...style }}
-    >
-      {children}
-    </button>
+    <>
+      <style href="hui-button" precedence="default">
+        {BUTTON_CSS}
+      </style>
+      <button
+        {...buttonProps}
+        type={type}
+        className={cn("hui-button", className)}
+        style={{ ...themed, ...style }}
+      >
+        {children}
+      </button>
+    </>
   );
 }
