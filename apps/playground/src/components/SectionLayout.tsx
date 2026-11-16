@@ -1,5 +1,5 @@
 import { Link, Outlet } from "@tanstack/react-router";
-import type { CatalogSection } from "#/catalog";
+import type { CatalogSection } from "@/catalog";
 
 interface SectionLayoutProps {
   readonly section: CatalogSection;

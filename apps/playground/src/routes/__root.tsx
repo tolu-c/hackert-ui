@@ -3,7 +3,7 @@ import { TanStackDevtools } from "@tanstack/react-devtools";
 import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 
-import { SECTION_LIST } from "#/catalog";
+import { SECTION_LIST } from "@/catalog";
 
 import "../styles.css";
 

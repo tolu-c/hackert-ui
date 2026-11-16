@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { SECTION_LIST } from "#/catalog";
+import { SECTION_LIST } from "@/catalog";
 
 export const Route = createFileRoute("/")({ component: Overview });
 

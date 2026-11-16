@@ -1,12 +1,12 @@
 import { Button, Card } from "@hackert-ui/ui";
 import { createFileRoute } from "@tanstack/react-router";
-import { Demo } from "#/components/Demo";
-import { PageHeader } from "#/components/PageHeader";
-import { UsageHeading } from "#/components/UsageHeading";
-import { Configurator } from "#/configurator/Configurator";
-import { defineControls } from "#/configurator/controls";
-import { searchOptionsFor } from "#/configurator/search";
-import { toJsx, toSnippet } from "#/configurator/to-jsx";
+import { Demo } from "@/components/Demo";
+import { PageHeader } from "@/components/PageHeader";
+import { UsageHeading } from "@/components/UsageHeading";
+import { Configurator } from "@/configurator/Configurator";
+import { defineControls } from "@/configurator/controls";
+import { searchOptionsFor } from "@/configurator/search";
+import { toJsx, toSnippet } from "@/configurator/to-jsx";
 
 const CONTROLS = defineControls([
   {

@@ -72,3 +72,7 @@ and compare `scrollWidth` to `clientWidth` to check mobile layout for real.
 - Button page keeps only the Disabled state and Custom className examples;
   the configurator covers variants and sizes.
 - User asked for commits without a Claude co-author trailer.
+- Playground path alias is `@/` (tsconfig `paths`), not `#/`. `#/` came from
+  package.json subpath `imports`, which Node requires to start with `#`, so
+  `@/` relies on Vite's `resolve.tsconfigPaths`; the playground's
+  `vitest.config.ts` enables it too.
