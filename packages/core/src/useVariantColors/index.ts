@@ -1,0 +1,1 @@
+export { useVariantColors } from "./useVariantColors";

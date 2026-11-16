@@ -77,6 +77,7 @@ assert.deepEqual(Object.keys(await import("@hackert-ui/core")).sort(), [
   "DEFAULT_THEME",
   "useAppTheme",
   "useSafeAppTheme",
+  "useVariantColors",
 ]);
 
 function Probe() {
@@ -88,11 +89,10 @@ function Probe() {
 }
 
 const markup = renderToStaticMarkup(h(AppProvider, null, h(Probe)));
-assert.match(markup, /^<div><button type="button" class="my-button cursor-pointer" style="/);
-assert.ok(
-  markup.includes(\`background-color:\${DEFAULT_THEME.colors.primary}\`),
-  markup,
-);
+assert.match(markup, /^<style data-precedence="default" data-href="hui-button">@layer theme, base, components, utilities;/, markup);
+assert.match(markup, /<button type="button" class="hui-button" style="/, markup);
+assert.ok(markup.includes(\`--hui-bg:\${DEFAULT_THEME.colors.primary}\`), markup);
+assert.ok(markup.includes("--hui-fg:#ffffff"), markup);
 
 assert.equal(cn("px-2", "px-4"), "px-4");
 assert.equal(renderToStaticMarkup(h(DateInput)), "<div>DateInput</div>");
@@ -103,6 +103,15 @@ console.log("smoke ok for react@${version}");
     );
 
     run("pnpm", ["install", "--ignore-workspace", "--no-lockfile"], fixtureDirectory);
+
+    // A bundled copy of core means a second ThemeContext inside ui.
+    const uiBundle = await readFile(
+      join(fixtureDirectory, "node_modules/@hackert-ui/ui/dist/index.js"),
+      "utf8",
+    );
+    assert.match(uiBundle, /from "@hackert-ui\/core"/, "ui must import core, not bundle it");
+    assert.doesNotMatch(uiBundle, /createContext/, "ui must not bundle core's ThemeContext");
+
     run("node", ["smoke.mjs"], fixtureDirectory);
   }
 } finally {

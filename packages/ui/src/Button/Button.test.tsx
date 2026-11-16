@@ -8,6 +8,10 @@ import { Button } from "./Button";
 
 afterEach(cleanup);
 
+function variable(name: string) {
+  return screen.getByRole("button").style.getPropertyValue(name);
+}
+
 describe("Button", () => {
   it("paints the resolved theme colour for its variant", () => {
     render(
@@ -16,25 +20,72 @@ describe("Button", () => {
       </AppProvider>,
     );
 
-    expect(screen.getByRole("button").style.backgroundColor).toBe("rgb(1, 2, 3)");
+    expect(variable("--hui-bg")).toBe("rgb(1, 2, 3)");
+  });
+
+  it("derives readable text from the background", () => {
+    render(
+      <>
+        <Button variant="primary">Save</Button>
+        <Button variant="warning">Careful</Button>
+      </>,
+    );
+    const [primary, warning] = screen.getAllByRole("button");
+
+    expect(primary?.style.getPropertyValue("--hui-fg")).toBe("#ffffff");
+    expect(warning?.style.getPropertyValue("--hui-fg")).toBe("#0a0a0a");
+  });
+
+  it("provides hover and active colours", () => {
+    render(<Button>Save</Button>);
+
+    expect(variable("--hui-bg-hover")).toMatch(/^#[0-9a-f]{6}$/);
+    expect(variable("--hui-fg-hover")).toBe("#ffffff");
+    expect(variable("--hui-bg-active")).toMatch(/^#[0-9a-f]{6}$/);
   });
 
   it("falls back to the default theme without a provider", () => {
     render(<Button>Save</Button>);
 
-    expect(screen.getByRole("button").style.borderRadius).toBe(DEFAULT_THEME.radius.md);
+    expect(variable("--hui-radius")).toBe(DEFAULT_THEME.radius.md);
   });
 
-  it("lets the consumer's className and style win", () => {
-    render(
-      <Button className="mt-4" style={{ backgroundColor: "rgb(9, 9, 9)" }}>
-        Save
-      </Button>,
-    );
-    const button = screen.getByRole("button");
+  it("pads from the spacing scale by size", () => {
+    render(<Button size="lg">Save</Button>);
 
-    expect(button.className).toBe("my-button cursor-pointer mt-4");
-    expect(button.style.backgroundColor).toBe("rgb(9, 9, 9)");
+    expect(variable("--hui-py")).toBe(DEFAULT_THEME.spacing.md);
+    expect(variable("--hui-px")).toBe(DEFAULT_THEME.spacing.lg);
+  });
+
+  it("adds one shared stylesheet to the document however many buttons render", () => {
+    render(
+      <>
+        <Button>One</Button>
+        <Button>Two</Button>
+        <Button>Three</Button>
+      </>,
+    );
+
+    expect(document.head.querySelectorAll('style[data-href="hui-button"]')).toHaveLength(1);
+  });
+
+  it("fixes the layer order so a reset loaded later cannot outrank it", () => {
+    render(<Button>Save</Button>);
+    const css = document.head.querySelector('style[data-href="hui-button"]')?.textContent ?? "";
+
+    expect(css.startsWith("@layer theme, base, components, utilities;")).toBe(true);
+  });
+
+  it("keeps the consumer's className alongside its own", () => {
+    render(<Button className="mt-4">Save</Button>);
+
+    expect(screen.getByRole("button").className).toBe("hui-button mt-4");
+  });
+
+  it("lets the consumer's style override a themed variable", () => {
+    render(<Button style={{ ["--hui-bg" as string]: "rgb(9, 9, 9)" }}>Save</Button>);
+
+    expect(variable("--hui-bg")).toBe("rgb(9, 9, 9)");
   });
 
   it("defaults to type=button", () => {

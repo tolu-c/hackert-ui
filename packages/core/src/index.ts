@@ -5,5 +5,7 @@ export type {
   AppSpacingTheme,
   AppTheme,
   AppThemeOverride,
+  VariantColors,
 } from "./theme";
 export { DEFAULT_THEME } from "./theme";
+export { useVariantColors } from "./useVariantColors";

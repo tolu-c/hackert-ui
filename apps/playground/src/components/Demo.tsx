@@ -1,8 +1,5 @@
 import type { ReactNode } from "react";
 
-export const DEMO_BUTTON =
-  "rounded border border-slate-300 px-3 py-1.5 text-sm font-medium hover:border-slate-400";
-
 interface DemoProps {
   readonly title: string;
   readonly description: string;

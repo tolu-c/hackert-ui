@@ -2,7 +2,7 @@
 
 import { cleanup, render } from "@testing-library/react";
 import { memo } from "react";
-import { afterEach, describe, expect, it } from "vite-plus/test";
+import { afterEach, describe, expect, it, vi } from "vite-plus/test";
 
 import { AppProvider, DEFAULT_THEME, useAppTheme } from "../index";
 import type { AppTheme } from "../theme/types";
@@ -114,5 +114,55 @@ describe("AppProvider", () => {
     );
 
     expect(observedThemes).toHaveLength(1);
+  });
+});
+
+describe("AppProvider across duplicate core instances", () => {
+  it("shares one theme context and reports the duplicate", async () => {
+    const key = Symbol.for("@hackert-ui/core/ThemeContext");
+    const registry = globalThis as Record<symbol, { context: unknown; source: string }>;
+    const original = registry[key];
+    if (!original) throw new Error("expected the first core instance to register its context");
+    registry[key] = { ...original, source: "file:///elsewhere/@hackert-ui/core/dist/index.js" };
+
+    const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+    vi.resetModules();
+    const duplicate = await import("./AppProvider");
+    registry[key] = original;
+    let observedTheme: Readonly<AppTheme> | undefined;
+
+    function Probe() {
+      observedTheme = duplicate.useAppTheme();
+      return null;
+    }
+
+    render(
+      <AppProvider theme={{ colors: { primary: "#000000" } }}>
+        <Probe />
+      </AppProvider>,
+    );
+
+    expect(observedTheme?.colors.primary).toBe("#000000");
+    expect(errorSpy).toHaveBeenCalledTimes(1);
+    expect(errorSpy.mock.calls[0]?.[0]).toContain("@hackert-ui/core was loaded more than once");
+    errorSpy.mockRestore();
+  });
+});
+
+describe("AppProvider re-executed by HMR", () => {
+  it("does not report a duplicate when the same file reloads with a cache-busting query", async () => {
+    const key = Symbol.for("@hackert-ui/core/ThemeContext");
+    const registry = globalThis as Record<symbol, { context: unknown; source: string }>;
+    const original = registry[key];
+    if (!original) throw new Error("expected the first core instance to register its context");
+    registry[key] = { ...original, source: `${original.source}?t=1731770000000` };
+
+    const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+    vi.resetModules();
+    await import("./AppProvider");
+    registry[key] = original;
+
+    expect(errorSpy).not.toHaveBeenCalled();
+    errorSpy.mockRestore();
   });
 });
