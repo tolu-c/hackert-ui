@@ -40,3 +40,35 @@ real duplicate from an HMR re-run.
 - Library CSS is delivered via a React 19 hoisted `<style>`, not a shipped
   `.css` file or Tailwind classes.
 - Internal peer range: widened to `>=0.1.0 <1.0.0` rather than releasing 1.0.0.
+
+## Lessons learned (playground)
+
+### A child route's search is merged over the parent's raw search
+
+The root route has no `validateSearch`, so it passes raw URL params down, and
+a child's search is `{ ...parentSearch, ...validated }`. A validator that
+_omits_ an invalid key lets the raw value through (`?variant=bogus` crashed
+Button). Return every declared key with a default instead, and type the input
+`Partial<…> & SearchSchemaInput` so links and redirects need no `search`.
+Unit-testing the validator alone did not catch it; a real page load did.
+
+### `stripSearchParams` cannot infer inside a generic helper
+
+Its input type is a conditional over the schema, which TypeScript cannot
+resolve for a generic `C`. A five-line `SearchMiddleware<T>` that drops keys
+equal to their defaults is simpler than fighting the inference.
+
+### Headless Chrome screenshots are not phone-width
+
+`--window-size=390,…` on macOS renders at Chrome's minimum window width
+(~500px), which looks like overflow. Use CDP `Emulation.setDeviceMetricsOverride`
+and compare `scrollWidth` to `clientWidth` to check mobile layout for real.
+
+## Decisions (playground)
+
+- Mantine-style pages: Usage configurator + example sections, no right TOC.
+- Configurator state lives in URL search params (`replace: true`, defaults
+  stripped). Variant control is theme swatches only. No dark mode yet.
+- Button page keeps only the Disabled state and Custom className examples;
+  the configurator covers variants and sizes.
+- User asked for commits without a Claude co-author trailer.

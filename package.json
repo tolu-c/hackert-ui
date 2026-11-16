@@ -14,7 +14,7 @@
     "dev:packages": "pnpm --filter \"./packages/*\" --parallel exec vp pack --watch",
     "dev:playground": "pnpm --filter playground dev",
     "typecheck": "pnpm -r run typecheck",
-    "test": "pnpm --filter \"./packages/*\" run test",
+    "test": "pnpm --filter \"./packages/*\" --filter playground run test",
     "test:published": "node scripts/verify-published-packages.mjs",
     "lint": "vp check",
     "format": "vp check --fix",

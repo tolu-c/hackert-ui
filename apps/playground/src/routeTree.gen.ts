@@ -10,73 +10,225 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as FormRouteImport } from './routes/form'
-import { Route as HooksRouteImport } from './routes/hooks'
-import { Route as ThemeRouteImport } from './routes/theme'
-import { Route as UiRouteImport } from './routes/ui'
+import { Route as FormRouteRouteImport } from './routes/form/route'
+import { Route as HooksRouteRouteImport } from './routes/hooks/route'
+import { Route as ThemeRouteRouteImport } from './routes/theme/route'
+import { Route as UiRouteRouteImport } from './routes/ui/route'
+import { Route as FormIndexRouteImport } from './routes/form/index'
+import { Route as FormInputRouteImport } from './routes/form/input'
+import { Route as HooksIndexRouteImport } from './routes/hooks/index'
+import { Route as HooksUseDebouncedValueRouteImport } from './routes/hooks/use-debounced-value'
+import { Route as HooksUseDisclosureRouteImport } from './routes/hooks/use-disclosure'
+import { Route as ThemeIndexRouteImport } from './routes/theme/index'
+import { Route as ThemeColorsRouteImport } from './routes/theme/colors'
+import { Route as ThemeRadiusRouteImport } from './routes/theme/radius'
+import { Route as ThemeSpacingRouteImport } from './routes/theme/spacing'
+import { Route as UiIndexRouteImport } from './routes/ui/index'
+import { Route as UiButtonRouteImport } from './routes/ui/button'
+import { Route as UiCardRouteImport } from './routes/ui/card'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const FormRoute = FormRouteImport.update({
+const FormRouteRoute = FormRouteRouteImport.update({
   id: '/form',
   path: '/form',
   getParentRoute: () => rootRouteImport,
 } as any)
-const HooksRoute = HooksRouteImport.update({
+const HooksRouteRoute = HooksRouteRouteImport.update({
   id: '/hooks',
   path: '/hooks',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ThemeRoute = ThemeRouteImport.update({
+const ThemeRouteRoute = ThemeRouteRouteImport.update({
   id: '/theme',
   path: '/theme',
   getParentRoute: () => rootRouteImport,
 } as any)
-const UiRoute = UiRouteImport.update({
+const UiRouteRoute = UiRouteRouteImport.update({
   id: '/ui',
   path: '/ui',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FormIndexRoute = FormIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => FormRouteRoute,
+} as any)
+const FormInputRoute = FormInputRouteImport.update({
+  id: '/input',
+  path: '/input',
+  getParentRoute: () => FormRouteRoute,
+} as any)
+const HooksIndexRoute = HooksIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => HooksRouteRoute,
+} as any)
+const HooksUseDebouncedValueRoute = HooksUseDebouncedValueRouteImport.update({
+  id: '/use-debounced-value',
+  path: '/use-debounced-value',
+  getParentRoute: () => HooksRouteRoute,
+} as any)
+const HooksUseDisclosureRoute = HooksUseDisclosureRouteImport.update({
+  id: '/use-disclosure',
+  path: '/use-disclosure',
+  getParentRoute: () => HooksRouteRoute,
+} as any)
+const ThemeIndexRoute = ThemeIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ThemeRouteRoute,
+} as any)
+const ThemeColorsRoute = ThemeColorsRouteImport.update({
+  id: '/colors',
+  path: '/colors',
+  getParentRoute: () => ThemeRouteRoute,
+} as any)
+const ThemeRadiusRoute = ThemeRadiusRouteImport.update({
+  id: '/radius',
+  path: '/radius',
+  getParentRoute: () => ThemeRouteRoute,
+} as any)
+const ThemeSpacingRoute = ThemeSpacingRouteImport.update({
+  id: '/spacing',
+  path: '/spacing',
+  getParentRoute: () => ThemeRouteRoute,
+} as any)
+const UiIndexRoute = UiIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => UiRouteRoute,
+} as any)
+const UiButtonRoute = UiButtonRouteImport.update({
+  id: '/button',
+  path: '/button',
+  getParentRoute: () => UiRouteRoute,
+} as any)
+const UiCardRoute = UiCardRouteImport.update({
+  id: '/card',
+  path: '/card',
+  getParentRoute: () => UiRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/form': typeof FormRoute
-  '/hooks': typeof HooksRoute
-  '/theme': typeof ThemeRoute
-  '/ui': typeof UiRoute
+  '/form': typeof FormRouteRouteWithChildren
+  '/hooks': typeof HooksRouteRouteWithChildren
+  '/theme': typeof ThemeRouteRouteWithChildren
+  '/ui': typeof UiRouteRouteWithChildren
+  '/form/input': typeof FormInputRoute
+  '/hooks/use-debounced-value': typeof HooksUseDebouncedValueRoute
+  '/hooks/use-disclosure': typeof HooksUseDisclosureRoute
+  '/theme/colors': typeof ThemeColorsRoute
+  '/theme/radius': typeof ThemeRadiusRoute
+  '/theme/spacing': typeof ThemeSpacingRoute
+  '/ui/button': typeof UiButtonRoute
+  '/ui/card': typeof UiCardRoute
+  '/form/': typeof FormIndexRoute
+  '/hooks/': typeof HooksIndexRoute
+  '/theme/': typeof ThemeIndexRoute
+  '/ui/': typeof UiIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/form': typeof FormRoute
-  '/hooks': typeof HooksRoute
-  '/theme': typeof ThemeRoute
-  '/ui': typeof UiRoute
+  '/form/input': typeof FormInputRoute
+  '/hooks/use-debounced-value': typeof HooksUseDebouncedValueRoute
+  '/hooks/use-disclosure': typeof HooksUseDisclosureRoute
+  '/theme/colors': typeof ThemeColorsRoute
+  '/theme/radius': typeof ThemeRadiusRoute
+  '/theme/spacing': typeof ThemeSpacingRoute
+  '/ui/button': typeof UiButtonRoute
+  '/ui/card': typeof UiCardRoute
+  '/form': typeof FormIndexRoute
+  '/hooks': typeof HooksIndexRoute
+  '/theme': typeof ThemeIndexRoute
+  '/ui': typeof UiIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/form': typeof FormRoute
-  '/hooks': typeof HooksRoute
-  '/theme': typeof ThemeRoute
-  '/ui': typeof UiRoute
+  '/form': typeof FormRouteRouteWithChildren
+  '/hooks': typeof HooksRouteRouteWithChildren
+  '/theme': typeof ThemeRouteRouteWithChildren
+  '/ui': typeof UiRouteRouteWithChildren
+  '/form/input': typeof FormInputRoute
+  '/hooks/use-debounced-value': typeof HooksUseDebouncedValueRoute
+  '/hooks/use-disclosure': typeof HooksUseDisclosureRoute
+  '/theme/colors': typeof ThemeColorsRoute
+  '/theme/radius': typeof ThemeRadiusRoute
+  '/theme/spacing': typeof ThemeSpacingRoute
+  '/ui/button': typeof UiButtonRoute
+  '/ui/card': typeof UiCardRoute
+  '/form/': typeof FormIndexRoute
+  '/hooks/': typeof HooksIndexRoute
+  '/theme/': typeof ThemeIndexRoute
+  '/ui/': typeof UiIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/form' | '/hooks' | '/theme' | '/ui'
+  fullPaths:
+    | '/'
+    | '/form'
+    | '/hooks'
+    | '/theme'
+    | '/ui'
+    | '/form/input'
+    | '/hooks/use-debounced-value'
+    | '/hooks/use-disclosure'
+    | '/theme/colors'
+    | '/theme/radius'
+    | '/theme/spacing'
+    | '/ui/button'
+    | '/ui/card'
+    | '/form/'
+    | '/hooks/'
+    | '/theme/'
+    | '/ui/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/form' | '/hooks' | '/theme' | '/ui'
-  id: '__root__' | '/' | '/form' | '/hooks' | '/theme' | '/ui'
+  to:
+    | '/'
+    | '/form/input'
+    | '/hooks/use-debounced-value'
+    | '/hooks/use-disclosure'
+    | '/theme/colors'
+    | '/theme/radius'
+    | '/theme/spacing'
+    | '/ui/button'
+    | '/ui/card'
+    | '/form'
+    | '/hooks'
+    | '/theme'
+    | '/ui'
+  id:
+    | '__root__'
+    | '/'
+    | '/form'
+    | '/hooks'
+    | '/theme'
+    | '/ui'
+    | '/form/input'
+    | '/hooks/use-debounced-value'
+    | '/hooks/use-disclosure'
+    | '/theme/colors'
+    | '/theme/radius'
+    | '/theme/spacing'
+    | '/ui/button'
+    | '/ui/card'
+    | '/form/'
+    | '/hooks/'
+    | '/theme/'
+    | '/ui/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  FormRoute: typeof FormRoute
-  HooksRoute: typeof HooksRoute
-  ThemeRoute: typeof ThemeRoute
-  UiRoute: typeof UiRoute
+  FormRouteRoute: typeof FormRouteRouteWithChildren
+  HooksRouteRoute: typeof HooksRouteRouteWithChildren
+  ThemeRouteRoute: typeof ThemeRouteRouteWithChildren
+  UiRouteRoute: typeof UiRouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -92,39 +244,186 @@ declare module '@tanstack/react-router' {
       id: '/form'
       path: '/form'
       fullPath: '/form'
-      preLoaderRoute: typeof FormRouteImport
+      preLoaderRoute: typeof FormRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/hooks': {
       id: '/hooks'
       path: '/hooks'
       fullPath: '/hooks'
-      preLoaderRoute: typeof HooksRouteImport
+      preLoaderRoute: typeof HooksRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/theme': {
       id: '/theme'
       path: '/theme'
       fullPath: '/theme'
-      preLoaderRoute: typeof ThemeRouteImport
+      preLoaderRoute: typeof ThemeRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ui': {
       id: '/ui'
       path: '/ui'
       fullPath: '/ui'
-      preLoaderRoute: typeof UiRouteImport
+      preLoaderRoute: typeof UiRouteRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/form/': {
+      id: '/form/'
+      path: '/'
+      fullPath: '/form/'
+      preLoaderRoute: typeof FormIndexRouteImport
+      parentRoute: typeof FormRouteRoute
+    }
+    '/form/input': {
+      id: '/form/input'
+      path: '/input'
+      fullPath: '/form/input'
+      preLoaderRoute: typeof FormInputRouteImport
+      parentRoute: typeof FormRouteRoute
+    }
+    '/hooks/': {
+      id: '/hooks/'
+      path: '/'
+      fullPath: '/hooks/'
+      preLoaderRoute: typeof HooksIndexRouteImport
+      parentRoute: typeof HooksRouteRoute
+    }
+    '/hooks/use-debounced-value': {
+      id: '/hooks/use-debounced-value'
+      path: '/use-debounced-value'
+      fullPath: '/hooks/use-debounced-value'
+      preLoaderRoute: typeof HooksUseDebouncedValueRouteImport
+      parentRoute: typeof HooksRouteRoute
+    }
+    '/hooks/use-disclosure': {
+      id: '/hooks/use-disclosure'
+      path: '/use-disclosure'
+      fullPath: '/hooks/use-disclosure'
+      preLoaderRoute: typeof HooksUseDisclosureRouteImport
+      parentRoute: typeof HooksRouteRoute
+    }
+    '/theme/': {
+      id: '/theme/'
+      path: '/'
+      fullPath: '/theme/'
+      preLoaderRoute: typeof ThemeIndexRouteImport
+      parentRoute: typeof ThemeRouteRoute
+    }
+    '/theme/colors': {
+      id: '/theme/colors'
+      path: '/colors'
+      fullPath: '/theme/colors'
+      preLoaderRoute: typeof ThemeColorsRouteImport
+      parentRoute: typeof ThemeRouteRoute
+    }
+    '/theme/radius': {
+      id: '/theme/radius'
+      path: '/radius'
+      fullPath: '/theme/radius'
+      preLoaderRoute: typeof ThemeRadiusRouteImport
+      parentRoute: typeof ThemeRouteRoute
+    }
+    '/theme/spacing': {
+      id: '/theme/spacing'
+      path: '/spacing'
+      fullPath: '/theme/spacing'
+      preLoaderRoute: typeof ThemeSpacingRouteImport
+      parentRoute: typeof ThemeRouteRoute
+    }
+    '/ui/': {
+      id: '/ui/'
+      path: '/'
+      fullPath: '/ui/'
+      preLoaderRoute: typeof UiIndexRouteImport
+      parentRoute: typeof UiRouteRoute
+    }
+    '/ui/button': {
+      id: '/ui/button'
+      path: '/button'
+      fullPath: '/ui/button'
+      preLoaderRoute: typeof UiButtonRouteImport
+      parentRoute: typeof UiRouteRoute
+    }
+    '/ui/card': {
+      id: '/ui/card'
+      path: '/card'
+      fullPath: '/ui/card'
+      preLoaderRoute: typeof UiCardRouteImport
+      parentRoute: typeof UiRouteRoute
     }
   }
 }
 
+interface FormRouteRouteChildren {
+  FormInputRoute: typeof FormInputRoute
+  FormIndexRoute: typeof FormIndexRoute
+}
+
+const FormRouteRouteChildren: FormRouteRouteChildren = {
+  FormInputRoute: FormInputRoute,
+  FormIndexRoute: FormIndexRoute,
+}
+
+const FormRouteRouteWithChildren = FormRouteRoute._addFileChildren(
+  FormRouteRouteChildren,
+)
+
+interface HooksRouteRouteChildren {
+  HooksUseDebouncedValueRoute: typeof HooksUseDebouncedValueRoute
+  HooksUseDisclosureRoute: typeof HooksUseDisclosureRoute
+  HooksIndexRoute: typeof HooksIndexRoute
+}
+
+const HooksRouteRouteChildren: HooksRouteRouteChildren = {
+  HooksUseDebouncedValueRoute: HooksUseDebouncedValueRoute,
+  HooksUseDisclosureRoute: HooksUseDisclosureRoute,
+  HooksIndexRoute: HooksIndexRoute,
+}
+
+const HooksRouteRouteWithChildren = HooksRouteRoute._addFileChildren(
+  HooksRouteRouteChildren,
+)
+
+interface ThemeRouteRouteChildren {
+  ThemeColorsRoute: typeof ThemeColorsRoute
+  ThemeRadiusRoute: typeof ThemeRadiusRoute
+  ThemeSpacingRoute: typeof ThemeSpacingRoute
+  ThemeIndexRoute: typeof ThemeIndexRoute
+}
+
+const ThemeRouteRouteChildren: ThemeRouteRouteChildren = {
+  ThemeColorsRoute: ThemeColorsRoute,
+  ThemeRadiusRoute: ThemeRadiusRoute,
+  ThemeSpacingRoute: ThemeSpacingRoute,
+  ThemeIndexRoute: ThemeIndexRoute,
+}
+
+const ThemeRouteRouteWithChildren = ThemeRouteRoute._addFileChildren(
+  ThemeRouteRouteChildren,
+)
+
+interface UiRouteRouteChildren {
+  UiButtonRoute: typeof UiButtonRoute
+  UiCardRoute: typeof UiCardRoute
+  UiIndexRoute: typeof UiIndexRoute
+}
+
+const UiRouteRouteChildren: UiRouteRouteChildren = {
+  UiButtonRoute: UiButtonRoute,
+  UiCardRoute: UiCardRoute,
+  UiIndexRoute: UiIndexRoute,
+}
+
+const UiRouteRouteWithChildren =
+  UiRouteRoute._addFileChildren(UiRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  FormRoute: FormRoute,
-  HooksRoute: HooksRoute,
-  ThemeRoute: ThemeRoute,
-  UiRoute: UiRoute,
+  FormRouteRoute: FormRouteRouteWithChildren,
+  HooksRouteRoute: HooksRouteRouteWithChildren,
+  ThemeRouteRoute: ThemeRouteRouteWithChildren,
+  UiRouteRoute: UiRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

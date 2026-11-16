@@ -1,40 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { SECTION_LIST } from "#/catalog";
 
 export const Route = createFileRoute("/")({ component: Overview });
 
-const PACKAGES = [
-  {
-    to: "/theme",
-    name: "@hackert-ui/core",
-    blurb: "AppProvider and the design token set every other package reads.",
-  },
-  {
-    to: "/ui",
-    name: "@hackert-ui/ui",
-    blurb: "Component primitives — Button, Card.",
-  },
-  {
-    to: "/form",
-    name: "@hackert-ui/form",
-    blurb: "Form controls with labels wired to inputs.",
-  },
-  {
-    to: "/hooks",
-    name: "@hackert-ui/hooks",
-    blurb: "Stateful helpers — useDisclosure, useDebouncedValue.",
-  },
-  {
-    to: null,
-    name: "@hackert-ui/utils",
-    blurb: "Framework-agnostic helpers — cn. No React dependency.",
-  },
-] as const;
-
-const CARD = "rounded-lg border border-slate-200 p-5";
-
 function Overview() {
   return (
-    <div>
+    <div className="max-w-4xl">
       <header className="mb-10">
         <h1 className="text-3xl font-bold tracking-tight">hackert-ui</h1>
         <p className="mt-3 max-w-2xl text-slate-600">
@@ -44,28 +15,25 @@ function Overview() {
       </header>
 
       <div className="grid gap-4 sm:grid-cols-2">
-        {PACKAGES.map((pkg) => {
-          const body = (
-            <>
-              <code className="text-sm font-medium">{pkg.name}</code>
-              <p className="mt-2 text-sm text-slate-500">{pkg.blurb}</p>
-            </>
-          );
-
-          return pkg.to === null ? (
-            <div key={pkg.name} className={`${CARD} border-dashed`}>
-              {body}
-            </div>
-          ) : (
-            <Link
-              key={pkg.name}
-              to={pkg.to}
-              className={`${CARD} transition-colors hover:border-slate-400`}
-            >
-              {body}
-            </Link>
-          );
-        })}
+        {SECTION_LIST.map((section) => (
+          <Link
+            key={section.to}
+            to={section.to}
+            className="rounded-lg border border-slate-200 p-5 transition-colors duration-150 hover:border-slate-400"
+          >
+            <code className="text-sm font-medium">{section.packageName}</code>
+            <p className="mt-2 text-sm text-slate-500">{section.blurb}</p>
+            <p className="mt-3 text-xs text-slate-400">
+              {section.items.map((item) => item.label).join(" · ")}
+            </p>
+          </Link>
+        ))}
+        <div className="rounded-lg border border-dashed border-slate-200 p-5">
+          <code className="text-sm font-medium">@hackert-ui/utils</code>
+          <p className="mt-2 text-sm text-slate-500">
+            Framework-agnostic helpers — cn. No React dependency.
+          </p>
+        </div>
       </div>
     </div>
   );
