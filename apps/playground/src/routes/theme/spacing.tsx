@@ -1,6 +1,6 @@
 import { useAppTheme } from "@hackert-ui/core";
 import { createFileRoute } from "@tanstack/react-router";
-import { PageHeader } from "#/components/PageHeader";
+import { PageHeader } from "@/components/PageHeader";
 
 export const Route = createFileRoute("/theme/spacing")({ component: SpacingPage });
 

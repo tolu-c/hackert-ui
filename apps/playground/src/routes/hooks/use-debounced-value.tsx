@@ -1,11 +1,11 @@
 import { useDebouncedValue } from "@hackert-ui/hooks";
 import { createFileRoute } from "@tanstack/react-router";
 import { useId, useState } from "react";
-import { PageHeader } from "#/components/PageHeader";
-import { UsageHeading } from "#/components/UsageHeading";
-import { Configurator } from "#/configurator/Configurator";
-import { defineControls } from "#/configurator/controls";
-import { searchOptionsFor } from "#/configurator/search";
+import { PageHeader } from "@/components/PageHeader";
+import { UsageHeading } from "@/components/UsageHeading";
+import { Configurator } from "@/configurator/Configurator";
+import { defineControls } from "@/configurator/controls";
+import { searchOptionsFor } from "@/configurator/search";
 
 const CONTROLS = defineControls([
   {

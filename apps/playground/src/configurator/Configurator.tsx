@@ -1,5 +1,5 @@
 import type { ComponentType, ReactNode } from "react";
-import { CodeBlock } from "#/components/CodeBlock";
+import { CodeBlock } from "@/components/CodeBlock";
 import type { Control, ControlValue, ControlValues } from "./controls";
 import { SelectField } from "./fields/SelectField";
 import { SliderField } from "./fields/SliderField";

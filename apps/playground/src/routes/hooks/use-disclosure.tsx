@@ -2,11 +2,11 @@ import { useDisclosure } from "@hackert-ui/hooks";
 import { Button } from "@hackert-ui/ui";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { PageHeader } from "#/components/PageHeader";
-import { UsageHeading } from "#/components/UsageHeading";
-import { Configurator } from "#/configurator/Configurator";
-import { defineControls } from "#/configurator/controls";
-import { searchOptionsFor } from "#/configurator/search";
+import { PageHeader } from "@/components/PageHeader";
+import { UsageHeading } from "@/components/UsageHeading";
+import { Configurator } from "@/configurator/Configurator";
+import { defineControls } from "@/configurator/controls";
+import { searchOptionsFor } from "@/configurator/search";
 
 const CONTROLS = defineControls([
   { kind: "switch", prop: "initial", label: "Initially open", defaultValue: false },

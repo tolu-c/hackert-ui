@@ -10,7 +10,7 @@ import {
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vite-plus/test";
 
-import { SECTIONS } from "#/catalog";
+import { SECTIONS } from "@/catalog";
 import { SectionLayout } from "./SectionLayout";
 
 afterEach(cleanup);
