@@ -203,19 +203,26 @@ map or a missing peer dependency fails here, not in a consuming project.
 
 ## Releasing
 
-[Changesets](https://github.com/changesets/changesets) handles versioning.
+[Changesets](https://github.com/changesets/changesets) handles versioning;
+publishing happens only when you publish a GitHub Release.
 
-```sh
-pnpm changeset          # describe the change and pick the bump
-git push                # CI opens a "Version Packages" PR
-```
+1. With each change, run `pnpm changeset`, pick the bump (patch, minor or
+   major) and describe it. Commit the file it creates.
+2. When that lands on `main`, the **Version** workflow opens a
+   "chore: version packages" PR that bumps every package to the same new
+   version and writes the changelogs. Merge it when you want to release.
+3. Publish a GitHub Release whose tag is `v<new version>`, for example:
 
-Merging that PR publishes to npm with provenance.
+   ```sh
+   gh release create v0.2.0 --target main --generate-notes
+   ```
 
-**Publishing isn't live yet.** Two external steps come first:
+4. The **Publish** workflow checks that the tag matches the package version,
+   runs `pnpm verify`, and publishes every package to npm with provenance.
 
-1. Claim the `@hackert-ui` scope on npm.
-2. Add an automation token as the `NPM_TOKEN` repository secret.
+Publishing needs the `NPM_TOKEN` repository secret and a public repository
+(npm only accepts provenance from public repos). Consumers install with any
+npm-compatible client: `pnpm add`, `npm install`, `yarn add` or `bun add`.
 
 ## Deploying the playground
 
