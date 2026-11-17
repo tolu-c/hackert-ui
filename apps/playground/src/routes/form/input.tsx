@@ -1,6 +1,7 @@
 import { Input } from "@hackert-ui/form";
 import { createFileRoute } from "@tanstack/react-router";
 import { Demo } from "@/components/Demo";
+import { pageHead } from "@/catalog";
 import { PageHeader } from "@/components/PageHeader";
 import { UsageHeading } from "@/components/UsageHeading";
 import { Configurator } from "@/configurator/Configurator";
@@ -25,6 +26,7 @@ const COMPONENT_DEFAULTS = { label: "", placeholder: "", type: "text", disabled:
 const IMPORT = 'import { Input } from "@hackert-ui/form";';
 
 export const Route = createFileRoute("/form/input")({
+  head: () => pageHead("/form/input"),
   ...searchOptionsFor(CONTROLS),
   component: InputPage,
 });
@@ -35,12 +37,7 @@ function InputPage() {
 
   return (
     <div>
-      <PageHeader
-        title="Input"
-        packageName="@hackert-ui/form"
-        description="A text input whose label is wired to it with useId, so clicking the label focuses the field."
-        importLine={IMPORT}
-      />
+      <PageHeader to="/form/input" importLine={IMPORT} />
 
       <UsageHeading />
       <Configurator

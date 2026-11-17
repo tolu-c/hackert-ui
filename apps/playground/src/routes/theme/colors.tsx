@@ -1,9 +1,13 @@
 import { type AppColorTheme, useAppTheme, useVariantColors } from "@hackert-ui/core";
 import { createFileRoute } from "@tanstack/react-router";
 import { useColorScheme } from "@/color-scheme";
+import { pageHead } from "@/catalog";
 import { PageHeader } from "@/components/PageHeader";
 
-export const Route = createFileRoute("/theme/colors")({ component: ColorsPage });
+export const Route = createFileRoute("/theme/colors")({
+  head: () => pageHead("/theme/colors"),
+  component: ColorsPage,
+});
 
 function ColorsPage() {
   const theme = useAppTheme();
@@ -12,9 +16,7 @@ function ColorsPage() {
   return (
     <div>
       <PageHeader
-        title="Colors"
-        packageName="@hackert-ui/core"
-        description="Each theme colour is a single value. useVariantColors derives the readable text colour and the hover and pressed states from it, choosing white or near-black by WCAG contrast. Dark mode has its own palette, and hover lightens instead of darkens; switch the theme in the header to compare."
+        to="/theme/colors"
         importLine={'import { useVariantColors } from "@hackert-ui/core";'}
       />
 

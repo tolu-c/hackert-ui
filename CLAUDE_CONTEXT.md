@@ -107,3 +107,10 @@ and compare `scrollWidth` to `clientWidth` to check mobile layout for real.
   mirrors `src/color-scheme.ts`. Switcher is System / Light / Dark.
 - Every package page header shows Installation tabs (pnpm, yarn, npm),
   Mantine style; the chosen manager is shared across pages.
+- Logo: three of four rounded tiles forming an "h" (stem + leg), the empty
+  corner standing for "take only the packages you need"; the leg is the
+  primary blue. `components/Logo.tsx` and `public/favicon.svg` (adapts to OS
+  dark mode).
+- Page `<title>` and meta description come from `catalog.ts` via `pageHead(to)`
+  and `<HeadContent />`; PageHeader reads the same entry, so the lead paragraph
+  and meta description cannot drift.

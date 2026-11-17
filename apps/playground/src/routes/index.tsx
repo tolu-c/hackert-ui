@@ -4,6 +4,7 @@ import { SECTION_LIST } from "@/catalog";
 import { CodeBlock } from "@/components/CodeBlock";
 import { GitHubLink } from "@/components/GitHubLink";
 import { InstallBlock } from "@/components/InstallBlock";
+import { LogoMark } from "@/components/Logo";
 import { ISSUES_URL } from "@/repo";
 
 export const Route = createFileRoute("/")({ component: Overview });
@@ -29,10 +30,13 @@ function Overview() {
   return (
     <div className="max-w-4xl">
       <header className="mb-14">
-        <h1 className="text-3xl font-bold tracking-tight">hackert-ui</h1>
+        <h1 className="flex items-center gap-3 text-3xl font-bold tracking-tight">
+          <LogoMark className="size-8" />
+          hackert-ui
+        </h1>
         <p className="mt-3 max-w-2xl text-fg-secondary">
-          A shared React component library, split into packages so a project can take only what it
-          needs.
+          React 19 components, split into packages so a project takes only what it needs. Themeable
+          from one provider, dark-mode ready, built for Tailwind v4.
         </p>
         <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
           <GitHubLink />

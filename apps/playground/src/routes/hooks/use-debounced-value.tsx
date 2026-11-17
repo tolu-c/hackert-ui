@@ -1,6 +1,7 @@
 import { useDebouncedValue } from "@hackert-ui/hooks";
 import { createFileRoute } from "@tanstack/react-router";
 import { useId, useState } from "react";
+import { pageHead } from "@/catalog";
 import { PageHeader } from "@/components/PageHeader";
 import { UsageHeading } from "@/components/UsageHeading";
 import { Configurator } from "@/configurator/Configurator";
@@ -20,6 +21,7 @@ const CONTROLS = defineControls([
 const IMPORT = 'import { useDebouncedValue } from "@hackert-ui/hooks";';
 
 export const Route = createFileRoute("/hooks/use-debounced-value")({
+  head: () => pageHead("/hooks/use-debounced-value"),
   ...searchOptionsFor(CONTROLS),
   component: UseDebouncedValuePage,
 });
@@ -31,12 +33,7 @@ function UseDebouncedValuePage() {
 
   return (
     <div>
-      <PageHeader
-        title="useDebouncedValue"
-        packageName="@hackert-ui/hooks"
-        description="Returns the value only after it has stopped changing for the given delay. Each change restarts the timer."
-        importLine={IMPORT}
-      />
+      <PageHeader to="/hooks/use-debounced-value" importLine={IMPORT} />
 
       <UsageHeading />
       <Configurator
