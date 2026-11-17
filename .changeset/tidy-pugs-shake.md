@@ -15,10 +15,13 @@ First publishable release.
   instead of replacing it, and only fires on an actual transition.
 - `Button` and `Card` accept their native element props; `Card` children
   widened from `string` to `ReactNode`.
-- `Button` no longer depends on Tailwind. It accepts `variant`, `size` and
+- `Button` no longer uses Tailwind utility classes. It accepts `variant`, `size` and
   `radius` props, styles itself through a hoisted stylesheet with hover,
   press, focus and disabled states, and exposes the theme as `--hui-*`
   custom properties. Consumer `className` and `style` override it.
+  Requires Tailwind v4: the stylesheet declares Tailwind v4's layer order
+  (`theme, base, components, utilities`) for the page, so apps using other
+  cascade layer names or Tailwind v3 are not supported.
 - `@hackert-ui/core` exports `useSafeAppTheme`, which falls back to
   `DEFAULT_THEME` outside `AppProvider` instead of throwing, and
   `useVariantColors`, which derives readable text, hover and active colours
