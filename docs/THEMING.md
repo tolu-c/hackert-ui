@@ -16,7 +16,17 @@ This note records the design discussion. What shipped:
   cascade, and `:hover`, `:active`, `:focus-visible` and `:disabled` all work.
   The flip side: any **unlayered** rule beats a layered one, so an app-level
   `button { … }` reset, or Tailwind v3's unlayered preflight, overrides these
-  styles. Tailwind v4 (layered preflight) is the verified setup.
+  styles.
+- **Tailwind v4 is required.** React hoists the `<style>` to the top of
+  `<head>`, above the app's stylesheet, and cascade layers rank by first
+  declaration. So the stylesheet opens with
+  `@layer theme, base, components, utilities;` (Tailwind v4's layer names);
+  without it Tailwind's `base` preflight would outrank `components` and reset
+  the button. That line fixes the layer order for the whole page. An app with
+  other layer names (Panda CSS, a custom `@layer reset, …` scheme) gets
+  Tailwind's four layers ranked first, ahead of its own, so its own layers can
+  end up overriding the wrong things. Tailwind v3 is unsupported too: its
+  preflight is unlayered and beats these styles.
 - **Foreground gap: closed by derivation, not tokens.** `core`'s
   `useVariantColors(variant)` parses the theme colour (hex, `rgb()` or
   `oklch()`; anything else throws) and derives text, hover and active colours

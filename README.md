@@ -131,6 +131,11 @@ export function App() {
 }
 ```
 
+The app must use **Tailwind v4**. Component styles declare Tailwind v4's
+cascade layer order (`theme, base, components, utilities`) for the whole page,
+so Tailwind v3 (unlayered preflight) or another layer scheme such as Panda CSS
+will override or reorder them.
+
 Components fall back to the default theme outside `AppProvider`. See
 [`docs/THEMING.md`](docs/THEMING.md) for how theming works and what's still
 open.
