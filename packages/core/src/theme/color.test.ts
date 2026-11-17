@@ -67,6 +67,25 @@ describe("deriveVariantColors", () => {
     expect(colors.hoverForeground).toBe(WHITE);
   });
 
+  it("lightens on hover and further on press in dark mode", () => {
+    const color = DEFAULT_THEME.dark.colors.primary;
+    const colors = deriveVariantColors("primary", color, "dark");
+
+    expect(channelSum(colors.hoverBackground)).toBeGreaterThan(channelSum(color));
+    expect(channelSum(colors.activeBackground)).toBeGreaterThan(channelSum(colors.hoverBackground));
+  });
+
+  it("darkens near-white backgrounds on hover in dark mode so the change is visible", () => {
+    const colors = deriveVariantColors("secondary", "#f5f5f5", "dark");
+    expect(channelSum(colors.hoverBackground)).toBeLessThan(channelSum("#f5f5f5"));
+  });
+
+  it("keeps light and dark derivations of the same colour apart", () => {
+    const light = deriveVariantColors("primary", "#2563eb", "light");
+    const dark = deriveVariantColors("primary", "#2563eb", "dark");
+    expect(light.hoverBackground).not.toBe(dark.hoverBackground);
+  });
+
   it("names the variant and value when the format is unsupported", () => {
     expect(() => deriveVariantColors("primary", "red")).toThrow(
       '@hackert-ui/core: cannot derive colours for variant "primary" from "red"',

@@ -91,8 +91,11 @@ function Probe() {
 const markup = renderToStaticMarkup(h(AppProvider, null, h(Probe)));
 assert.match(markup, /^<style data-precedence="default" data-href="hui-button">@layer theme, base, components, utilities;/, markup);
 assert.match(markup, /<button type="button" class="hui-button" style="/, markup);
-assert.ok(markup.includes(\`--hui-bg:\${DEFAULT_THEME.colors.primary}\`), markup);
-assert.ok(markup.includes("--hui-fg:#ffffff"), markup);
+assert.ok(
+  markup.includes(\`--hui-bg:light-dark(\${DEFAULT_THEME.colors.primary}, \${DEFAULT_THEME.dark.colors.primary})\`),
+  markup,
+);
+assert.ok(markup.includes("--hui-fg:light-dark(#ffffff, #0a0a0a)"), markup);
 
 assert.equal(cn("px-2", "px-4"), "px-4");
 assert.equal(renderToStaticMarkup(h(DateInput)), "<div>DateInput</div>");

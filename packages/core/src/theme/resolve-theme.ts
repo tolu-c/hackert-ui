@@ -10,6 +10,13 @@ export function resolveTheme(
 
   return Object.freeze({
     colors: Object.freeze({ ...baseTheme.colors, ...override.colors }),
+    dark: Object.freeze({
+      colors: Object.freeze({
+        ...baseTheme.dark.colors,
+        ...override.colors,
+        ...override.dark?.colors,
+      }),
+    }),
     radius: Object.freeze({ ...baseTheme.radius, ...override.radius }),
     spacing: Object.freeze({ ...baseTheme.spacing, ...override.spacing }),
     fontFamily: override.fontFamily ?? baseTheme.fontFamily,

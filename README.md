@@ -136,6 +136,10 @@ cascade layer order (`theme, base, components, utilities`) for the whole page,
 so Tailwind v3 (unlayered preflight) or another layer scheme such as Panda CSS
 will override or reorder them.
 
+For dark mode, set the page's CSS `color-scheme` (`:root { color-scheme: light
+dark; }` to follow the OS, or `.dark { color-scheme: dark; }` with a class
+toggle). Components carry both palettes and pick one in CSS.
+
 Components fall back to the default theme outside `AppProvider`. See
 [`docs/THEMING.md`](docs/THEMING.md) for how theming works and what's still
 open.

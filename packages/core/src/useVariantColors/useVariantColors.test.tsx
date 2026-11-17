@@ -25,4 +25,10 @@ describe("useVariantColors", () => {
     expect(result.current.background).toBe("#fde047");
     expect(result.current.foreground).toBe("#0a0a0a");
   });
+
+  it("derives from the dark palette for the dark scheme", () => {
+    const { result } = renderHook(() => useVariantColors("primary", "dark"));
+
+    expect(result.current.background).toBe(DEFAULT_THEME.dark.colors.primary);
+  });
 });
