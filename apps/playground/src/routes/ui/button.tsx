@@ -5,7 +5,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { UsageHeading } from "@/components/UsageHeading";
 import { Configurator } from "@/configurator/Configurator";
 import { defineControls } from "@/configurator/controls";
-import { searchOptionsFor } from "@/configurator/search";
+import { pickControls, searchOptionsFor } from "@/configurator/search";
 import { toJsx, toSnippet } from "@/configurator/to-jsx";
 
 const SCALE = ["xs", "sm", "md", "lg", "xl", "2xl"] as const;
@@ -33,7 +33,7 @@ export const Route = createFileRoute("/ui/button")({
 });
 
 function ButtonPage() {
-  const values = Route.useSearch();
+  const values = Route.useSearch({ select: (search) => pickControls(CONTROLS, search) });
   const navigate = Route.useNavigate();
   const { label, ...props } = values;
 
