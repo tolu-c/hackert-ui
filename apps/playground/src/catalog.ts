@@ -1,3 +1,4 @@
+import type { PackageName } from "./install";
 import type { FileRoutesByTo } from "./routeTree.gen";
 
 type RoutePath = keyof FileRoutesByTo;
@@ -5,12 +6,14 @@ type RoutePath = keyof FileRoutesByTo;
 export interface CatalogItem {
   readonly to: RoutePath;
   readonly label: string;
+  // The page's lead paragraph and its meta description.
+  readonly description: string;
 }
 
 export interface CatalogSection {
   readonly to: RoutePath;
   readonly label: string;
-  readonly packageName: string;
+  readonly packageName: PackageName;
   readonly blurb: string;
   readonly items: readonly CatalogItem[];
 }
@@ -22,9 +25,23 @@ export const SECTIONS = {
     packageName: "@hackert-ui/core",
     blurb: "AppProvider, the design tokens, and the colours derived from them.",
     items: [
-      { to: "/theme/colors", label: "Colors" },
-      { to: "/theme/spacing", label: "Spacing" },
-      { to: "/theme/radius", label: "Radius" },
+      {
+        to: "/theme/colors",
+        label: "Colors",
+        description:
+          "Each theme colour is one value. useVariantColors derives readable text and hover and pressed colours from it, in light and dark mode.",
+      },
+      {
+        to: "/theme/spacing",
+        label: "Spacing",
+        description:
+          "The spacing scale. Button padding is drawn from it: horizontal at the size, vertical one step smaller.",
+      },
+      {
+        to: "/theme/radius",
+        label: "Radius",
+        description: "The corner radius scale, used by Button's radius prop.",
+      },
     ],
   },
   ui: {
@@ -33,8 +50,18 @@ export const SECTIONS = {
     packageName: "@hackert-ui/ui",
     blurb: "Themed component primitives.",
     items: [
-      { to: "/ui/button", label: "Button" },
-      { to: "/ui/card", label: "Card" },
+      {
+        to: "/ui/button",
+        label: "Button",
+        description:
+          "A themed button. Text, hover and pressed colours are derived from the variant's theme colour, and its styles sit in @layer components so your className always wins.",
+      },
+      {
+        to: "/ui/card",
+        label: "Card",
+        description:
+          "A container that accepts any ReactNode and its native div props. It ships unstyled, so its appearance comes from your className.",
+      },
     ],
   },
   form: {
@@ -42,7 +69,14 @@ export const SECTIONS = {
     label: "Form",
     packageName: "@hackert-ui/form",
     blurb: "Form controls with labels wired to inputs.",
-    items: [{ to: "/form/input", label: "Input" }],
+    items: [
+      {
+        to: "/form/input",
+        label: "Input",
+        description:
+          "A text input whose label is wired to it with useId, so clicking the label focuses the field.",
+      },
+    ],
   },
   hooks: {
     to: "/hooks",
@@ -50,8 +84,18 @@ export const SECTIONS = {
     packageName: "@hackert-ui/hooks",
     blurb: "Stateful helpers with stable handlers.",
     items: [
-      { to: "/hooks/use-disclosure", label: "useDisclosure" },
-      { to: "/hooks/use-debounced-value", label: "useDebouncedValue" },
+      {
+        to: "/hooks/use-disclosure",
+        label: "useDisclosure",
+        description:
+          "Boolean open state with open, close and toggle handlers. Handlers are referentially stable, and onOpen/onClose fire only on an actual transition.",
+      },
+      {
+        to: "/hooks/use-debounced-value",
+        label: "useDebouncedValue",
+        description:
+          "Returns the value only after it has stopped changing for the given delay. Each change restarts the timer.",
+      },
     ],
   },
 } as const satisfies Readonly<Record<string, CatalogSection>>;
@@ -62,3 +106,37 @@ export const SECTION_LIST: readonly CatalogSection[] = [
   SECTIONS.form,
   SECTIONS.hooks,
 ];
+
+export const SITE_TITLE = "hackert-ui";
+export const SITE_DESCRIPTION =
+  "A React 19 component library split into packages: theme, UI primitives, form controls and hooks. Themeable, dark-mode ready, built for Tailwind v4.";
+
+export interface CatalogPage {
+  readonly item: CatalogItem;
+  readonly section: CatalogSection;
+}
+
+const PAGES = new Map<RoutePath, CatalogPage>(
+  SECTION_LIST.flatMap((section) => section.items.map((item) => [item.to, { item, section }])),
+);
+
+export function catalogPage(to: RoutePath): CatalogPage {
+  const page = PAGES.get(to);
+  if (!page) {
+    throw new Error(`playground: ${to} has no entry in catalog.ts`);
+  }
+  return page;
+}
+
+// Route `head` for a catalog page: "<label> · hackert-ui" plus its description.
+export function pageHead(to: RoutePath) {
+  const { item } = catalogPage(to);
+  return {
+    meta: [
+      { title: `${item.label} · ${SITE_TITLE}` },
+      { name: "description", content: item.description },
+      { property: "og:title", content: `${item.label} · ${SITE_TITLE}` },
+      { property: "og:description", content: item.description },
+    ],
+  };
+}

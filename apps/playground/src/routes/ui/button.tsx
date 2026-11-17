@@ -1,6 +1,7 @@
 import { Button } from "@hackert-ui/ui";
 import { createFileRoute } from "@tanstack/react-router";
 import { Demo } from "@/components/Demo";
+import { pageHead } from "@/catalog";
 import { PageHeader } from "@/components/PageHeader";
 import { UsageHeading } from "@/components/UsageHeading";
 import { Configurator } from "@/configurator/Configurator";
@@ -28,6 +29,7 @@ const COMPONENT_DEFAULTS = { variant: "primary", size: "md", radius: "md", disab
 const IMPORT = 'import { Button } from "@hackert-ui/ui";';
 
 export const Route = createFileRoute("/ui/button")({
+  head: () => pageHead("/ui/button"),
   ...searchOptionsFor(CONTROLS),
   component: ButtonPage,
 });
@@ -39,12 +41,7 @@ function ButtonPage() {
 
   return (
     <div>
-      <PageHeader
-        title="Button"
-        packageName="@hackert-ui/ui"
-        description="A themed button. Text, hover and pressed colours are derived from the variant's theme colour, and its styles sit in @layer components so your className always wins."
-        importLine={IMPORT}
-      />
+      <PageHeader to="/ui/button" importLine={IMPORT} />
 
       <UsageHeading />
       <Configurator

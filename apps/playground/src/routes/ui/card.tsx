@@ -1,6 +1,7 @@
 import { Button, Card } from "@hackert-ui/ui";
 import { createFileRoute } from "@tanstack/react-router";
 import { Demo } from "@/components/Demo";
+import { pageHead } from "@/catalog";
 import { PageHeader } from "@/components/PageHeader";
 import { UsageHeading } from "@/components/UsageHeading";
 import { Configurator } from "@/configurator/Configurator";
@@ -13,7 +14,7 @@ const CONTROLS = defineControls([
     kind: "text",
     prop: "className",
     label: "className",
-    defaultValue: "rounded-lg border border-slate-200 p-6 shadow-sm",
+    defaultValue: "rounded-lg border border-line p-6 shadow-sm",
   },
   { kind: "text", prop: "content", label: "Content", defaultValue: "Card content" },
 ]);
@@ -22,6 +23,7 @@ const COMPONENT_DEFAULTS = { className: "" };
 const IMPORT = 'import { Card } from "@hackert-ui/ui";';
 
 export const Route = createFileRoute("/ui/card")({
+  head: () => pageHead("/ui/card"),
   ...searchOptionsFor(CONTROLS),
   component: CardPage,
 });
@@ -33,12 +35,7 @@ function CardPage() {
 
   return (
     <div>
-      <PageHeader
-        title="Card"
-        packageName="@hackert-ui/ui"
-        description="A container that accepts any ReactNode and its native div props. It ships unstyled, so its appearance comes from your className."
-        importLine={IMPORT}
-      />
+      <PageHeader to="/ui/card" importLine={IMPORT} />
 
       <UsageHeading />
       <Configurator
@@ -56,11 +53,11 @@ function CardPage() {
         title="With nested components"
         description="Children can be any ReactNode, including other components."
         source={
-          '<Card className="space-y-3 rounded-lg border border-slate-200 p-6">\n  <p>Unsaved changes</p>\n  <Button variant="success">Save</Button>\n</Card>'
+          '<Card className="space-y-3 rounded-lg border border-line p-6">\n  <p>Unsaved changes</p>\n  <Button variant="success">Save</Button>\n</Card>'
         }
       >
-        <Card className="space-y-3 rounded-lg border border-slate-200 p-6">
-          <p className="text-sm text-slate-700">Unsaved changes</p>
+        <Card className="space-y-3 rounded-lg border border-line p-6">
+          <p className="text-sm text-fg-soft">Unsaved changes</p>
           <Button variant="success">Save</Button>
         </Card>
       </Demo>

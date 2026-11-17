@@ -1,4 +1,4 @@
-import type { AppColorTheme } from "./types";
+import type { AppColorTheme, ColorScheme } from "./types";
 
 export interface Rgba {
   readonly r: number;
@@ -20,6 +20,7 @@ const DARK_TEXT = "#0a0a0a";
 const BLACK = { r: 0, g: 0, b: 0, alpha: 1 } as const;
 const WHITE = { r: 1, g: 1, b: 1, alpha: 1 } as const;
 const NEAR_BLACK_LUMINANCE = 0.05;
+const NEAR_WHITE_LUMINANCE = 0.85;
 
 // Parsers are tried in order; adding a format means adding one entry.
 const PARSERS: readonly {
@@ -46,8 +47,13 @@ export function parseColor(input: string): Rgba | undefined {
 
 const cache = new Map<string, VariantColors>();
 
-export function deriveVariantColors(variant: keyof AppColorTheme, color: string): VariantColors {
-  const cached = cache.get(color);
+export function deriveVariantColors(
+  variant: keyof AppColorTheme,
+  color: string,
+  scheme: ColorScheme = "light",
+): VariantColors {
+  const key = `${scheme}:${color}`;
+  const cached = cache.get(key);
   if (cached) {
     return cached;
   }
@@ -64,10 +70,15 @@ export function deriveVariantColors(variant: keyof AppColorTheme, color: string)
     );
   }
 
-  const nearBlack = luminance(rgb) < NEAR_BLACK_LUMINANCE;
-  const target = nearBlack ? WHITE : BLACK;
-  const hover = mix(rgb, target, nearBlack ? 0.12 : 0.1);
-  const active = mix(rgb, target, nearBlack ? 0.24 : 0.2);
+  // Hover and press move away from the page: darker on light pages, lighter on
+  // dark ones, flipping when the colour is already at that end.
+  const lighten =
+    scheme === "dark"
+      ? luminance(rgb) <= NEAR_WHITE_LUMINANCE
+      : luminance(rgb) < NEAR_BLACK_LUMINANCE;
+  const target = lighten ? WHITE : BLACK;
+  const hover = mix(rgb, target, lighten ? 0.12 : 0.1);
+  const active = mix(rgb, target, lighten ? 0.24 : 0.2);
 
   const colors: VariantColors = Object.freeze({
     background: color,
@@ -77,7 +88,7 @@ export function deriveVariantColors(variant: keyof AppColorTheme, color: string)
     activeBackground: toHex(active),
   });
 
-  cache.set(color, colors);
+  cache.set(key, colors);
   return colors;
 }
 

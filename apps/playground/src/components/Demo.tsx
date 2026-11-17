@@ -12,12 +12,12 @@ export function Demo({ title, description, source, children }: DemoProps) {
   return (
     <section className="mt-12">
       <h2 className="text-xl font-semibold tracking-tight">{title}</h2>
-      <p className="mt-1 text-sm text-slate-500">{description}</p>
-      <div className="mt-4 overflow-hidden rounded-xl border border-slate-200">
+      <p className="mt-1 text-sm text-fg-muted">{description}</p>
+      <div className="mt-4 overflow-hidden rounded-xl border border-line">
         <div className="flex min-h-32 flex-wrap items-center justify-center gap-3 p-8">
           {children}
         </div>
-        <div className="border-t border-slate-200">
+        <div className="border-t border-line">
           <CodeBlock code={source} />
         </div>
       </div>

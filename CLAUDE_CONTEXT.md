@@ -39,7 +39,7 @@ real duplicate from an HMR re-run.
   (`cursor-pointer` moved into the stylesheet; `cursorPointer` prop removed).
 - Library CSS is delivered via a React 19 hoisted `<style>`, not a shipped
   `.css` file or Tailwind classes.
-- Internal peer range: widened to `>=0.1.0 <1.0.0` rather than releasing 1.0.0.
+- Internal peer range: `>=0.0.0 <1.0.0` rather than releasing 1.0.0.
 
 ## Lessons learned (playground)
 
@@ -92,3 +92,35 @@ and compare `scrollWidth` to `clientWidth` to check mobile layout for real.
 - Zod for configurator search validation was considered and not adopted: the
   router merges parent raw search over the validated output, so a schema does
   not stop undeclared params leaking; `pickControls` via `useSearch({ select })` does.
+- Publishing runs only on a published GitHub Release (`publish.yml`), not on
+  push to `main`. `version.yml` still opens the Changesets "Version Packages"
+  PR on `main`; the release tag must be `v<lockstep version>`. The repo is made
+  public so npm provenance works.
+- Imports stay per package (`@hackert-ui/ui`, `@hackert-ui/form`, …), Mantine
+  style. An umbrella `hackert-ui` re-export package was offered and declined.
+- Dark mode covers the library and the playground (user's choice). The library
+  follows CSS `color-scheme` via `light-dark()` in Button's inline variables,
+  chosen over an `AppProvider colorScheme` prop to avoid SSR flashes. Dark
+  palette is 400/500 shades, so some variants take dark text by WCAG contrast.
+- Playground colours are semantic tokens (`fg`, `line`, `surface`, …) in
+  `styles.css` with a `.dark` override; a pre-paint script in `index.html`
+  mirrors `src/color-scheme.ts`. Switcher is System / Light / Dark.
+- Every package page header shows Installation tabs (pnpm, yarn, npm),
+  Mantine style; the chosen manager is shared across pages.
+- Logo: three of four rounded tiles forming an "h" (stem + leg), the empty
+  corner standing for "take only the packages you need"; the leg is the
+  primary blue. `components/Logo.tsx` and `public/favicon.svg` (adapts to OS
+  dark mode).
+- Page `<title>` and meta description come from `catalog.ts` via `pageHead(to)`
+  and `<HeadContent />`; PageHeader reads the same entry, so the lead paragraph
+  and meta description cannot drift.
+
+### Merging a Version PR published 0.2.0 by accident
+
+`main` still had the old `release.yml` (publish on Version PR merge) while the
+release-triggered `publish.yml` sat in an unmerged PR, so merging the bot's
+Version PR published 0.2.0 straight to npm. The user wanted to start at 0.0.1:
+0.2.0 is deprecated, versions reset to 0.0.0 with patch changesets so the next
+Version PR yields 0.0.1. Lesson: land a workflow change before merging anything
+that triggers the old one. 0.2.0 is permanently taken on npm, so 0.1.x must jump
+past it (0.2.1+) or go to 1.0.0.

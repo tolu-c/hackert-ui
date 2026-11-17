@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 
 type CopyStatus = "idle" | "copied" | "failed";
 
@@ -10,9 +10,11 @@ const STATUS_LABEL: Readonly<Record<CopyStatus, string>> = {
 
 interface CodeBlockProps {
   readonly code: string;
+  // Rendered in place of `code`, e.g. highlighted; the copy button still copies `code`.
+  readonly children?: ReactNode;
 }
 
-export function CodeBlock({ code }: CodeBlockProps) {
+export function CodeBlock({ code, children }: CodeBlockProps) {
   const [status, setStatus] = useState<CopyStatus>("idle");
 
   useEffect(() => {
@@ -34,16 +36,16 @@ export function CodeBlock({ code }: CodeBlockProps) {
   }
 
   return (
-    <div className="relative bg-slate-50">
-      <pre className="overflow-x-auto p-4 pr-14 text-xs leading-relaxed text-slate-700">
-        <code>{code}</code>
+    <div className="relative bg-subtle">
+      <pre className="overflow-x-auto p-4 pr-14 text-xs leading-relaxed text-fg-soft">
+        <code>{children ?? code}</code>
       </pre>
       <button
         type="button"
         onClick={copy}
         aria-label={STATUS_LABEL[status]}
         title={STATUS_LABEL[status]}
-        className="absolute top-2.5 right-2.5 grid size-8 cursor-pointer place-items-center rounded-md border border-slate-200 bg-white text-slate-500 transition-[color,transform] duration-150 ease-out hover:text-slate-900 active:scale-97 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 motion-reduce:transition-colors"
+        className="absolute top-2.5 right-2.5 grid size-8 cursor-pointer place-items-center rounded-md border border-line bg-surface text-fg-muted transition-[color,transform] duration-150 ease-out hover:text-fg active:scale-97 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg motion-reduce:transition-colors"
       >
         <span className="grid [&>*]:col-start-1 [&>*]:row-start-1">
           <CopyIcon visible={status === "idle"} />
@@ -96,7 +98,7 @@ function CheckIcon({ visible }: IconProps) {
   return (
     <svg
       viewBox="0 0 16 16"
-      className={`${iconClass(visible)} text-emerald-600`}
+      className={`${iconClass(visible)} text-emerald-600 dark:text-emerald-400`}
       aria-hidden="true"
     >
       <path
@@ -113,7 +115,11 @@ function CheckIcon({ visible }: IconProps) {
 
 function CrossIcon({ visible }: IconProps) {
   return (
-    <svg viewBox="0 0 16 16" className={`${iconClass(visible)} text-red-600`} aria-hidden="true">
+    <svg
+      viewBox="0 0 16 16"
+      className={`${iconClass(visible)} text-red-600 dark:text-red-400`}
+      aria-hidden="true"
+    >
       <path
         d="M4.5 4.5l7 7m0-7l-7 7"
         fill="none"

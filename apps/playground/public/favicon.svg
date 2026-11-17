@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <style>
+    .stem { fill: #0f172a; }
+    .leg { fill: #2563eb; }
+    @media (prefers-color-scheme: dark) {
+      .stem { fill: #f1f5f9; }
+      .leg { fill: #3b82f6; }
+    }
+  </style>
+  <rect class="stem" x="2" y="2" width="9" height="9" rx="2.5" />
+  <rect class="stem" x="2" y="13" width="9" height="9" rx="2.5" />
+  <rect class="leg" x="13" y="13" width="9" height="9" rx="2.5" />
+</svg>

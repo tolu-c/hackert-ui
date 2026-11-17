@@ -1,5 +1,6 @@
 import { type AppColorTheme, useVariantColors } from "@hackert-ui/core";
 import { useId } from "react";
+import { useColorScheme } from "@/color-scheme";
 import type { SwatchesControl } from "../controls";
 import type { FieldProps } from "./types";
 
@@ -8,7 +9,7 @@ export function SwatchesField({ control, value, onChange }: FieldProps<SwatchesC
 
   return (
     <fieldset>
-      <legend className="mb-2 text-sm font-medium text-slate-900">{control.label}</legend>
+      <legend className="mb-2 text-sm font-medium text-fg">{control.label}</legend>
       <div className="flex flex-wrap gap-2">
         {control.options.map((option) => (
           <Swatch
@@ -32,12 +33,12 @@ interface SwatchProps {
 }
 
 function Swatch({ name, option, checked, onSelect }: SwatchProps) {
-  const colors = useVariantColors(option);
+  const colors = useVariantColors(option, useColorScheme());
 
   return (
     <label
       title={option}
-      className="grid size-8 cursor-pointer place-items-center rounded-md transition-transform duration-150 ease-out active:scale-95 has-focus-visible:ring-2 has-focus-visible:ring-slate-900 has-focus-visible:ring-offset-2 motion-reduce:transition-none"
+      className="grid size-8 cursor-pointer place-items-center rounded-md transition-transform duration-150 ease-out active:scale-95 has-focus-visible:ring-2 has-focus-visible:ring-fg has-focus-visible:ring-offset-2 has-focus-visible:ring-offset-surface motion-reduce:transition-none"
       style={{ backgroundColor: colors.background, color: colors.foreground }}
     >
       <input

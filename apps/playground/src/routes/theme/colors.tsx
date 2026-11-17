@@ -1,8 +1,13 @@
 import { type AppColorTheme, useAppTheme, useVariantColors } from "@hackert-ui/core";
 import { createFileRoute } from "@tanstack/react-router";
+import { useColorScheme } from "@/color-scheme";
+import { pageHead } from "@/catalog";
 import { PageHeader } from "@/components/PageHeader";
 
-export const Route = createFileRoute("/theme/colors")({ component: ColorsPage });
+export const Route = createFileRoute("/theme/colors")({
+  head: () => pageHead("/theme/colors"),
+  component: ColorsPage,
+});
 
 function ColorsPage() {
   const theme = useAppTheme();
@@ -11,9 +16,7 @@ function ColorsPage() {
   return (
     <div>
       <PageHeader
-        title="Colors"
-        packageName="@hackert-ui/core"
-        description="Each theme colour is a single value. useVariantColors derives the readable text colour and the hover and pressed states from it, choosing white or near-black by WCAG contrast."
+        to="/theme/colors"
         importLine={'import { useVariantColors } from "@hackert-ui/core";'}
       />
 
@@ -27,7 +30,7 @@ function ColorsPage() {
 }
 
 function ColorCard({ variant }: { readonly variant: keyof AppColorTheme }) {
-  const colors = useVariantColors(variant);
+  const colors = useVariantColors(variant, useColorScheme());
   const chips = [
     ["text", colors.foreground],
     ["hover", colors.hoverBackground],
@@ -36,7 +39,7 @@ function ColorCard({ variant }: { readonly variant: keyof AppColorTheme }) {
   ] as const;
 
   return (
-    <div className="overflow-hidden rounded-xl border border-slate-200">
+    <div className="overflow-hidden rounded-xl border border-line">
       <div
         className="flex h-24 items-end justify-between p-4"
         style={{ backgroundColor: colors.background, color: colors.foreground }}
@@ -48,11 +51,11 @@ function ColorCard({ variant }: { readonly variant: keyof AppColorTheme }) {
         {chips.map(([name, value]) => (
           <div key={name} className="flex items-center gap-2">
             <span
-              className="size-4 shrink-0 rounded border border-slate-200"
+              className="size-4 shrink-0 rounded border border-line"
               style={{ backgroundColor: value }}
             />
-            <dt className="text-slate-500">{name}</dt>
-            <dd className="ml-auto font-mono text-slate-700">{value}</dd>
+            <dt className="text-fg-muted">{name}</dt>
+            <dd className="ml-auto font-mono text-fg-soft">{value}</dd>
           </div>
         ))}
       </dl>

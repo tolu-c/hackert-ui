@@ -27,6 +27,12 @@ This note records the design discussion. What shipped:
   Tailwind's four layers ranked first, ahead of its own, so its own layers can
   end up overriding the wrong things. Tailwind v3 is unsupported too: its
   preflight is unlayered and beats these styles.
+- **Dark mode follows CSS `color-scheme`.** The theme has a `dark.colors`
+  palette. `Button` sets each `--hui-*` colour to `light-dark(<light>, <dark>)`,
+  so the browser picks one from the page's `color-scheme`: no React state, no
+  pre-paint script in the library, correct server-rendered markup. In dark mode
+  hover and press lighten. A `.dark` class toggle needs
+  `.dark { color-scheme: dark }`. Requires `light-dark()` (Baseline 2024).
 - **Foreground gap: closed by derivation, not tokens.** `core`'s
   `useVariantColors(variant)` parses the theme colour (hex, `rgb()` or
   `oklch()`; anything else throws) and derives text, hover and active colours
@@ -37,7 +43,7 @@ This note records the design discussion. What shipped:
   `console.error`. The build never bundles `@hackert-ui/*`, and the smoke test
   asserts `ui`'s dist imports core.
 - **`0.x` peer ranges: decided.** Packages version in lockstep (Changesets
-  `fixed`), and internal peers are `>=0.1.0 <1.0.0` with
+  `fixed`), and internal peers are `>=0.0.0 <1.0.0` with
   `onlyUpdatePeerDependentsWhenOutOfRange`, so a minor stays a minor.
 
 The sections below are the original analysis and describe the code before

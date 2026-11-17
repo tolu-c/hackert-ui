@@ -1,6 +1,6 @@
 {
   "name": "@hackert-ui/dates",
-  "version": "0.2.0",
+  "version": "0.0.0",
   "description": "Date components for Hackert UI",
   "keywords": [
     "dates",
@@ -53,8 +53,8 @@
     "react": "19.2.8"
   },
   "peerDependencies": {
-    "@hackert-ui/core": ">=0.1.0 <1.0.0",
-    "@hackert-ui/utils": ">=0.1.0 <1.0.0",
+    "@hackert-ui/core": ">=0.0.0 <1.0.0",
+    "@hackert-ui/utils": ">=0.0.0 <1.0.0",
     "react": "^19.0.0"
   }
 }

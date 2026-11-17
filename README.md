@@ -136,6 +136,10 @@ cascade layer order (`theme, base, components, utilities`) for the whole page,
 so Tailwind v3 (unlayered preflight) or another layer scheme such as Panda CSS
 will override or reorder them.
 
+For dark mode, set the page's CSS `color-scheme` (`:root { color-scheme: light
+dark; }` to follow the OS, or `.dark { color-scheme: dark; }` with a class
+toggle). Components carry both palettes and pick one in CSS.
+
 Components fall back to the default theme outside `AppProvider`. See
 [`docs/THEMING.md`](docs/THEMING.md) for how theming works and what's still
 open.
@@ -163,14 +167,14 @@ open.
    `packages/<name>/`.
 2. **Update `package.json`.** Change `name` (`@hackert-ui/<name>`),
    `description`, `keywords`, `homepage` and `repository.directory`. Reset
-   `version` to `0.1.0`. Keep `exports`, `publishConfig` (including
+   `version` to `0.0.0`. Keep `exports`, `publishConfig` (including
    `"access": "public"`), `files` and `scripts` as they are.
 3. **Declare dependencies by how they should ship.** The build bundles
    anything that is not a runtime dependency.
    - `react` and other `@hackert-ui/*` packages go in **`peerDependencies`**,
      plus the same package in **`devDependencies`** as `workspace:*` so it
-     resolves inside the repo. Internal peers use `">=0.1.0 <1.0.0"`, not
-     `"^0.1.0"`: a caret on `0.x` makes Changesets bump the dependent to a
+     resolves inside the repo. Internal peers use `">=0.0.0 <1.0.0"`, not
+     `"^0.0.0"`: a caret on `0.x` makes Changesets bump the dependent to a
      major on every minor of the peer.
    - Third-party runtime libraries go in **`dependencies`**.
 4. **Install and verify.** Run `pnpm install` to link the package and update
@@ -203,19 +207,26 @@ map or a missing peer dependency fails here, not in a consuming project.
 
 ## Releasing
 
-[Changesets](https://github.com/changesets/changesets) handles versioning.
+[Changesets](https://github.com/changesets/changesets) handles versioning;
+publishing happens only when you publish a GitHub Release.
 
-```sh
-pnpm changeset          # describe the change and pick the bump
-git push                # CI opens a "Version Packages" PR
-```
+1. With each change, run `pnpm changeset`, pick the bump (patch, minor or
+   major) and describe it. Commit the file it creates.
+2. When that lands on `main`, the **Version** workflow opens a
+   "chore: version packages" PR that bumps every package to the same new
+   version and writes the changelogs. Merge it when you want to release.
+3. Publish a GitHub Release whose tag is `v<new version>`, for example:
 
-Merging that PR publishes to npm with provenance.
+   ```sh
+   gh release create v0.2.0 --target main --generate-notes
+   ```
 
-**Publishing isn't live yet.** Two external steps come first:
+4. The **Publish** workflow checks that the tag matches the package version,
+   runs `pnpm verify`, and publishes every package to npm with provenance.
 
-1. Claim the `@hackert-ui` scope on npm.
-2. Add an automation token as the `NPM_TOKEN` repository secret.
+Publishing needs the `NPM_TOKEN` repository secret and a public repository
+(npm only accepts provenance from public repos). Consumers install with any
+npm-compatible client: `pnpm add`, `npm install`, `yarn add` or `bun add`.
 
 ## Deploying the playground
 

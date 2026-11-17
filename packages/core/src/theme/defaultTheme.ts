@@ -9,6 +9,16 @@ export const DEFAULT_THEME: Readonly<AppTheme> = Object.freeze({
     warning: "#f59e0b",
   }),
 
+  dark: Object.freeze({
+    colors: Object.freeze({
+      primary: "#3b82f6",
+      secondary: "#94a3b8",
+      success: "#22c55e",
+      danger: "#ef4444",
+      warning: "#fbbf24",
+    }),
+  }),
+
   radius: Object.freeze({
     xs: "2px",
     sm: "4px",

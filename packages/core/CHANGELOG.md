@@ -2,6 +2,8 @@
 
 ## 0.2.0
 
+Deprecated: published by mistake. Use 0.0.1 or later.
+
 ### Minor Changes
 
 - 58f1356: First publishable release.
