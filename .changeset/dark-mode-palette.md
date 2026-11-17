@@ -1,6 +1,6 @@
 ---
-"@hackert-ui/core": minor
-"@hackert-ui/ui": minor
+"@hackert-ui/core": patch
+"@hackert-ui/ui": patch
 ---
 
 Dark mode.
@@ -14,3 +14,5 @@ Dark mode.
   so it follows the page's `color-scheme` with no React state and no flash on
   first paint. Set `color-scheme: light dark` on `:root` to follow the OS, or
   `.dark { color-scheme: dark }` for a class toggle.
+  `Button` needs `light-dark()` support (Chrome 123, Safari 17.5, Firefox 120);
+  on older browsers its colours do not apply, even without dark mode.

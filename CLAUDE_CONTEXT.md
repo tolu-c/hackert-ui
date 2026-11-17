@@ -39,7 +39,7 @@ real duplicate from an HMR re-run.
   (`cursor-pointer` moved into the stylesheet; `cursorPointer` prop removed).
 - Library CSS is delivered via a React 19 hoisted `<style>`, not a shipped
   `.css` file or Tailwind classes.
-- Internal peer range: widened to `>=0.1.0 <1.0.0` rather than releasing 1.0.0.
+- Internal peer range: `>=0.0.0 <1.0.0` rather than releasing 1.0.0.
 
 ## Lessons learned (playground)
 
@@ -114,3 +114,13 @@ and compare `scrollWidth` to `clientWidth` to check mobile layout for real.
 - Page `<title>` and meta description come from `catalog.ts` via `pageHead(to)`
   and `<HeadContent />`; PageHeader reads the same entry, so the lead paragraph
   and meta description cannot drift.
+
+### Merging a Version PR published 0.2.0 by accident
+
+`main` still had the old `release.yml` (publish on Version PR merge) while the
+release-triggered `publish.yml` sat in an unmerged PR, so merging the bot's
+Version PR published 0.2.0 straight to npm. The user wanted to start at 0.0.1:
+0.2.0 is deprecated, versions reset to 0.0.0 with patch changesets so the next
+Version PR yields 0.0.1. Lesson: land a workflow change before merging anything
+that triggers the old one. 0.2.0 is permanently taken on npm, so 0.1.x must jump
+past it (0.2.1+) or go to 1.0.0.

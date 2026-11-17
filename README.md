@@ -167,14 +167,14 @@ open.
    `packages/<name>/`.
 2. **Update `package.json`.** Change `name` (`@hackert-ui/<name>`),
    `description`, `keywords`, `homepage` and `repository.directory`. Reset
-   `version` to `0.1.0`. Keep `exports`, `publishConfig` (including
+   `version` to `0.0.0`. Keep `exports`, `publishConfig` (including
    `"access": "public"`), `files` and `scripts` as they are.
 3. **Declare dependencies by how they should ship.** The build bundles
    anything that is not a runtime dependency.
    - `react` and other `@hackert-ui/*` packages go in **`peerDependencies`**,
      plus the same package in **`devDependencies`** as `workspace:*` so it
-     resolves inside the repo. Internal peers use `">=0.1.0 <1.0.0"`, not
-     `"^0.1.0"`: a caret on `0.x` makes Changesets bump the dependent to a
+     resolves inside the repo. Internal peers use `">=0.0.0 <1.0.0"`, not
+     `"^0.0.0"`: a caret on `0.x` makes Changesets bump the dependent to a
      major on every minor of the peer.
    - Third-party runtime libraries go in **`dependencies`**.
 4. **Install and verify.** Run `pnpm install` to link the package and update

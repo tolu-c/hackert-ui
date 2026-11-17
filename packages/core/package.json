@@ -1,6 +1,6 @@
 {
   "name": "@hackert-ui/core",
-  "version": "0.2.0",
+  "version": "0.0.0",
   "description": "Theme provider and design tokens for Hackert UI",
   "keywords": [
     "design-tokens",

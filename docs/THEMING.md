@@ -43,7 +43,7 @@ This note records the design discussion. What shipped:
   `console.error`. The build never bundles `@hackert-ui/*`, and the smoke test
   asserts `ui`'s dist imports core.
 - **`0.x` peer ranges: decided.** Packages version in lockstep (Changesets
-  `fixed`), and internal peers are `>=0.1.0 <1.0.0` with
+  `fixed`), and internal peers are `>=0.0.0 <1.0.0` with
   `onlyUpdatePeerDependentsWhenOutOfRange`, so a minor stays a minor.
 
 The sections below are the original analysis and describe the code before
