@@ -7,6 +7,8 @@ export type Preference = (typeof PREFERENCES)[number];
 // index.html reads the same key before first paint; keep them in sync.
 const STORAGE_KEY = "hui-playground-color-scheme";
 const DARK_QUERY = "(prefers-color-scheme: dark)";
+// index.html sets the same colours before first paint.
+const THEME_COLORS: Record<ColorScheme, string> = { light: "#ffffff", dark: "#020617" };
 
 export function readPreference(stored: string | null): Preference {
   return PREFERENCES.find((preference) => preference === stored) ?? "system";
@@ -44,6 +46,7 @@ function apply() {
   document.head.append(freeze);
   root.classList.toggle("dark", scheme === "dark");
   root.style.colorScheme = scheme;
+  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", THEME_COLORS[scheme]);
   // Force a style recalculation while transitions are frozen.
   void getComputedStyle(root).colorScheme;
   freeze.remove();
@@ -67,12 +70,15 @@ export function setPreference(next: Preference) {
 }
 
 function subscribe(listener: () => void) {
+  if (listeners.size === 0) {
+    matchMedia(DARK_QUERY).addEventListener("change", notify);
+  }
   listeners.add(listener);
-  const query = matchMedia(DARK_QUERY);
-  query.addEventListener("change", notify);
   return () => {
     listeners.delete(listener);
-    query.removeEventListener("change", notify);
+    if (listeners.size === 0) {
+      matchMedia(DARK_QUERY).removeEventListener("change", notify);
+    }
   };
 }
 
