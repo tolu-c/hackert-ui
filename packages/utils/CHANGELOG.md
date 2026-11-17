@@ -1,5 +1,12 @@
 # @hackert-ui/utils
 
+## 0.0.1
+
+### Patch Changes
+
+- 2c78f85: First release on the 0.0.x line, with everything from 0.2.0. 0.2.0 was
+  published by mistake and is deprecated; install 0.0.1 or later.
+
 ## 0.2.0
 
 Deprecated: published by mistake. Use 0.0.1 or later.
