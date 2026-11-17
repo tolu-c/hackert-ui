@@ -2,6 +2,7 @@ import { useDisclosure } from "@hackert-ui/hooks";
 import { Button } from "@hackert-ui/ui";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { pageHead } from "@/catalog";
 import { PageHeader } from "@/components/PageHeader";
 import { UsageHeading } from "@/components/UsageHeading";
 import { Configurator } from "@/configurator/Configurator";
@@ -15,6 +16,7 @@ const CONTROLS = defineControls([
 const IMPORT = 'import { useDisclosure } from "@hackert-ui/hooks";';
 
 export const Route = createFileRoute("/hooks/use-disclosure")({
+  head: () => pageHead("/hooks/use-disclosure"),
   ...searchOptionsFor(CONTROLS),
   component: UseDisclosurePage,
 });
@@ -25,12 +27,7 @@ function UseDisclosurePage() {
 
   return (
     <div>
-      <PageHeader
-        title="useDisclosure"
-        packageName="@hackert-ui/hooks"
-        description="Boolean open state with open, close and toggle handlers. Handlers are referentially stable, and onOpen/onClose fire only on an actual transition."
-        importLine={IMPORT}
-      />
+      <PageHeader to="/hooks/use-disclosure" importLine={IMPORT} />
 
       <UsageHeading />
       <Configurator

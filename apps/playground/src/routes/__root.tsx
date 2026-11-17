@@ -1,16 +1,30 @@
 import { AppProvider } from "@hackert-ui/core";
 import { TanStackDevtools } from "@tanstack/react-devtools";
-import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
+import { createRootRoute, HeadContent, Link, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 
-import { SECTION_LIST } from "@/catalog";
+import { SECTION_LIST, SITE_DESCRIPTION, SITE_TITLE } from "@/catalog";
 import { ColorSchemeSwitcher } from "@/components/ColorSchemeSwitcher";
 import { GitHubIcon, GitHubLink } from "@/components/GitHubLink";
+import { Logo } from "@/components/Logo";
 import { NEW_ISSUE_URL, REPO_URL } from "@/repo";
 
 import "../styles.css";
 
-export const Route = createRootRoute({ component: RootComponent });
+const HOME_TITLE = `${SITE_TITLE} · React components, split into packages`;
+
+export const Route = createRootRoute({
+  head: () => ({
+    meta: [
+      { title: HOME_TITLE },
+      { name: "description", content: SITE_DESCRIPTION },
+      { property: "og:title", content: HOME_TITLE },
+      { property: "og:description", content: SITE_DESCRIPTION },
+      { property: "og:type", content: "website" },
+    ],
+  }),
+  component: RootComponent,
+});
 
 const NAV_LINK = {
   className: "transition-colors",
@@ -21,10 +35,13 @@ const NAV_LINK = {
 function RootComponent() {
   return (
     <AppProvider>
+      <HeadContent />
       <div className="flex min-h-screen flex-col bg-surface text-fg">
         <header className="border-b border-line">
           <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-6 gap-y-3 px-6 py-4">
-            <span className="text-sm font-semibold tracking-tight">hackert-ui</span>
+            <Link to="/" aria-label="hackert-ui home" className="flex rounded-sm">
+              <Logo />
+            </Link>
             <nav className="flex flex-wrap gap-4 text-sm">
               <Link to="/" {...NAV_LINK} activeOptions={{ exact: true }}>
                 Overview
