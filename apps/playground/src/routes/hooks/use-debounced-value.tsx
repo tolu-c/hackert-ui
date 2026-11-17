@@ -62,24 +62,24 @@ function DebounceDemo({ delay }: { readonly delay: number }) {
   return (
     <div className="w-full max-w-sm space-y-4">
       <div>
-        <label htmlFor={id} className="mb-2 block text-sm font-medium text-slate-900">
+        <label htmlFor={id} className="mb-2 block text-sm font-medium text-fg">
           Type something
         </label>
         <input
           id={id}
           value={query}
           onChange={(event) => setQuery(event.currentTarget.value)}
-          className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
+          className="w-full rounded-md border border-line-strong px-3 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
         />
       </div>
       <dl className="grid grid-cols-[6rem_1fr] gap-y-1 text-sm">
-        <dt className="text-slate-500">Live</dt>
+        <dt className="text-fg-muted">Live</dt>
         <dd className="truncate font-mono">{query || "—"}</dd>
-        <dt className="text-slate-500">Debounced</dt>
+        <dt className="text-fg-muted">Debounced</dt>
         <dd className="truncate font-mono">{debounced || "—"}</dd>
       </dl>
       <p
-        className={`text-xs text-amber-600 transition-opacity duration-150 ${waiting ? "opacity-100" : "opacity-0"}`}
+        className={`text-xs text-amber-600 dark:text-amber-400 transition-opacity duration-150 ${waiting ? "opacity-100" : "opacity-0"}`}
         aria-live="polite"
       >
         {waiting ? `waiting ${delay}ms…` : ""}

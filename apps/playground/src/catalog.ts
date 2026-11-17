@@ -1,3 +1,4 @@
+import type { PackageName } from "./install";
 import type { FileRoutesByTo } from "./routeTree.gen";
 
 type RoutePath = keyof FileRoutesByTo;
@@ -10,7 +11,7 @@ export interface CatalogItem {
 export interface CatalogSection {
   readonly to: RoutePath;
   readonly label: string;
-  readonly packageName: string;
+  readonly packageName: PackageName;
   readonly blurb: string;
   readonly items: readonly CatalogItem[];
 }

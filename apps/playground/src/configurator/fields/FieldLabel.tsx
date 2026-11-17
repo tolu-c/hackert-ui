@@ -9,7 +9,7 @@ interface FieldLabelProps {
 export function FieldLabel({ htmlFor, children, aside }: FieldLabelProps) {
   return (
     <div className="mb-2 flex items-baseline justify-between">
-      <label htmlFor={htmlFor} className="text-sm font-medium text-slate-900">
+      <label htmlFor={htmlFor} className="text-sm font-medium text-fg">
         {children}
       </label>
       {aside}
