@@ -14,7 +14,7 @@ export default defineConfig({
     clearMocks: false,
   },
   fmt: {
-    ignorePatterns: ["**/routeTree.gen.ts", "**/AGENTS.md"],
+    ignorePatterns: ["**/routeTree.gen.ts", "**/AGENTS.md", ".github/workflows/pullfrog.yml"],
   },
   lint: {
     ignorePatterns: ["**/routeTree.gen.ts"],
