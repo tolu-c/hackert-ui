@@ -80,7 +80,6 @@ docs/                  design notes (THEMING.md)
 tsdown.config.ts       shared build config, used by vp pack
 vite.config.ts         root Vite+ config: lint, fmt, staged, pack
 vitest.shared.ts       shared test config (jsdom)
-vercel.json            playground deploy config
 ```
 
 ## Toolchain
@@ -230,13 +229,15 @@ npm-compatible client: `pnpm add`, `npm install`, `yarn add` or `bun add`.
 
 ## Deploying the playground
 
-The playground deploys to Vercel from the repository root. `vercel.json` holds
+The playground deploys to Vercel from `apps/playground`. `apps/playground/vercel.json` holds
 the install and build commands, the output directory, and a catch-all rewrite
 that keeps deep links working with the client-side router. Vercel checks the
 filesystem before rewriting, so hashed assets still serve normally.
 
-Point a Vercel project at this repo and leave **Root Directory** as the repo
-root, so the workspace packages resolve. Set the project's Node version to
+Point a Vercel project at this repo and set **Root Directory** to
+`apps/playground`. pnpm still installs the whole workspace from there, and the
+playground imports the workspace packages from source, so they need no
+separate build. Set the project's Node version to
 22.18 or newer, or 24.11 or newer. `engine-strict=true` makes any other version
 fail the install. Everything else lives in `vercel.json`.
 
