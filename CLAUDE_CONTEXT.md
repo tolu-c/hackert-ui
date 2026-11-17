@@ -92,3 +92,9 @@ and compare `scrollWidth` to `clientWidth` to check mobile layout for real.
 - Zod for configurator search validation was considered and not adopted: the
   router merges parent raw search over the validated output, so a schema does
   not stop undeclared params leaking; `pickControls` via `useSearch({ select })` does.
+- Publishing runs only on a published GitHub Release (`publish.yml`), not on
+  push to `main`. `version.yml` still opens the Changesets "Version Packages"
+  PR on `main`; the release tag must be `v<lockstep version>`. The repo is made
+  public so npm provenance works.
+- Imports stay per package (`@hackert-ui/ui`, `@hackert-ui/form`, …), Mantine
+  style. An umbrella `hackert-ui` re-export package was offered and declined.
