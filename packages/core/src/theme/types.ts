@@ -1,5 +1,9 @@
+export type ColorScheme = "light" | "dark";
+
 export interface AppTheme {
   readonly colors: AppColorTheme;
+  // Used when the page's CSS color-scheme is dark.
+  readonly dark: { readonly colors: AppColorTheme };
   readonly radius: AppRadiusTheme;
   readonly spacing: AppSpacingTheme;
   readonly fontFamily: string;
@@ -7,6 +11,8 @@ export interface AppTheme {
 
 export interface AppThemeOverride {
   readonly colors?: Partial<AppColorTheme>;
+  // A light colour override applies in dark mode too unless set here.
+  readonly dark?: { readonly colors?: Partial<AppColorTheme> };
   readonly radius?: Partial<AppRadiusTheme>;
   readonly spacing?: Partial<AppSpacingTheme>;
   readonly fontFamily?: string;

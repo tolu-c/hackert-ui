@@ -5,6 +5,7 @@ export type {
   AppSpacingTheme,
   AppTheme,
   AppThemeOverride,
+  ColorScheme,
   VariantColors,
 } from "./theme";
 export { DEFAULT_THEME } from "./theme";

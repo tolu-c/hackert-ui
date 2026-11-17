@@ -23,6 +23,14 @@ describe("Button", () => {
     expect(variable("--hui-bg")).toBe("rgb(1, 2, 3)");
   });
 
+  it("carries light and dark colours and lets the page's color-scheme pick", () => {
+    render(<Button>Save</Button>);
+
+    expect(variable("--hui-bg")).toBe(
+      `light-dark(${DEFAULT_THEME.colors.primary}, ${DEFAULT_THEME.dark.colors.primary})`,
+    );
+  });
+
   it("derives readable text from the background", () => {
     render(
       <>
@@ -32,16 +40,16 @@ describe("Button", () => {
     );
     const [primary, warning] = screen.getAllByRole("button");
 
-    expect(primary?.style.getPropertyValue("--hui-fg")).toBe("#ffffff");
+    expect(primary?.style.getPropertyValue("--hui-fg")).toBe("light-dark(#ffffff, #0a0a0a)");
     expect(warning?.style.getPropertyValue("--hui-fg")).toBe("#0a0a0a");
   });
 
   it("provides hover and active colours", () => {
     render(<Button>Save</Button>);
 
-    expect(variable("--hui-bg-hover")).toMatch(/^#[0-9a-f]{6}$/);
-    expect(variable("--hui-fg-hover")).toBe("#ffffff");
-    expect(variable("--hui-bg-active")).toMatch(/^#[0-9a-f]{6}$/);
+    expect(variable("--hui-bg-hover")).toMatch(/^light-dark\(#[0-9a-f]{6}, #[0-9a-f]{6}\)$/);
+    expect(variable("--hui-fg-hover")).toBe("light-dark(#ffffff, #0a0a0a)");
+    expect(variable("--hui-bg-active")).toMatch(/^light-dark\(#[0-9a-f]{6}, #[0-9a-f]{6}\)$/);
   });
 
   it("falls back to the default theme without a provider", () => {

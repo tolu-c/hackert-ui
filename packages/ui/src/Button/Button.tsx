@@ -30,6 +30,12 @@ const BLOCK_PADDING: Readonly<Record<ButtonSize, ButtonSize>> = {
   "2xl": "xl",
 };
 
+// light-dark() resolves against the page's CSS color-scheme, so dark mode needs
+// no React state and server-rendered markup is right on first paint.
+function byScheme(light: string, dark: string): string {
+  return light === dark ? light : `light-dark(${light}, ${dark})`;
+}
+
 export function Button({
   type = "button",
   variant = "primary",
@@ -41,14 +47,15 @@ export function Button({
   ...buttonProps
 }: ButtonProps) {
   const theme = useSafeAppTheme();
-  const colors = useVariantColors(variant);
+  const light = useVariantColors(variant, "light");
+  const dark = useVariantColors(variant, "dark");
 
   const themed = {
-    "--hui-bg": colors.background,
-    "--hui-fg": colors.foreground,
-    "--hui-bg-hover": colors.hoverBackground,
-    "--hui-fg-hover": colors.hoverForeground,
-    "--hui-bg-active": colors.activeBackground,
+    "--hui-bg": byScheme(light.background, dark.background),
+    "--hui-fg": byScheme(light.foreground, dark.foreground),
+    "--hui-bg-hover": byScheme(light.hoverBackground, dark.hoverBackground),
+    "--hui-fg-hover": byScheme(light.hoverForeground, dark.hoverForeground),
+    "--hui-bg-active": byScheme(light.activeBackground, dark.activeBackground),
     "--hui-radius": theme.radius[radius],
     "--hui-font": theme.fontFamily,
     "--hui-py": theme.spacing[BLOCK_PADDING[size]],

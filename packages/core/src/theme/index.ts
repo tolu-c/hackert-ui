@@ -7,4 +7,5 @@ export type {
   AppSpacingTheme,
   AppTheme,
   AppThemeOverride,
+  ColorScheme,
 } from "./types";
