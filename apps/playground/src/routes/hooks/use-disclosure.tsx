@@ -6,7 +6,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { UsageHeading } from "@/components/UsageHeading";
 import { Configurator } from "@/configurator/Configurator";
 import { defineControls } from "@/configurator/controls";
-import { searchOptionsFor } from "@/configurator/search";
+import { pickControls, searchOptionsFor } from "@/configurator/search";
 
 const CONTROLS = defineControls([
   { kind: "switch", prop: "initial", label: "Initially open", defaultValue: false },
@@ -20,7 +20,7 @@ export const Route = createFileRoute("/hooks/use-disclosure")({
 });
 
 function UseDisclosurePage() {
-  const values = Route.useSearch();
+  const values = Route.useSearch({ select: (search) => pickControls(CONTROLS, search) });
   const navigate = Route.useNavigate();
 
   return (

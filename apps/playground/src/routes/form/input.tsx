@@ -5,7 +5,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { UsageHeading } from "@/components/UsageHeading";
 import { Configurator } from "@/configurator/Configurator";
 import { defineControls } from "@/configurator/controls";
-import { searchOptionsFor } from "@/configurator/search";
+import { pickControls, searchOptionsFor } from "@/configurator/search";
 import { toJsx, toSnippet } from "@/configurator/to-jsx";
 
 const CONTROLS = defineControls([
@@ -30,7 +30,7 @@ export const Route = createFileRoute("/form/input")({
 });
 
 function InputPage() {
-  const values = Route.useSearch();
+  const values = Route.useSearch({ select: (search) => pickControls(CONTROLS, search) });
   const navigate = Route.useNavigate();
 
   return (

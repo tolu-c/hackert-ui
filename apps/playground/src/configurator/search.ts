@@ -24,6 +24,17 @@ export function validateSearchFor<const C extends readonly Control[]>(controls: 
   };
 }
 
+// Route.useSearch() also returns the parent route's raw params. Select through
+// this so undeclared ones (?utm_source, ?page=2) never reach component props.
+export function pickControls<const C extends readonly Control[]>(
+  controls: C,
+  search: Readonly<Record<string, unknown>>,
+): ControlValues<C> {
+  return Object.fromEntries(
+    controls.map((control) => [control.prop, search[control.prop]]),
+  ) as ControlValues<C>;
+}
+
 function readValue(control: Control, raw: unknown): ControlValue | undefined {
   switch (control.kind) {
     case "switch":

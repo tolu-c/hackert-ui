@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vite-plus/test";
 
 import { defineControls } from "./controls";
-import { defaultsFor, searchOptionsFor, validateSearchFor } from "./search";
+import { defaultsFor, pickControls, searchOptionsFor, validateSearchFor } from "./search";
 
 const CONTROLS = defineControls([
   {
@@ -68,5 +68,13 @@ describe("searchOptionsFor", () => {
         next: (search) => search,
       }),
     ).toEqual({ size: "lg" });
+  });
+});
+
+describe("pickControls", () => {
+  it("keeps only declared params, dropping the parent route's raw ones", () => {
+    const search = { ...defaultsFor(CONTROLS), size: "lg", page: 2, utm_source: "newsletter" };
+
+    expect(pickControls(CONTROLS, search)).toEqual({ ...defaultsFor(CONTROLS), size: "lg" });
   });
 });
