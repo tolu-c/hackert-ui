@@ -13,7 +13,7 @@ const CONTROLS = defineControls([
     kind: "text",
     prop: "className",
     label: "className",
-    defaultValue: "rounded-lg border border-slate-200 p-6 shadow-sm",
+    defaultValue: "rounded-lg border border-line p-6 shadow-sm",
   },
   { kind: "text", prop: "content", label: "Content", defaultValue: "Card content" },
 ]);
@@ -56,11 +56,11 @@ function CardPage() {
         title="With nested components"
         description="Children can be any ReactNode, including other components."
         source={
-          '<Card className="space-y-3 rounded-lg border border-slate-200 p-6">\n  <p>Unsaved changes</p>\n  <Button variant="success">Save</Button>\n</Card>'
+          '<Card className="space-y-3 rounded-lg border border-line p-6">\n  <p>Unsaved changes</p>\n  <Button variant="success">Save</Button>\n</Card>'
         }
       >
-        <Card className="space-y-3 rounded-lg border border-slate-200 p-6">
-          <p className="text-sm text-slate-700">Unsaved changes</p>
+        <Card className="space-y-3 rounded-lg border border-line p-6">
+          <p className="text-sm text-fg-soft">Unsaved changes</p>
           <Button variant="success">Save</Button>
         </Card>
       </Demo>

@@ -37,10 +37,10 @@ export function Configurator<const C extends readonly Control[]>({
   const current: Readonly<Record<string, ControlValue>> = values;
 
   return (
-    <div className="overflow-hidden rounded-xl border border-slate-200">
+    <div className="overflow-hidden rounded-xl border border-line">
       <div className="grid grid-cols-[minmax(0,1fr)] lg:grid-cols-[minmax(0,1fr)_18rem]">
         <div className="flex min-h-64 items-center justify-center p-8">{children}</div>
-        <div className="space-y-5 border-t border-slate-200 p-5 lg:border-t-0 lg:border-l">
+        <div className="space-y-5 border-t border-line p-5 lg:border-t-0 lg:border-l">
           {controls.map((control) => {
             const Field = FIELD_RENDERERS[control.kind] as ComponentType<FieldProps<Control>>;
             const value = current[control.prop] ?? control.defaultValue;
@@ -56,7 +56,7 @@ export function Configurator<const C extends readonly Control[]>({
           })}
         </div>
       </div>
-      <div className="border-t border-slate-200">
+      <div className="border-t border-line">
         <CodeBlock code={code} />
       </div>
     </div>

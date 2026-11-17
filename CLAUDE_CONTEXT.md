@@ -98,3 +98,12 @@ and compare `scrollWidth` to `clientWidth` to check mobile layout for real.
   public so npm provenance works.
 - Imports stay per package (`@hackert-ui/ui`, `@hackert-ui/form`, …), Mantine
   style. An umbrella `hackert-ui` re-export package was offered and declined.
+- Dark mode covers the library and the playground (user's choice). The library
+  follows CSS `color-scheme` via `light-dark()` in Button's inline variables,
+  chosen over an `AppProvider colorScheme` prop to avoid SSR flashes. Dark
+  palette is 400/500 shades, so some variants take dark text by WCAG contrast.
+- Playground colours are semantic tokens (`fg`, `line`, `surface`, …) in
+  `styles.css` with a `.dark` override; a pre-paint script in `index.html`
+  mirrors `src/color-scheme.ts`. Switcher is System / Light / Dark.
+- Every package page header shows Installation tabs (pnpm, yarn, npm),
+  Mantine style; the chosen manager is shared across pages.

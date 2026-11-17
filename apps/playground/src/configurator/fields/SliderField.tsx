@@ -9,7 +9,7 @@ export function SliderField({ control, value, onChange }: FieldProps<SliderContr
 
   return (
     <div>
-      <FieldLabel htmlFor={id} aside={<code className="text-xs text-slate-500">{value}</code>}>
+      <FieldLabel htmlFor={id} aside={<code className="text-xs text-fg-muted">{value}</code>}>
         {control.label}
       </FieldLabel>
       <input
@@ -26,14 +26,11 @@ export function SliderField({ control, value, onChange }: FieldProps<SliderContr
             onChange(option);
           }
         }}
-        className="w-full cursor-pointer accent-slate-900"
+        className="w-full cursor-pointer accent-fg"
       />
-      <div className="mt-1 flex justify-between text-[11px] text-slate-400" aria-hidden="true">
+      <div className="mt-1 flex justify-between text-[11px] text-fg-faint" aria-hidden="true">
         {control.options.map((option) => (
-          <span
-            key={option}
-            className={option === value ? "font-medium text-slate-900" : undefined}
-          >
+          <span key={option} className={option === value ? "font-medium text-fg" : undefined}>
             {option}
           </span>
         ))}

@@ -9,7 +9,7 @@ export function SectionLayout({ section }: SectionLayoutProps) {
   return (
     <div className="md:grid md:grid-cols-[12rem_minmax(0,1fr)] md:gap-10">
       <nav aria-label={`${section.label} components`} className="mb-8 md:mb-0">
-        <p className="mb-2 hidden text-xs font-semibold tracking-wide text-slate-500 uppercase md:block">
+        <p className="mb-2 hidden text-xs font-semibold tracking-wide text-fg-muted uppercase md:block">
           {section.label}
         </p>
         <ul className="-mx-4 flex gap-1 overflow-x-auto px-4 md:sticky md:top-6 md:mx-0 md:flex-col md:overflow-visible md:px-0">
@@ -19,9 +19,12 @@ export function SectionLayout({ section }: SectionLayoutProps) {
                 to={item.to}
                 className="block rounded-md px-3 py-1.5 text-sm transition-colors duration-150"
                 inactiveProps={{
-                  className: "text-slate-600 hover:bg-slate-50 hover:text-slate-900",
+                  className: "text-fg-secondary hover:bg-subtle hover:text-fg",
                 }}
-                activeProps={{ className: "bg-blue-50 font-medium text-blue-700" }}
+                activeProps={{
+                  className:
+                    "bg-blue-50 dark:bg-blue-500/15 font-medium text-blue-700 dark:text-blue-300",
+                }}
               >
                 {item.label}
               </Link>

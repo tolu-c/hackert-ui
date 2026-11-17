@@ -68,16 +68,16 @@ function DisclosureDemo({ initial }: { readonly initial: boolean }) {
       </div>
 
       {opened ? (
-        <div className="mt-4 rounded-lg border border-slate-200 p-4 text-sm text-slate-700 transition-[opacity,transform] duration-200 ease-out starting:translate-y-1 starting:opacity-0 motion-reduce:starting:translate-y-0">
+        <div className="mt-4 rounded-lg border border-line p-4 text-sm text-fg-soft transition-[opacity,transform] duration-200 ease-out starting:translate-y-1 starting:opacity-0 motion-reduce:starting:translate-y-0">
           The panel is open.
         </div>
       ) : (
-        <div className="mt-4 rounded-lg border border-dashed border-slate-200 p-4 text-sm text-slate-400">
+        <div className="mt-4 rounded-lg border border-dashed border-line p-4 text-sm text-fg-faint">
           Closed
         </div>
       )}
 
-      <p className="mt-4 text-xs text-slate-500">
+      <p className="mt-4 text-xs text-fg-muted">
         callbacks: {log.length > 0 ? log.join(" → ") : "none yet"}
       </p>
     </div>

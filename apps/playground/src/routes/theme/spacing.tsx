@@ -17,9 +17,9 @@ function SpacingPage() {
       <div className="space-y-3">
         {Object.entries(theme.spacing).map(([name, value]) => (
           <div key={name} className="flex items-center gap-4">
-            <code className="w-12 text-xs text-slate-500">{name}</code>
-            <div className="h-4 rounded-sm bg-slate-800" style={{ width: value }} />
-            <span className="text-xs text-slate-500">{value}</span>
+            <code className="w-12 text-xs text-fg-muted">{name}</code>
+            <div className="h-4 rounded-sm bg-fg-soft" style={{ width: value }} />
+            <span className="text-xs text-fg-muted">{value}</span>
           </div>
         ))}
       </div>

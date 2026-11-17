@@ -1,7 +1,45 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-surface: var(--color-white);
+  --color-subtle: var(--color-slate-50);
+  --color-muted: var(--color-slate-100);
+  --color-line: var(--color-slate-200);
+  --color-line-strong: var(--color-slate-300);
+  --color-line-hover: var(--color-slate-400);
+  --color-fg: var(--color-slate-900);
+  --color-fg-soft: var(--color-slate-700);
+  --color-fg-secondary: var(--color-slate-600);
+  --color-fg-muted: var(--color-slate-500);
+  --color-fg-faint: var(--color-slate-400);
+}
+
+/* The .dark class drives Tailwind's dark: variant; color-scheme drives the
+   library's light-dark() colours and native controls. index.html sets both
+   before first paint. */
+.dark {
+  color-scheme: dark;
+  --color-surface: var(--color-slate-950);
+  --color-subtle: var(--color-slate-900);
+  --color-muted: var(--color-slate-800);
+  --color-line: var(--color-slate-800);
+  --color-line-strong: var(--color-slate-700);
+  --color-line-hover: var(--color-slate-600);
+  --color-fg: var(--color-slate-100);
+  --color-fg-soft: var(--color-slate-300);
+  --color-fg-secondary: var(--color-slate-400);
+  --color-fg-muted: var(--color-slate-400);
+  --color-fg-faint: var(--color-slate-500);
+}
+
 * {
   box-sizing: border-box;
+}
+
+html {
+  color-scheme: light;
 }
 
 html,
@@ -12,4 +50,5 @@ body,
 
 body {
   margin: 0;
+  background: var(--color-surface);
 }

@@ -17,8 +17,8 @@ function RadiusPage() {
       <div className="flex flex-wrap gap-6">
         {Object.entries(theme.radius).map(([name, value]) => (
           <div key={name} className="text-center">
-            <div className="size-16 border-2 border-slate-800" style={{ borderRadius: value }} />
-            <p className="mt-2 text-xs text-slate-500">
+            <div className="size-16 border-2 border-fg-soft" style={{ borderRadius: value }} />
+            <p className="mt-2 text-xs text-fg-muted">
               {name} · {value}
             </p>
           </div>

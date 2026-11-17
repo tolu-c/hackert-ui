@@ -46,7 +46,9 @@ describe("Configurator", () => {
     fireEvent.click(screen.getByRole("radio", { name: "danger" }));
 
     const preview = screen.getByRole("button", { name: "Preview" });
-    expect(preview.style.getPropertyValue("--hui-bg")).toBe(DEFAULT_THEME.colors.danger);
+    expect(preview.style.getPropertyValue("--hui-bg")).toBe(
+      `light-dark(${DEFAULT_THEME.colors.danger}, ${DEFAULT_THEME.dark.colors.danger})`,
+    );
     expect(screen.getByText('<Button variant="danger">Preview</Button>')).toBeTruthy();
   });
 
