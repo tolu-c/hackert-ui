@@ -19,6 +19,15 @@ export const PEERS: Readonly<Record<PackageId, readonly PackageId[]>> = {
   utils: [],
 };
 
+// Peers outside the @hackert-ui scope; Yarn and npm do not install them for you.
+const EXTERNAL_PEERS: Readonly<Record<PackageId, readonly string[]>> = {
+  core: [],
+  ui: [],
+  form: ["@tanstack/react-form"],
+  hooks: [],
+  utils: [],
+};
+
 export function resolvePackages(selected: readonly PackageId[]): PackageId[] {
   const wanted = new Set(selected.flatMap((id) => [id, ...PEERS[id]]));
   return PACKAGES.filter((id) => wanted.has(id));
@@ -32,5 +41,6 @@ export function packageId(name: PackageName): PackageId {
 
 export function installCommand(manager: Manager, selected: readonly PackageId[]): string {
   const names = resolvePackages(selected).map((id) => `@hackert-ui/${id}`);
-  return `${ADD_COMMAND[manager]} ${names.join(" ")}`;
+  const external = resolvePackages(selected).flatMap((id) => EXTERNAL_PEERS[id]);
+  return `${ADD_COMMAND[manager]} ${[...names, ...external].join(" ")}`;
 }

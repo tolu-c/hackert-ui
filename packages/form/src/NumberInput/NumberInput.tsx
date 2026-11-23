@@ -45,7 +45,7 @@ export function NumberInput({
   const pendingCaret = useRef<number | null>(null);
 
   // The form changed the value (reset, setFieldValue): show it.
-  if (value !== seenValue) {
+  if (!Object.is(value, seenValue)) {
     setSeenValue(value);
     setText(formatNumberText(value, options));
   }

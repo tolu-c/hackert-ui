@@ -83,7 +83,10 @@ function groupDigits(digits: string, resolved: Resolved) {
 export function formatNumberText(value: number | null, options: NumberFormatOptions) {
   if (value === null || Number.isNaN(value)) return "";
   const resolved = resolve(options);
-  const fixed = Math.abs(value).toFixed(resolved.decimals);
+  const fixed = Math.abs(value).toLocaleString("en-US", {
+    useGrouping: false,
+    maximumFractionDigits: resolved.decimals,
+  });
   const [integer = "0", fraction = ""] = fixed.split(".");
   const trimmed = fraction.replace(/0+$/, "").padEnd(resolved.padDecimals, "0");
   const sign = value < 0 && resolved.allowNegative ? "-" : "";

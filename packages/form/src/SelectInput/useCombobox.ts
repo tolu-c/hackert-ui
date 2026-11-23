@@ -59,12 +59,14 @@ export function useCombobox({ options, mode, value, onValueChange }: UseCombobox
   const [open, setOpen] = useState(false);
   const [typed, setTyped] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
-  const [seenValue, setSeenValue] = useState(value);
+  const label = labelFor(value);
+  const [seen, setSeen] = useState({ value, label });
 
-  // The value changed from outside (form reset, setFieldValue, a controlled parent): show it.
-  if (value !== seenValue) {
-    setSeenValue(value);
-    setText(labelFor(value));
+  // The value or its label changed from outside (form reset, setFieldValue, a controlled parent,
+  // options arriving later): show it, unless the user is mid-typing.
+  if (value !== seen.value || (!typed && label !== seen.label)) {
+    setSeen({ value, label });
+    setText(label);
   }
 
   // Until the user types, show every option so a chosen value can be changed.
@@ -72,7 +74,7 @@ export function useCombobox({ options, mode, value, onValueChange }: UseCombobox
 
   function commit(next: SelectPrimitive | null) {
     onValueChange(next);
-    setSeenValue(next);
+    setSeen({ value: next, label: labelFor(next) });
   }
 
   function show() {
