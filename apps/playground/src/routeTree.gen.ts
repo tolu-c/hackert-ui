@@ -32,6 +32,7 @@ import { Route as ThemeSpacingRouteImport } from './routes/theme/spacing'
 import { Route as UiIndexRouteImport } from './routes/ui/index'
 import { Route as UiButtonRouteImport } from './routes/ui/button'
 import { Route as UiCardRouteImport } from './routes/ui/card'
+import { Route as UiModalRouteImport } from './routes/ui/modal'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -148,6 +149,11 @@ const UiCardRoute = UiCardRouteImport.update({
   path: '/card',
   getParentRoute: () => UiRouteRoute,
 } as any)
+const UiModalRoute = UiModalRouteImport.update({
+  id: '/modal',
+  path: '/modal',
+  getParentRoute: () => UiRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -169,6 +175,7 @@ export interface FileRoutesByFullPath {
   '/theme/spacing': typeof ThemeSpacingRoute
   '/ui/button': typeof UiButtonRoute
   '/ui/card': typeof UiCardRoute
+  '/ui/modal': typeof UiModalRoute
   '/form/': typeof FormIndexRoute
   '/hooks/': typeof HooksIndexRoute
   '/theme/': typeof ThemeIndexRoute
@@ -190,6 +197,7 @@ export interface FileRoutesByTo {
   '/theme/spacing': typeof ThemeSpacingRoute
   '/ui/button': typeof UiButtonRoute
   '/ui/card': typeof UiCardRoute
+  '/ui/modal': typeof UiModalRoute
   '/form': typeof FormIndexRoute
   '/hooks': typeof HooksIndexRoute
   '/theme': typeof ThemeIndexRoute
@@ -216,6 +224,7 @@ export interface FileRoutesById {
   '/theme/spacing': typeof ThemeSpacingRoute
   '/ui/button': typeof UiButtonRoute
   '/ui/card': typeof UiCardRoute
+  '/ui/modal': typeof UiModalRoute
   '/form/': typeof FormIndexRoute
   '/hooks/': typeof HooksIndexRoute
   '/theme/': typeof ThemeIndexRoute
@@ -243,6 +252,7 @@ export interface FileRouteTypes {
     | '/theme/spacing'
     | '/ui/button'
     | '/ui/card'
+    | '/ui/modal'
     | '/form/'
     | '/hooks/'
     | '/theme/'
@@ -264,6 +274,7 @@ export interface FileRouteTypes {
     | '/theme/spacing'
     | '/ui/button'
     | '/ui/card'
+    | '/ui/modal'
     | '/form'
     | '/hooks'
     | '/theme'
@@ -289,6 +300,7 @@ export interface FileRouteTypes {
     | '/theme/spacing'
     | '/ui/button'
     | '/ui/card'
+    | '/ui/modal'
     | '/form/'
     | '/hooks/'
     | '/theme/'
@@ -466,6 +478,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UiCardRouteImport
       parentRoute: typeof UiRouteRoute
     }
+    '/ui/modal': {
+      id: '/ui/modal'
+      path: '/modal'
+      fullPath: '/ui/modal'
+      preLoaderRoute: typeof UiModalRouteImport
+      parentRoute: typeof UiRouteRoute
+    }
   }
 }
 
@@ -532,12 +551,14 @@ const ThemeRouteRouteWithChildren = ThemeRouteRoute._addFileChildren(
 interface UiRouteRouteChildren {
   UiButtonRoute: typeof UiButtonRoute
   UiCardRoute: typeof UiCardRoute
+  UiModalRoute: typeof UiModalRoute
   UiIndexRoute: typeof UiIndexRoute
 }
 
 const UiRouteRouteChildren: UiRouteRouteChildren = {
   UiButtonRoute: UiButtonRoute,
   UiCardRoute: UiCardRoute,
+  UiModalRoute: UiModalRoute,
   UiIndexRoute: UiIndexRoute,
 }
 
