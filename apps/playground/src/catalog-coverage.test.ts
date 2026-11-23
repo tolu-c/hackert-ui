@@ -16,11 +16,7 @@ const PACKAGE_ENTRIES = import.meta.glob<Record<string, unknown>>(
 const DOCUMENTED_BY_TOPIC = new Set(["@hackert-ui/core", "@hackert-ui/utils"]);
 
 // Exports still in progress. Delete an entry once `pnpm scaffold` (or a hand-written page) covers it.
-const NO_PAGE_YET = new Set([
-  "DateInput (@hackert-ui/dates)",
-  "useCopy (@hackert-ui/hooks)",
-  "useClickOutside (@hackert-ui/hooks)",
-]);
+const NO_PAGE_YET = new Set(["DateInput (@hackert-ui/dates)"]);
 
 function documentedExports() {
   return Object.entries(PACKAGE_ENTRIES).flatMap(([entryPath, entry]) => {

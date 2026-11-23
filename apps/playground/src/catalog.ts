@@ -132,6 +132,16 @@ export const SECTIONS = {
         description:
           "Returns the value only after it has stopped changing for the given delay. Each change restarts the timer.",
       },
+      {
+        to: "/hooks/use-copy",
+        label: "useCopy",
+        description: "Copies text to the clipboard and reports for a moment that it worked.",
+      },
+      {
+        to: "/hooks/use-click-outside",
+        label: "useClickOutside",
+        description: "Calls back when a pointer or touch lands outside the referenced element.",
+      },
     ],
   },
 } as const satisfies Readonly<Record<string, CatalogSection>>;
