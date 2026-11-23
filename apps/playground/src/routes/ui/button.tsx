@@ -22,10 +22,17 @@ const CONTROLS = defineControls([
   { kind: "slider", prop: "size", label: "Size", options: SCALE, defaultValue: "md" },
   { kind: "slider", prop: "radius", label: "Radius", options: SCALE, defaultValue: "md" },
   { kind: "switch", prop: "disabled", label: "Disabled", defaultValue: false },
+  { kind: "switch", prop: "loading", label: "Loading", defaultValue: false },
   { kind: "text", prop: "label", label: "Label", defaultValue: "Button" },
 ]);
 
-const COMPONENT_DEFAULTS = { variant: "primary", size: "md", radius: "md", disabled: false };
+const COMPONENT_DEFAULTS = {
+  variant: "primary",
+  size: "md",
+  radius: "md",
+  disabled: false,
+  loading: false,
+};
 const IMPORT = 'import { Button } from "@hackert-ui/ui";';
 
 export const Route = createFileRoute("/ui/button")({
