@@ -1,5 +1,11 @@
 # @hackert-ui/hooks
 
+## 0.1.0
+
+### Minor Changes
+
+- 6a4393c: Add `useCopy` and `useClickOutside`. `useCopy` copies text to the clipboard and reports `isCopied` for a moment (`timeout`, default 1000ms); it does nothing when the Clipboard API is missing. `useClickOutside` returns a ref and calls back on a mousedown or touchstart outside that element.
+
 ## 0.0.1
 
 ### Patch Changes

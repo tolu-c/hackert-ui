@@ -1,5 +1,13 @@
 # @hackert-ui/ui
 
+## 0.1.0
+
+### Patch Changes
+
+- 87449ec: Button text now scales with `size`, from 12px at `xs` to 24px at `2xl` (16px at the default `md`). Override it per button with a utility class such as `text-sm`, or with the `--hui-font-size` variable.
+- f0caab3: Button takes a `loading` prop. While loading it is disabled and sets `aria-busy` and `data-loading`, so you can style the busy state.
+- d7ee53d: Export placeholder `CloseButton`, `CopyButton`, `EmptyState`, `Loader`, `Modal`, `Notification`, `Skeleton` and `Tabs`. They are not implemented yet: each renders a stand-in element, and their props will change before they are ready, so don't build on them yet.
+
 ## 0.0.1
 
 ### Patch Changes
