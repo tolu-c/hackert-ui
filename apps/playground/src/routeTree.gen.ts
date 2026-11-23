@@ -21,6 +21,8 @@ import { Route as FormSelectInputRouteImport } from './routes/form/select-input'
 import { Route as FormTextAreaRouteImport } from './routes/form/text-area'
 import { Route as FormTextInputRouteImport } from './routes/form/text-input'
 import { Route as HooksIndexRouteImport } from './routes/hooks/index'
+import { Route as HooksUseClickOutsideRouteImport } from './routes/hooks/use-click-outside'
+import { Route as HooksUseCopyRouteImport } from './routes/hooks/use-copy'
 import { Route as HooksUseDebouncedValueRouteImport } from './routes/hooks/use-debounced-value'
 import { Route as HooksUseDisclosureRouteImport } from './routes/hooks/use-disclosure'
 import { Route as ThemeIndexRouteImport } from './routes/theme/index'
@@ -91,6 +93,16 @@ const HooksIndexRoute = HooksIndexRouteImport.update({
   path: '/',
   getParentRoute: () => HooksRouteRoute,
 } as any)
+const HooksUseClickOutsideRoute = HooksUseClickOutsideRouteImport.update({
+  id: '/use-click-outside',
+  path: '/use-click-outside',
+  getParentRoute: () => HooksRouteRoute,
+} as any)
+const HooksUseCopyRoute = HooksUseCopyRouteImport.update({
+  id: '/use-copy',
+  path: '/use-copy',
+  getParentRoute: () => HooksRouteRoute,
+} as any)
 const HooksUseDebouncedValueRoute = HooksUseDebouncedValueRouteImport.update({
   id: '/use-debounced-value',
   path: '/use-debounced-value',
@@ -148,6 +160,8 @@ export interface FileRoutesByFullPath {
   '/form/select-input': typeof FormSelectInputRoute
   '/form/text-area': typeof FormTextAreaRoute
   '/form/text-input': typeof FormTextInputRoute
+  '/hooks/use-click-outside': typeof HooksUseClickOutsideRoute
+  '/hooks/use-copy': typeof HooksUseCopyRoute
   '/hooks/use-debounced-value': typeof HooksUseDebouncedValueRoute
   '/hooks/use-disclosure': typeof HooksUseDisclosureRoute
   '/theme/colors': typeof ThemeColorsRoute
@@ -167,6 +181,8 @@ export interface FileRoutesByTo {
   '/form/select-input': typeof FormSelectInputRoute
   '/form/text-area': typeof FormTextAreaRoute
   '/form/text-input': typeof FormTextInputRoute
+  '/hooks/use-click-outside': typeof HooksUseClickOutsideRoute
+  '/hooks/use-copy': typeof HooksUseCopyRoute
   '/hooks/use-debounced-value': typeof HooksUseDebouncedValueRoute
   '/hooks/use-disclosure': typeof HooksUseDisclosureRoute
   '/theme/colors': typeof ThemeColorsRoute
@@ -191,6 +207,8 @@ export interface FileRoutesById {
   '/form/select-input': typeof FormSelectInputRoute
   '/form/text-area': typeof FormTextAreaRoute
   '/form/text-input': typeof FormTextInputRoute
+  '/hooks/use-click-outside': typeof HooksUseClickOutsideRoute
+  '/hooks/use-copy': typeof HooksUseCopyRoute
   '/hooks/use-debounced-value': typeof HooksUseDebouncedValueRoute
   '/hooks/use-disclosure': typeof HooksUseDisclosureRoute
   '/theme/colors': typeof ThemeColorsRoute
@@ -216,6 +234,8 @@ export interface FileRouteTypes {
     | '/form/select-input'
     | '/form/text-area'
     | '/form/text-input'
+    | '/hooks/use-click-outside'
+    | '/hooks/use-copy'
     | '/hooks/use-debounced-value'
     | '/hooks/use-disclosure'
     | '/theme/colors'
@@ -235,6 +255,8 @@ export interface FileRouteTypes {
     | '/form/select-input'
     | '/form/text-area'
     | '/form/text-input'
+    | '/hooks/use-click-outside'
+    | '/hooks/use-copy'
     | '/hooks/use-debounced-value'
     | '/hooks/use-disclosure'
     | '/theme/colors'
@@ -258,6 +280,8 @@ export interface FileRouteTypes {
     | '/form/select-input'
     | '/form/text-area'
     | '/form/text-input'
+    | '/hooks/use-click-outside'
+    | '/hooks/use-copy'
     | '/hooks/use-debounced-value'
     | '/hooks/use-disclosure'
     | '/theme/colors'
@@ -365,6 +389,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HooksIndexRouteImport
       parentRoute: typeof HooksRouteRoute
     }
+    '/hooks/use-click-outside': {
+      id: '/hooks/use-click-outside'
+      path: '/use-click-outside'
+      fullPath: '/hooks/use-click-outside'
+      preLoaderRoute: typeof HooksUseClickOutsideRouteImport
+      parentRoute: typeof HooksRouteRoute
+    }
+    '/hooks/use-copy': {
+      id: '/hooks/use-copy'
+      path: '/use-copy'
+      fullPath: '/hooks/use-copy'
+      preLoaderRoute: typeof HooksUseCopyRouteImport
+      parentRoute: typeof HooksRouteRoute
+    }
     '/hooks/use-debounced-value': {
       id: '/hooks/use-debounced-value'
       path: '/use-debounced-value'
@@ -454,12 +492,16 @@ const FormRouteRouteWithChildren = FormRouteRoute._addFileChildren(
 )
 
 interface HooksRouteRouteChildren {
+  HooksUseClickOutsideRoute: typeof HooksUseClickOutsideRoute
+  HooksUseCopyRoute: typeof HooksUseCopyRoute
   HooksUseDebouncedValueRoute: typeof HooksUseDebouncedValueRoute
   HooksUseDisclosureRoute: typeof HooksUseDisclosureRoute
   HooksIndexRoute: typeof HooksIndexRoute
 }
 
 const HooksRouteRouteChildren: HooksRouteRouteChildren = {
+  HooksUseClickOutsideRoute: HooksUseClickOutsideRoute,
+  HooksUseCopyRoute: HooksUseCopyRoute,
   HooksUseDebouncedValueRoute: HooksUseDebouncedValueRoute,
   HooksUseDisclosureRoute: HooksUseDisclosureRoute,
   HooksIndexRoute: HooksIndexRoute,
