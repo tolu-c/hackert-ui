@@ -236,6 +236,50 @@ describe("Select", () => {
     expect(combobox().value).toBe("Vue");
   });
 
+  it("shows the label when options arrive after the value", () => {
+    const { rerender } = render(
+      <Select options={[]} value="ng" onChange={() => {}} aria-label="Country" />,
+    );
+
+    rerender(
+      <Select
+        options={[{ value: "ng", label: "Nigeria" }]}
+        value="ng"
+        onChange={() => {}}
+        aria-label="Country"
+      />,
+    );
+
+    expect(combobox().value).toBe("Nigeria");
+  });
+
+  it("keeps typed text when options change while searching", async () => {
+    const user = userEvent.setup();
+    const onChange = () => {};
+    const { rerender } = render(
+      <Select
+        mode="searchable"
+        options={LIBRARIES}
+        value={null}
+        onChange={onChange}
+        aria-label="Library"
+      />,
+    );
+
+    await user.type(combobox(), "Sv");
+    rerender(
+      <Select
+        mode="searchable"
+        options={["Svelte", "React"]}
+        value={null}
+        onChange={onChange}
+        aria-label="Library"
+      />,
+    );
+
+    expect(combobox().value).toBe("Sv");
+  });
+
   it("works with free text in autocomplete mode", async () => {
     const onChange = vi.fn();
     render(

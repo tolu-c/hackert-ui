@@ -12,7 +12,7 @@ import { fileURLToPath } from "node:url";
 
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const packagesRoot = join(repositoryRoot, "packages");
-const reactVersions = ["19.2.8"];
+const reactVersions = ["19.0.0", "19.2.8"];
 
 const packageDirectories = await readdir(packagesRoot);
 const temporaryDirectory = await mkdtemp(join(tmpdir(), "hackert-ui-verify-"));

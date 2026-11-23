@@ -31,6 +31,12 @@ function input() {
 }
 
 describe("NumberInput", () => {
+  it("renders a NaN value as empty without looping", () => {
+    render(<Harness initial={Number.NaN} />);
+
+    expect(input().value).toBe("");
+  });
+
   it("formats currency as the user types and stores a number", async () => {
     render(<Harness currency="NGN" locale="en-NG" />);
 

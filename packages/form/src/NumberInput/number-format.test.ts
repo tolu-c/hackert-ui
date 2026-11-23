@@ -32,6 +32,12 @@ describe("formatNumberText", () => {
     expect(formatNumberText(1234.5, { ...plain, thousandSeparator: true })).toBe("1,234.5");
   });
 
+  it("does not print float noise when no decimals are set", () => {
+    const open = { locale: "en-US" } as const;
+    expect(formatNumberText(1.1, open)).toBe("1.1");
+    expect(formatNumberText(0.1, open)).toBe("0.1");
+  });
+
   it("formats null as empty and keeps negatives", () => {
     expect(formatNumberText(null, plain)).toBe("");
     expect(formatNumberText(-1234.5, { ...plain, thousandSeparator: true })).toBe("-1,234.5");

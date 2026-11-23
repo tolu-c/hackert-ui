@@ -1,13 +1,17 @@
-import { type RefObject, useEffect, useEffectEvent, useRef } from "react";
+import { type RefObject, useEffect, useRef } from "react";
 
 export function useClickOutside<T extends HTMLElement>(callback: () => void): RefObject<T | null> {
   const ref = useRef<T | null>(null);
-  const onClickOutside = useEffectEvent(callback);
+  const latest = useRef(callback);
+
+  useEffect(() => {
+    latest.current = callback;
+  });
 
   useEffect(() => {
     function handlePointerDown(event: MouseEvent | TouchEvent) {
       if (ref.current && !ref.current.contains(event.target as Node)) {
-        onClickOutside();
+        latest.current();
       }
     }
 

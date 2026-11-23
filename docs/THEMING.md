@@ -244,15 +244,14 @@ Note that `packages/ui/src/index.ts` re-exports its component barrels with
 `export *`, so anything added to `Button/index.ts` becomes public API. Keep `cx`
 out of the barrel.
 
-### The same treatment applies to `form`
+### `form` follows the same pattern
 
-`@hackert-ui/form`'s components are in an identical position — a React peer (plus
-`@tanstack/react-form`) only, no `core` dependency, no styling. Everything above transfers unchanged: the peer +
-dev dependency pair, `useSafeAppTheme` over `useAppTheme`, rest-props-first
-spread, the `cx` merge. `FormField` renders a wrapper `div` and a `label`, so it
-has more elements to distribute tokens across, and its markup is asserted in the
-same smoke fixture (`scripts/verify-published-packages.mjs`, the `/<label for=/`
-match) — that assertion is markup-sensitive in the same way as `Button`'s.
+`@hackert-ui/form` has already made this move: `@hackert-ui/core` and
+`@hackert-ui/ui` are peers, `useFormThemeVars` supplies the tokens, and one
+hoisted stylesheet in `@layer components` styles every control, the same way
+`Button` is themed. Its markup is asserted in the smoke fixture
+(`scripts/verify-published-packages.mjs`, the `/<label for=/` match), which is
+markup-sensitive in the same way as `Button`'s.
 
 ## The `className` and `style` contract
 
