@@ -5,7 +5,7 @@ A personal React component library, split into packages so a project takes only 
 | Package             | What it holds                                                      |
 | ------------------- | ------------------------------------------------------------------ |
 | `@hackert-ui/core`  | `AppProvider`, theme resolution, design tokens                     |
-| `@hackert-ui/ui`    | Component primitives — `Button`, `Card`                            |
+| `@hackert-ui/ui`    | Component primitives — `Button`, `Card` (more as placeholders)     |
 | `@hackert-ui/form`  | TanStack Form components — `FormField`, `TextInput`, `SelectInput` |
 | `@hackert-ui/hooks` | React hooks — `useDisclosure`, `useDebouncedValue`                 |
 | `@hackert-ui/utils` | Framework-agnostic helpers — `cn` (no React dependency)            |
