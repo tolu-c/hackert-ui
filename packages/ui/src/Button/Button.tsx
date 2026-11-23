@@ -18,6 +18,7 @@ export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
   readonly variant?: ButtonVariant | undefined;
   readonly size?: ButtonSize | undefined;
   readonly radius?: ButtonRadius | undefined;
+  readonly loading?: boolean | undefined;
 }
 
 // Vertical padding sits one spacing step below the horizontal padding.
@@ -50,6 +51,8 @@ export function Button({
   variant = "primary",
   size = "md",
   radius = "md",
+  loading = false,
+  disabled,
   className,
   style,
   children,
@@ -80,6 +83,9 @@ export function Button({
       <button
         {...buttonProps}
         type={type}
+        disabled={disabled || loading}
+        aria-busy={loading || undefined}
+        data-loading={loading ? "" : undefined}
         className={cn("hui-button", className)}
         style={{ ...themed, ...style }}
       >

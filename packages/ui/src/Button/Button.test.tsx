@@ -116,4 +116,27 @@ describe("Button", () => {
 
     expect(screen.getByRole("button").getAttribute("type")).toBe("button");
   });
+
+  it("disables itself and reports busy while loading", () => {
+    render(<Button loading>Save</Button>);
+    const button = screen.getByRole("button") as HTMLButtonElement;
+
+    expect(button.disabled).toBe(true);
+    expect(button.getAttribute("aria-busy")).toBe("true");
+    expect(button.hasAttribute("data-loading")).toBe(true);
+  });
+
+  it("keeps loading off the DOM element", () => {
+    render(<Button loading>Save</Button>);
+
+    expect(screen.getByRole("button").hasAttribute("loading")).toBe(false);
+  });
+
+  it("is idle when not loading", () => {
+    render(<Button>Save</Button>);
+    const button = screen.getByRole("button") as HTMLButtonElement;
+
+    expect(button.disabled).toBe(false);
+    expect(button.hasAttribute("aria-busy")).toBe(false);
+  });
 });
