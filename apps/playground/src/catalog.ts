@@ -64,6 +64,11 @@ export const SECTIONS = {
         description:
           "A container that accepts any ReactNode and its native div props. It ships unstyled, so its appearance comes from your className.",
       },
+      {
+        to: "/ui/modal",
+        label: "Modal",
+        description: "Modal dialog",
+      },
     ],
   },
   form: {
