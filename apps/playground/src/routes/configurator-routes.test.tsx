@@ -21,7 +21,7 @@ async function renderAt(url: string) {
 }
 
 describe("configurator pages", () => {
-  it.each(["/ui/button", "/ui/card", "/form/input"])(
+  it.each(["/ui/button", "/ui/card", "/form/form"])(
     "render when the URL carries a numeric param no control declares: %s",
     async (path) => {
       await renderAt(`${path}?page=2`);

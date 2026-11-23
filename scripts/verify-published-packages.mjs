@@ -51,7 +51,11 @@ try {
     const fixtureDirectory = join(temporaryDirectory, `react-${version}`);
     await mkdir(fixtureDirectory, { recursive: true });
 
-    const dependencies = { react: version, "react-dom": version };
+    const dependencies = {
+      react: version,
+      "react-dom": version,
+      "@tanstack/react-form": "^1.33.5",
+    };
     for (const [name, tarball] of Object.entries(tarballs)) {
       dependencies[name] = `file:${tarball}`;
     }
@@ -67,7 +71,7 @@ import { createElement as h } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { AppProvider, DEFAULT_THEME, useAppTheme } from "@hackert-ui/core";
 import { Button, Card } from "@hackert-ui/ui";
-import { Input } from "@hackert-ui/form";
+import { FormField, useAppForm } from "@hackert-ui/form";
 import { useDebouncedValue, useDisclosure } from "@hackert-ui/hooks";
 import { cn } from "@hackert-ui/utils";
 import { DateInput } from "@hackert-ui/dates";
@@ -100,7 +104,13 @@ assert.ok(markup.includes("--hui-fg:light-dark(#ffffff, #0a0a0a)"), markup);
 assert.equal(cn("px-2", "px-4"), "px-4");
 assert.equal(renderToStaticMarkup(h(DateInput)), "<div>DateInput</div>");
 
-assert.match(renderToStaticMarkup(h(Input, { label: "Email" })), /<label for=/);
+function FormFieldProbe() {
+  const form = useAppForm({ defaultValues: { email: "" } });
+  return h(form.AppField, { name: "email" }, () =>
+    h(FormField, null, h(FormField.Label, null, "Email")),
+  );
+}
+assert.match(renderToStaticMarkup(h(FormFieldProbe)), /<label for=/);
 console.log("smoke ok for react@${version}");
 `,
     );

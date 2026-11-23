@@ -40,7 +40,10 @@ function documentedExports() {
 
 function hasPage(packageName: string, exportName: string) {
   const section = SECTION_LIST.find((candidate) => candidate.packageName === packageName);
-  return section?.items.some((item) => item.label === exportName) ?? false;
+  return (
+    section?.items.some((item) => item.label === exportName || item.covers?.includes(exportName)) ??
+    false
+  );
 }
 
 describe("catalog coverage", () => {
@@ -65,5 +68,18 @@ describe("catalog coverage", () => {
     const stale = [...NO_PAGE_YET].filter((key) => !waiting.has(key));
 
     expect(stale).toEqual([]);
+  });
+
+  it("only lists real exports in an item's covers", () => {
+    const exported = new Set(documentedExports().map((entry) => entry.key));
+    const unknown = SECTION_LIST.flatMap((section) =>
+      section.items.flatMap((item) =>
+        (("covers" in item ? item.covers : undefined) ?? [])
+          .map((name) => `${name} (${section.packageName})`)
+          .filter((key) => !exported.has(key)),
+      ),
+    );
+
+    expect(unknown).toEqual([]);
   });
 });

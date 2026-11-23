@@ -2,6 +2,6 @@ import { createFileRoute, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/form/")({
   beforeLoad: () => {
-    throw redirect({ to: "/form/input", replace: true });
+    throw redirect({ to: "/form/form", replace: true });
   },
 });
