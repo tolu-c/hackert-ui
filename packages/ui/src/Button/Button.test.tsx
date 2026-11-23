@@ -65,6 +65,21 @@ describe("Button", () => {
     expect(variable("--hui-px")).toBe(DEFAULT_THEME.spacing.lg);
   });
 
+  it("scales its text with size", () => {
+    render(
+      <>
+        <Button size="xs">Small</Button>
+        <Button>Default</Button>
+        <Button size="2xl">Large</Button>
+      </>,
+    );
+    const sizes = screen
+      .getAllByRole("button")
+      .map((button) => button.style.getPropertyValue("--hui-font-size"));
+
+    expect(sizes).toEqual(["12px", "16px", "24px"]);
+  });
+
   it("adds one shared stylesheet to the document however many buttons render", () => {
     render(
       <>

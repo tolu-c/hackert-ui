@@ -11,6 +11,7 @@ export const BUTTON_CSS = `@layer theme, base, components, utilities;
     border: none;
     border-radius: var(--hui-radius);
     font-family: var(--hui-font);
+    font-size: var(--hui-font-size);
     padding: var(--hui-py) var(--hui-px);
     cursor: pointer;
     transition:
