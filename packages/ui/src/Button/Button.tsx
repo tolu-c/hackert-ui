@@ -30,6 +30,15 @@ const BLOCK_PADDING: Readonly<Record<ButtonSize, ButtonSize>> = {
   "2xl": "xl",
 };
 
+const FONT_SIZE: Readonly<Record<ButtonSize, string>> = {
+  xs: "12px",
+  sm: "14px",
+  md: "16px",
+  lg: "18px",
+  xl: "20px",
+  "2xl": "24px",
+};
+
 // light-dark() resolves against the page's CSS color-scheme, so dark mode needs
 // no React state and server-rendered markup is right on first paint.
 function byScheme(light: string, dark: string): string {
@@ -58,6 +67,7 @@ export function Button({
     "--hui-bg-active": byScheme(light.activeBackground, dark.activeBackground),
     "--hui-radius": theme.radius[radius],
     "--hui-font": theme.fontFamily,
+    "--hui-font-size": FONT_SIZE[size],
     "--hui-py": theme.spacing[BLOCK_PADDING[size]],
     "--hui-px": theme.spacing[size],
   } as CSSProperties;
