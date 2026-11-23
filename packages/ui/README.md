@@ -2,6 +2,11 @@
 
 Component primitives: `Button`, `Card`.
 
+Also exported, as placeholders that are not implemented yet: `CloseButton`,
+`CopyButton`, `EmptyState`, `Loader`, `Modal`, `Notification`, `Skeleton` and
+`Tabs`. They render a stand-in element and their props will change, so don't
+build on them yet.
+
 ```sh
 pnpm add @hackert-ui/ui @hackert-ui/core @hackert-ui/utils
 ```
