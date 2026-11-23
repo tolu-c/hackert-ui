@@ -14,9 +14,11 @@ let finish: () => void = () => {};
 function Harness({
   disabled,
   name = "Ada",
+  variant,
 }: {
   readonly disabled?: boolean;
   readonly name?: string;
+  readonly variant?: "primary" | "danger";
 }) {
   const form = useAppForm({
     defaultValues: { name },
@@ -28,7 +30,9 @@ function Harness({
 
   return (
     <Form form={form}>
-      <form.SubmitButton disabled={disabled}>Save</form.SubmitButton>
+      <form.SubmitButton disabled={disabled} variant={variant}>
+        Save
+      </form.SubmitButton>
     </Form>
   );
 }
@@ -72,5 +76,22 @@ describe("SubmitButton", () => {
     await userEvent.setup().click(button());
 
     expect(button().hasAttribute("data-invalid")).toBe(true);
+  });
+
+  it("renders the themed Button from @hackert-ui/ui", () => {
+    render(<Harness variant="danger" />);
+
+    expect(button().className).toContain("hui-button");
+    expect(button().style.getPropertyValue("--hui-bg")).not.toBe("");
+  });
+
+  it("reuses Button's loading state while submitting", async () => {
+    const user = userEvent.setup();
+    render(<Harness />);
+
+    await user.click(button());
+
+    expect(button().hasAttribute("data-loading")).toBe(true);
+    finish();
   });
 });

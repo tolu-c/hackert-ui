@@ -14,7 +14,7 @@ const ADD_COMMAND: Readonly<Record<Manager, string>> = {
 export const PEERS: Readonly<Record<PackageId, readonly PackageId[]>> = {
   core: [],
   ui: ["core", "utils"],
-  form: [],
+  form: ["core", "ui", "utils"],
   hooks: [],
   utils: [],
 };

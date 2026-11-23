@@ -1,6 +1,7 @@
 import type { ComponentPropsWithoutRef } from "react";
 import { createContext, useContext, useId, useMemo } from "react";
 
+import { cx, FormStyles, useFormThemeVars } from "../styles/theme-vars";
 import { useFieldValidity } from "./field-validity";
 
 interface FormFieldContextValue {
@@ -17,7 +18,7 @@ export function useFormFieldContext() {
 
 export interface FormFieldProps extends ComponentPropsWithoutRef<"div"> {}
 
-function FormFieldRoot({ children, ...divProps }: FormFieldProps) {
+function FormFieldRoot({ children, className, style, ...divProps }: FormFieldProps) {
   const id = useId();
   const value = useMemo(
     () => ({
@@ -28,10 +29,17 @@ function FormFieldRoot({ children, ...divProps }: FormFieldProps) {
     [id],
   );
   const { invalid } = useFieldValidity();
+  const vars = useFormThemeVars();
 
   return (
     <FormFieldContext value={value}>
-      <div {...divProps} data-invalid={invalid ? "" : undefined}>
+      <div
+        {...divProps}
+        className={cx("hui-field hui-themed", className)}
+        style={{ ...vars, ...style }}
+        data-invalid={invalid ? "" : undefined}
+      >
+        <FormStyles />
         {children}
       </div>
     </FormFieldContext>
@@ -46,27 +54,27 @@ function useRequiredFormField(part: string) {
 
 export type FormFieldLabelProps = Omit<ComponentPropsWithoutRef<"label">, "htmlFor">;
 
-function Label(props: FormFieldLabelProps) {
+function Label({ className, ...props }: FormFieldLabelProps) {
   const { controlId } = useRequiredFormField("Label");
-  return <label {...props} htmlFor={controlId} />;
+  return <label {...props} className={cx("hui-label", className)} htmlFor={controlId} />;
 }
 
 export type FormFieldDescriptionProps = Omit<ComponentPropsWithoutRef<"p">, "id">;
 
-function Description(props: FormFieldDescriptionProps) {
+function Description({ className, ...props }: FormFieldDescriptionProps) {
   const { descriptionId } = useRequiredFormField("Description");
 
-  return <p {...props} id={descriptionId} />;
+  return <p {...props} className={cx("hui-description", className)} id={descriptionId} />;
 }
 
 export type FormFieldErrorProps = Omit<ComponentPropsWithoutRef<"p">, "id" | "children">;
 
-function FieldError(props: FormFieldErrorProps) {
+function FieldError({ className, ...props }: FormFieldErrorProps) {
   const { errorId } = useRequiredFormField("Error");
   const { messages } = useFieldValidity();
 
   return (
-    <p {...props} id={errorId} aria-live="polite">
+    <p {...props} className={cx("hui-error", className)} id={errorId} aria-live="polite">
       {messages.join(" ")}
     </p>
   );

@@ -3,9 +3,11 @@ import { useSelector } from "@tanstack/react-form";
 import { useLayoutEffect, useReducer, useRef, useState } from "react";
 
 import { useFieldControl } from "../FormField/field-control";
+import { InputBase } from "../styles/InputBase";
+import { cx } from "../styles/theme-vars";
 import {
   formatNumberText,
-  getCurrencySymbol,
+  getCurrencyAffix,
   reformat,
   type NumberFormatOptions,
 } from "./number-format";
@@ -24,6 +26,7 @@ export function NumberInput({
   decimals,
   thousandSeparator,
   allowNegative,
+  className,
   ...inputProps
 }: NumberInputProps) {
   const options: NumberFormatOptions = {
@@ -53,39 +56,40 @@ export function NumberInput({
     pendingCaret.current = null;
   });
 
-  const symbol = currency ? getCurrencySymbol(options) : undefined;
-  const input = (
-    <input
-      {...inputProps}
-      {...controlProps}
-      ref={inputRef}
-      type="text"
-      inputMode="decimal"
-      value={text}
-      onChange={(event) => {
-        const next = reformat(event.target.value, event.target.selectionStart ?? 0, options);
-        pendingCaret.current = next.caret;
-        setText(next.text);
-        setSeenValue(next.value);
-        field.handleChange(next.value);
-        rerender();
-      }}
-      onBlur={(event) => {
-        controlProps.onBlur();
-        setText(formatNumberText(value, options));
-        inputProps.onBlur?.(event);
-      }}
-    />
-  );
-
-  if (!symbol) return input;
+  const affix = currency ? getCurrencyAffix(options) : undefined;
+  const symbol = affix ? <span aria-hidden="true">{affix.symbol}</span> : undefined;
+  // Room for the symbol itself, so multi-letter ones like CHF or CA$ never run into the digits.
+  const symbolWidth = affix ? `calc(${affix.symbol.length}ch + 20px)` : undefined;
 
   return (
-    <span data-currency={currency}>
-      <span aria-hidden="true" data-part="affix">
-        {symbol}
-      </span>
-      {input}
-    </span>
+    <InputBase
+      leftSection={affix?.position === "left" ? symbol : undefined}
+      rightSection={affix?.position === "right" ? symbol : undefined}
+      leftSectionWidth={affix?.position === "left" ? symbolWidth : undefined}
+      rightSectionWidth={affix?.position === "right" ? symbolWidth : undefined}
+    >
+      <input
+        {...inputProps}
+        {...controlProps}
+        ref={inputRef}
+        type="text"
+        inputMode="decimal"
+        className={cx("hui-input", className)}
+        value={text}
+        onChange={(event) => {
+          const next = reformat(event.target.value, event.target.selectionStart ?? 0, options);
+          pendingCaret.current = next.caret;
+          setText(next.text);
+          setSeenValue(next.value);
+          field.handleChange(next.value);
+          rerender();
+        }}
+        onBlur={(event) => {
+          controlProps.onBlur();
+          setText(formatNumberText(value, options));
+          inputProps.onBlur?.(event);
+        }}
+      />
+    </InputBase>
   );
 }

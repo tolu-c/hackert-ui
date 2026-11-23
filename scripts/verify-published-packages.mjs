@@ -105,12 +105,23 @@ assert.equal(cn("px-2", "px-4"), "px-4");
 assert.equal(renderToStaticMarkup(h(DateInput)), "<div>DateInput</div>");
 
 function FormFieldProbe() {
-  const form = useAppForm({ defaultValues: { email: "" } });
-  return h(form.AppField, { name: "email" }, () =>
-    h(FormField, null, h(FormField.Label, null, "Email")),
+  const form = useAppForm({ defaultValues: { email: "", password: "" } });
+  return h(
+    form.AppForm,
+    null,
+    h(form.AppField, { name: "email" }, () =>
+      h(FormField, null, h(FormField.Label, null, "Email")),
+    ),
+    h(form.AppField, { name: "password" }, (field) => h(field.TextInput, { type: "password" })),
+    h(form.SubmitButton, null, "Save"),
   );
 }
-assert.match(renderToStaticMarkup(h(FormFieldProbe)), /<label for=/);
+const formMarkup = renderToStaticMarkup(h(AppProvider, null, h(FormFieldProbe)));
+assert.match(formMarkup, /<label [^>]*for="[^"]+-control"/, formMarkup);
+// Server rendering merges same-precedence styles into one tag: data-href="hui-form hui-button".
+assert.match(formMarkup, /data-href="[^"]*\\bhui-form\\b/, formMarkup);
+assert.match(formMarkup, /aria-label="Show password"/, formMarkup);
+assert.match(formMarkup, /<button type="submit" class="hui-button"/, formMarkup);
 console.log("smoke ok for react@${version}");
 `,
     );

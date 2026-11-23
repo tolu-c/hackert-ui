@@ -47,15 +47,14 @@ function TextAreaPage() {
       >
         <form.AppField name="message">
           {(field) => (
-            <FormField className="flex w-full max-w-xs flex-col gap-1">
-              <FormField.Label className="text-sm font-medium">Message</FormField.Label>
+            <FormField className="w-full max-w-xs">
+              <FormField.Label>Message</FormField.Label>
               <field.TextArea
                 {...props}
                 rows={Number(rows)}
                 placeholder={props.placeholder || undefined}
-                className="rounded-md border border-line px-3 py-2 text-sm"
               />
-              <FormField.Error className="text-xs text-red-600" />
+              <FormField.Error />
             </FormField>
           )}
         </form.AppField>

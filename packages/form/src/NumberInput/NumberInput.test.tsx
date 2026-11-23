@@ -203,7 +203,23 @@ describe("NumberInput", () => {
   it("renders no affix without a currency", () => {
     const { container } = render(<Harness />);
 
-    expect(container.firstElementChild).toBe(input());
+    expect(container.querySelector(".hui-input-section")).toBeNull();
+  });
+
+  it("puts the currency symbol inside the input, before the number in en-NG", () => {
+    render(<Harness currency="NGN" locale="en-NG" />);
+
+    expect(screen.getByText("₦").closest("[data-position]")?.getAttribute("data-position")).toBe(
+      "left",
+    );
+  });
+
+  it("puts the currency symbol after the number where the locale does", () => {
+    render(<Harness currency="EUR" locale="de-DE" />);
+
+    expect(screen.getByText("€").closest("[data-position]")?.getAttribute("data-position")).toBe(
+      "right",
+    );
   });
 
   it("is a decimal text input", () => {

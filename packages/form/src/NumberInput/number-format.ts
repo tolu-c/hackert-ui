@@ -14,6 +14,7 @@ interface Resolved {
   readonly allowNegative: boolean;
   readonly padDecimals: number;
   readonly symbol: string | undefined;
+  readonly symbolPosition: "left" | "right";
 }
 
 const DEFAULT_LOCALE = "en-US";
@@ -44,6 +45,7 @@ function resolve(options: NumberFormatOptions): Resolved {
       })
     : undefined;
   const currencyDecimals = currencyFormat?.resolvedOptions().maximumFractionDigits;
+  const currencyParts = currencyFormat?.formatToParts(1);
   const resolved: Resolved = {
     group,
     decimal,
@@ -51,14 +53,27 @@ function resolve(options: NumberFormatOptions): Resolved {
     grouping: thousandSeparator ?? currency !== undefined,
     allowNegative: allowNegative ?? true,
     padDecimals: currency ? (currencyDecimals ?? 0) : 0,
-    symbol: currencyFormat?.formatToParts(0).find((part) => part.type === "currency")?.value,
+    symbol: currencyParts?.find((part) => part.type === "currency")?.value,
+    symbolPosition: symbolAfterNumber(currencyParts) ? "right" : "left",
   };
   resolvedCache.set(key, resolved);
   return resolved;
 }
 
-export function getCurrencySymbol(options: NumberFormatOptions) {
-  return resolve(options).symbol;
+function symbolAfterNumber(parts: readonly Intl.NumberFormatPart[] | undefined) {
+  if (!parts) return false;
+  const types = parts.map((part) => part.type);
+  return types.indexOf("currency") > types.indexOf("integer");
+}
+
+export interface CurrencyAffix {
+  readonly symbol: string;
+  readonly position: "left" | "right";
+}
+
+export function getCurrencyAffix(options: NumberFormatOptions): CurrencyAffix | undefined {
+  const { symbol, symbolPosition } = resolve(options);
+  return symbol === undefined ? undefined : { symbol, position: symbolPosition };
 }
 
 function groupDigits(digits: string, resolved: Resolved) {
