@@ -51,6 +51,7 @@ Run these from the repository root.
 | `pnpm format`           | Same as `lint`, applying every safe fix                           |
 | `pnpm typecheck`        | `tsc` in every workspace project                                  |
 | `pnpm test`             | Run every package's tests                                         |
+| `pnpm scaffold`         | Create a component or hook with its playground page               |
 | `pnpm test:published`   | Pack, install and smoke-test the packages as npm would ship them  |
 | `pnpm verify`           | lint → typecheck → test → build → test:published, as CI runs them |
 | `pnpm changeset`        | Record a change for the next release                              |
@@ -144,6 +145,22 @@ Components fall back to the default theme outside `AppProvider`. See
 open.
 
 ## Adding a component
+
+`pnpm scaffold` does steps 1–4 in one go, then you fill in the real code and
+demo:
+
+```sh
+pnpm scaffold ui CopyButton "Copies text to the clipboard."
+pnpm scaffold hooks useCopy "Copies text and reports when it succeeded."
+```
+
+It keeps files that already exist, so running it for an existing component
+only adds what's missing, such as the playground page. It needs the package to
+have a section in `catalog.ts` already. A playground test fails when a
+component or hook ships without a catalog entry; exports still in progress are
+listed in `NO_PAGE_YET` in `apps/playground/src/catalog-coverage.test.ts`.
+
+By hand:
 
 1. Create `packages/<pkg>/src/<Name>/<Name>.tsx` and an `index.ts` barrel that
    names its exports, for example
