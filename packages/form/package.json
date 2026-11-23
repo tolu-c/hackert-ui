@@ -1,10 +1,11 @@
 {
   "name": "@hackert-ui/form",
   "version": "0.0.1",
-  "description": "React form components for Hackert UI",
+  "description": "TanStack Form components for Hackert UI",
   "keywords": [
     "forms",
     "react",
+    "tanstack-form",
     "ui"
   ],
   "homepage": "https://github.com/tolu-c/hackert-ui/tree/main/packages/form#readme",
@@ -49,9 +50,11 @@
     "test": "vp test run --passWithNoTests"
   },
   "devDependencies": {
+    "@tanstack/react-form": "^1.33.5",
     "react": "19.2.8"
   },
   "peerDependencies": {
+    "@tanstack/react-form": "^1.33.5",
     "react": "^19.0.0"
   }
 }

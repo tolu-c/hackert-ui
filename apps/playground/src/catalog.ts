@@ -8,6 +8,8 @@ export interface CatalogItem {
   readonly label: string;
   // The page's lead paragraph and its meta description.
   readonly description: string;
+  // Other exports this page documents, beyond the one named by `label`.
+  readonly covers?: readonly string[];
 }
 
 export interface CatalogSection {
@@ -68,13 +70,47 @@ export const SECTIONS = {
     to: "/form",
     label: "Form",
     packageName: "@hackert-ui/form",
-    blurb: "Form controls with labels wired to inputs.",
+    blurb: "TanStack Form components with accessible labels, descriptions and errors.",
     items: [
       {
-        to: "/form/input",
-        label: "Input",
+        to: "/form/form",
+        label: "Form",
         description:
-          "A text input whose label is wired to it with useId, so clicking the label focuses the field.",
+          "Wires useAppForm to a <form>, with FormField for the label, description and error, and a SubmitButton and FormError that read the form. A login example with async submit and server errors.",
+        covers: [
+          "FormField",
+          "SubmitButton",
+          "FormError",
+          "useAppForm",
+          "withForm",
+          "fieldContext",
+          "formContext",
+          "useFieldContext",
+          "useFormContext",
+        ],
+      },
+      {
+        to: "/form/text-input",
+        label: "TextInput",
+        description:
+          "A text field component for TanStack Form. Its id, aria-invalid and aria-describedby come from the surrounding FormField.",
+      },
+      {
+        to: "/form/text-area",
+        label: "TextArea",
+        description: "A multi-line text field with the same wiring as TextInput.",
+      },
+      {
+        to: "/form/number-input",
+        label: "NumberInput",
+        description:
+          "A locale-aware number field that groups digits as you type, keeps the caret in place and shows the currency symbol as an affix. The field value is a number or null.",
+      },
+      {
+        to: "/form/select-input",
+        label: "SelectInput",
+        description:
+          "A native select, a searchable combobox whose value must be an option, or an autocomplete that suggests options while keeping free text.",
       },
     ],
   },

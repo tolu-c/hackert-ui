@@ -15,7 +15,11 @@ import { Route as HooksRouteRouteImport } from './routes/hooks/route'
 import { Route as ThemeRouteRouteImport } from './routes/theme/route'
 import { Route as UiRouteRouteImport } from './routes/ui/route'
 import { Route as FormIndexRouteImport } from './routes/form/index'
-import { Route as FormInputRouteImport } from './routes/form/input'
+import { Route as FormFormRouteImport } from './routes/form/form'
+import { Route as FormNumberInputRouteImport } from './routes/form/number-input'
+import { Route as FormSelectInputRouteImport } from './routes/form/select-input'
+import { Route as FormTextAreaRouteImport } from './routes/form/text-area'
+import { Route as FormTextInputRouteImport } from './routes/form/text-input'
 import { Route as HooksIndexRouteImport } from './routes/hooks/index'
 import { Route as HooksUseDebouncedValueRouteImport } from './routes/hooks/use-debounced-value'
 import { Route as HooksUseDisclosureRouteImport } from './routes/hooks/use-disclosure'
@@ -57,9 +61,29 @@ const FormIndexRoute = FormIndexRouteImport.update({
   path: '/',
   getParentRoute: () => FormRouteRoute,
 } as any)
-const FormInputRoute = FormInputRouteImport.update({
-  id: '/input',
-  path: '/input',
+const FormFormRoute = FormFormRouteImport.update({
+  id: '/form',
+  path: '/form',
+  getParentRoute: () => FormRouteRoute,
+} as any)
+const FormNumberInputRoute = FormNumberInputRouteImport.update({
+  id: '/number-input',
+  path: '/number-input',
+  getParentRoute: () => FormRouteRoute,
+} as any)
+const FormSelectInputRoute = FormSelectInputRouteImport.update({
+  id: '/select-input',
+  path: '/select-input',
+  getParentRoute: () => FormRouteRoute,
+} as any)
+const FormTextAreaRoute = FormTextAreaRouteImport.update({
+  id: '/text-area',
+  path: '/text-area',
+  getParentRoute: () => FormRouteRoute,
+} as any)
+const FormTextInputRoute = FormTextInputRouteImport.update({
+  id: '/text-input',
+  path: '/text-input',
   getParentRoute: () => FormRouteRoute,
 } as any)
 const HooksIndexRoute = HooksIndexRouteImport.update({
@@ -119,7 +143,11 @@ export interface FileRoutesByFullPath {
   '/hooks': typeof HooksRouteRouteWithChildren
   '/theme': typeof ThemeRouteRouteWithChildren
   '/ui': typeof UiRouteRouteWithChildren
-  '/form/input': typeof FormInputRoute
+  '/form/form': typeof FormFormRoute
+  '/form/number-input': typeof FormNumberInputRoute
+  '/form/select-input': typeof FormSelectInputRoute
+  '/form/text-area': typeof FormTextAreaRoute
+  '/form/text-input': typeof FormTextInputRoute
   '/hooks/use-debounced-value': typeof HooksUseDebouncedValueRoute
   '/hooks/use-disclosure': typeof HooksUseDisclosureRoute
   '/theme/colors': typeof ThemeColorsRoute
@@ -134,7 +162,11 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/form/input': typeof FormInputRoute
+  '/form/form': typeof FormFormRoute
+  '/form/number-input': typeof FormNumberInputRoute
+  '/form/select-input': typeof FormSelectInputRoute
+  '/form/text-area': typeof FormTextAreaRoute
+  '/form/text-input': typeof FormTextInputRoute
   '/hooks/use-debounced-value': typeof HooksUseDebouncedValueRoute
   '/hooks/use-disclosure': typeof HooksUseDisclosureRoute
   '/theme/colors': typeof ThemeColorsRoute
@@ -154,7 +186,11 @@ export interface FileRoutesById {
   '/hooks': typeof HooksRouteRouteWithChildren
   '/theme': typeof ThemeRouteRouteWithChildren
   '/ui': typeof UiRouteRouteWithChildren
-  '/form/input': typeof FormInputRoute
+  '/form/form': typeof FormFormRoute
+  '/form/number-input': typeof FormNumberInputRoute
+  '/form/select-input': typeof FormSelectInputRoute
+  '/form/text-area': typeof FormTextAreaRoute
+  '/form/text-input': typeof FormTextInputRoute
   '/hooks/use-debounced-value': typeof HooksUseDebouncedValueRoute
   '/hooks/use-disclosure': typeof HooksUseDisclosureRoute
   '/theme/colors': typeof ThemeColorsRoute
@@ -175,7 +211,11 @@ export interface FileRouteTypes {
     | '/hooks'
     | '/theme'
     | '/ui'
-    | '/form/input'
+    | '/form/form'
+    | '/form/number-input'
+    | '/form/select-input'
+    | '/form/text-area'
+    | '/form/text-input'
     | '/hooks/use-debounced-value'
     | '/hooks/use-disclosure'
     | '/theme/colors'
@@ -190,7 +230,11 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/form/input'
+    | '/form/form'
+    | '/form/number-input'
+    | '/form/select-input'
+    | '/form/text-area'
+    | '/form/text-input'
     | '/hooks/use-debounced-value'
     | '/hooks/use-disclosure'
     | '/theme/colors'
@@ -209,7 +253,11 @@ export interface FileRouteTypes {
     | '/hooks'
     | '/theme'
     | '/ui'
-    | '/form/input'
+    | '/form/form'
+    | '/form/number-input'
+    | '/form/select-input'
+    | '/form/text-area'
+    | '/form/text-input'
     | '/hooks/use-debounced-value'
     | '/hooks/use-disclosure'
     | '/theme/colors'
@@ -275,11 +323,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FormIndexRouteImport
       parentRoute: typeof FormRouteRoute
     }
-    '/form/input': {
-      id: '/form/input'
-      path: '/input'
-      fullPath: '/form/input'
-      preLoaderRoute: typeof FormInputRouteImport
+    '/form/form': {
+      id: '/form/form'
+      path: '/form'
+      fullPath: '/form/form'
+      preLoaderRoute: typeof FormFormRouteImport
+      parentRoute: typeof FormRouteRoute
+    }
+    '/form/number-input': {
+      id: '/form/number-input'
+      path: '/number-input'
+      fullPath: '/form/number-input'
+      preLoaderRoute: typeof FormNumberInputRouteImport
+      parentRoute: typeof FormRouteRoute
+    }
+    '/form/select-input': {
+      id: '/form/select-input'
+      path: '/select-input'
+      fullPath: '/form/select-input'
+      preLoaderRoute: typeof FormSelectInputRouteImport
+      parentRoute: typeof FormRouteRoute
+    }
+    '/form/text-area': {
+      id: '/form/text-area'
+      path: '/text-area'
+      fullPath: '/form/text-area'
+      preLoaderRoute: typeof FormTextAreaRouteImport
+      parentRoute: typeof FormRouteRoute
+    }
+    '/form/text-input': {
+      id: '/form/text-input'
+      path: '/text-input'
+      fullPath: '/form/text-input'
+      preLoaderRoute: typeof FormTextInputRouteImport
       parentRoute: typeof FormRouteRoute
     }
     '/hooks/': {
@@ -356,12 +432,20 @@ declare module '@tanstack/react-router' {
 }
 
 interface FormRouteRouteChildren {
-  FormInputRoute: typeof FormInputRoute
+  FormFormRoute: typeof FormFormRoute
+  FormNumberInputRoute: typeof FormNumberInputRoute
+  FormSelectInputRoute: typeof FormSelectInputRoute
+  FormTextAreaRoute: typeof FormTextAreaRoute
+  FormTextInputRoute: typeof FormTextInputRoute
   FormIndexRoute: typeof FormIndexRoute
 }
 
 const FormRouteRouteChildren: FormRouteRouteChildren = {
-  FormInputRoute: FormInputRoute,
+  FormFormRoute: FormFormRoute,
+  FormNumberInputRoute: FormNumberInputRoute,
+  FormSelectInputRoute: FormSelectInputRoute,
+  FormTextAreaRoute: FormTextAreaRoute,
+  FormTextInputRoute: FormTextInputRoute,
   FormIndexRoute: FormIndexRoute,
 }
 

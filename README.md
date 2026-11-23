@@ -2,14 +2,14 @@
 
 A personal React component library, split into packages so a project takes only what it needs.
 
-| Package             | What it holds                                                    |
-| ------------------- | ---------------------------------------------------------------- |
-| `@hackert-ui/core`  | `AppProvider`, theme resolution, design tokens                   |
-| `@hackert-ui/ui`    | Component primitives — `Button`, `Card`                          |
-| `@hackert-ui/form`  | Form controls — `Input`                                          |
-| `@hackert-ui/hooks` | React hooks — `useDisclosure`, `useDebouncedValue`               |
-| `@hackert-ui/utils` | Framework-agnostic helpers — `cn` (no React dependency)          |
-| `@hackert-ui/dates` | Date components — `DateInput` (placeholder, not yet implemented) |
+| Package             | What it holds                                                      |
+| ------------------- | ------------------------------------------------------------------ |
+| `@hackert-ui/core`  | `AppProvider`, theme resolution, design tokens                     |
+| `@hackert-ui/ui`    | Component primitives — `Button`, `Card`                            |
+| `@hackert-ui/form`  | TanStack Form components — `FormField`, `TextInput`, `SelectInput` |
+| `@hackert-ui/hooks` | React hooks — `useDisclosure`, `useDebouncedValue`                 |
+| `@hackert-ui/utils` | Framework-agnostic helpers — `cn` (no React dependency)            |
+| `@hackert-ui/dates` | Date components — `DateInput` (placeholder, not yet implemented)   |
 
 `apps/playground` is the showcase site. It demos every package except
 `dates`, which has nothing to show yet.

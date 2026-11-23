@@ -209,7 +209,7 @@ Three things in that signature are load-bearing.
 component's variant set with no edit here, and removing one is a type error at
 every call site. This is the lookup-table form: a frozen token record indexed by
 a prop, rather than a `if (variant === "primary") … else if …` chain that has to
-be repeated in `Card`, `Input`, and everything after them. `SIZE_PADDING` is the
+be repeated in `Card`, `TextInput`, and everything after them. `SIZE_PADDING` is the
 same idea for a scale the theme does not name directly.
 
 **Optional public props carry `| undefined`.** `tsconfig.base.json` enables
@@ -246,11 +246,11 @@ out of the barrel.
 
 ### The same treatment applies to `form`
 
-`@hackert-ui/form`'s `Input` is in an identical position — a React peer only, no
-`core` dependency, no styling. Everything above transfers unchanged: the peer +
+`@hackert-ui/form`'s components are in an identical position — a React peer (plus
+`@tanstack/react-form`) only, no `core` dependency, no styling. Everything above transfers unchanged: the peer +
 dev dependency pair, `useSafeAppTheme` over `useAppTheme`, rest-props-first
-spread, the `cx` merge. `Input` renders a wrapper `div` and a `label`, so it has
-more elements to distribute tokens across, and its markup is asserted in the
+spread, the `cx` merge. `FormField` renders a wrapper `div` and a `label`, so it
+has more elements to distribute tokens across, and its markup is asserted in the
 same smoke fixture (`scripts/verify-published-packages.mjs`, the `/<label for=/`
 match) — that assertion is markup-sensitive in the same way as `Button`'s.
 
