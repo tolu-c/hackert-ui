@@ -1,6 +1,12 @@
 import { describe, expect, it } from "vite-plus/test";
 
-import { formatNumberText, getSeparators, parseNumberText, reformat } from "./number-format";
+import {
+  formatNumberText,
+  getCurrencyAffix,
+  getSeparators,
+  parseNumberText,
+  reformat,
+} from "./number-format";
 
 const usd = { locale: "en-US", currency: "USD" } as const;
 const plain = { locale: "en-US", decimals: 2 } as const;
@@ -109,5 +115,22 @@ describe("reformat", () => {
       caret: 7,
       value: 1234.5,
     });
+  });
+});
+
+describe("getCurrencyAffix", () => {
+  it("places the symbol where the locale writes it", () => {
+    expect(getCurrencyAffix({ currency: "NGN", locale: "en-NG" })).toEqual({
+      symbol: "₦",
+      position: "left",
+    });
+    expect(getCurrencyAffix({ currency: "EUR", locale: "de-DE" })).toEqual({
+      symbol: "€",
+      position: "right",
+    });
+  });
+
+  it("has no affix without a currency", () => {
+    expect(getCurrencyAffix({})).toBeUndefined();
   });
 });

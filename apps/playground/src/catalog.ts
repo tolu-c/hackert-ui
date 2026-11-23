@@ -115,7 +115,8 @@ export const SECTIONS = {
         to: "/form/select-input",
         label: "SelectInput",
         description:
-          "A native select, a searchable combobox whose value must be an option, or an autocomplete that suggests options while keeping free text.",
+          "A select with a styled dropdown, a searchable combobox whose value must be an option, or an autocomplete that keeps free text. Options can be strings, numbers, booleans, objects or groups. Select is the same control without TanStack Form.",
+        covers: ["Select"],
       },
     ],
   },

@@ -1,3 +1,4 @@
+import { Select } from "@hackert-ui/form";
 import { useId } from "react";
 import type { SelectControl } from "../controls";
 import { FieldLabel } from "./FieldLabel";
@@ -9,18 +10,12 @@ export function SelectField({ control, value, onChange }: FieldProps<SelectContr
   return (
     <div>
       <FieldLabel htmlFor={id}>{control.label}</FieldLabel>
-      <select
+      <Select
         id={id}
+        options={control.options}
         value={String(value)}
-        onChange={(event) => onChange(event.currentTarget.value)}
-        className="w-full rounded-md border border-line-strong bg-surface px-3 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
-      >
-        {control.options.map((option) => (
-          <option key={option} value={option}>
-            {option}
-          </option>
-        ))}
-      </select>
+        onChange={(next) => onChange(next ?? control.defaultValue)}
+      />
     </div>
   );
 }

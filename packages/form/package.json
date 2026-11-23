@@ -49,12 +49,23 @@
     "typecheck": "tsc -p tsconfig.json",
     "test": "vp test run --passWithNoTests"
   },
+  "dependencies": {
+    "@floating-ui/react-dom": "^2.1.9",
+    "@hugeicons/core-free-icons": "^4.4.0",
+    "@hugeicons/react": "^1.1.10"
+  },
   "devDependencies": {
+    "@hackert-ui/core": "workspace:*",
+    "@hackert-ui/ui": "workspace:*",
     "@tanstack/react-form": "^1.33.5",
-    "react": "19.2.8"
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
   },
   "peerDependencies": {
+    "@hackert-ui/core": ">=0.0.0 <1.0.0",
+    "@hackert-ui/ui": ">=0.0.0 <1.0.0",
     "@tanstack/react-form": "^1.33.5",
-    "react": "^19.0.0"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   }
 }

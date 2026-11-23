@@ -120,35 +120,23 @@ function SignInDemo() {
         <form.AppField name="email">
           {(field) => (
             <FormField className="flex flex-col gap-1">
-              <FormField.Label className="text-sm font-medium">Email</FormField.Label>
-              <field.TextInput
-                type="email"
-                autoComplete="email"
-                className="rounded-md border border-line px-3 py-2 text-sm aria-invalid:border-red-500"
-              />
-              <FormField.Description className="text-xs text-fg-muted">
-                We never share it.
-              </FormField.Description>
-              <FormField.Error className="text-xs text-red-600" />
+              <FormField.Label>Email</FormField.Label>
+              <field.TextInput type="email" autoComplete="email" />
+              <FormField.Description>We never share it.</FormField.Description>
+              <FormField.Error />
             </FormField>
           )}
         </form.AppField>
         <form.AppField name="password">
           {(field) => (
             <FormField className="flex flex-col gap-1">
-              <FormField.Label className="text-sm font-medium">Password</FormField.Label>
-              <field.TextInput
-                type="password"
-                autoComplete="current-password"
-                className="rounded-md border border-line px-3 py-2 text-sm aria-invalid:border-red-500"
-              />
-              <FormField.Error className="text-xs text-red-600" />
+              <FormField.Label>Password</FormField.Label>
+              <field.TextInput type="password" autoComplete="current-password" />
+              <FormField.Error />
             </FormField>
           )}
         </form.AppField>
-        <form.SubmitButton className="rounded-md border border-line px-3 py-2 text-sm disabled:opacity-60">
-          Sign in
-        </form.SubmitButton>
+        <form.SubmitButton>Sign in</form.SubmitButton>
         {signedInAs ? <p className="text-sm text-fg-soft">Signed in as {signedInAs}</p> : null}
       </Form>
     </div>

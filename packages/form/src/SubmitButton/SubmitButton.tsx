@@ -1,21 +1,21 @@
-import type { ComponentPropsWithoutRef } from "react";
+import { Button, type ButtonProps } from "@hackert-ui/ui";
 import { useSelector } from "@tanstack/react-form";
 
 import { useFormContext } from "../form-context";
 
-export type SubmitButtonProps = Omit<ComponentPropsWithoutRef<"button">, "type">;
+export type SubmitButtonProps = Omit<ButtonProps, "type" | "loading">;
 
-export function SubmitButton({ disabled, ...buttonProps }: SubmitButtonProps) {
+// Button from @hackert-ui/ui, in its loading state while the form submits.
+export function SubmitButton(buttonProps: SubmitButtonProps) {
   const form = useFormContext();
   const isSubmitting = useSelector(form.store, (state) => state.isSubmitting);
   const canSubmit = useSelector(form.store, (state) => state.canSubmit);
 
   return (
-    <button
+    <Button
       {...buttonProps}
       type="submit"
-      disabled={disabled || isSubmitting}
-      aria-busy={isSubmitting || undefined}
+      loading={isSubmitting}
       data-submitting={isSubmitting ? "" : undefined}
       data-invalid={canSubmit ? undefined : ""}
     />

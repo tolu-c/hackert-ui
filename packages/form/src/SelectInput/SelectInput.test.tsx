@@ -34,32 +34,39 @@ function Harness({ initial = "", ...props }: Partial<SelectInputProps> & { initi
 }
 
 describe("SelectInput mode=select", () => {
-  it("renders a native select with a disabled placeholder", () => {
+  function trigger() {
+    return screen.getByRole("combobox") as HTMLInputElement;
+  }
+
+  it("is a read-only combobox with a placeholder", () => {
     render(<Harness placeholder="Pick one" />);
 
-    const select = screen.getByLabelText("Country") as HTMLSelectElement;
-
-    expect(select.tagName).toBe("SELECT");
-    expect(select.value).toBe("");
-    expect((screen.getByRole("option", { name: "Pick one" }) as HTMLOptionElement).disabled).toBe(
-      true,
-    );
+    expect(trigger().readOnly).toBe(true);
+    expect(trigger().placeholder).toBe("Pick one");
+    expect(trigger().value).toBe("");
   });
 
   it("writes the chosen option to the field", async () => {
+    const user = userEvent.setup();
     render(<Harness />);
 
-    await userEvent.setup().selectOptions(screen.getByLabelText("Country"), "gh");
+    await user.click(trigger());
+    await user.click(screen.getByRole("option", { name: "Ghana" }));
 
     expect(latest).toBe("gh");
+    expect(trigger().value).toBe("Ghana");
   });
 
-  it("disables disabled options", () => {
+  it("does not pick disabled options", async () => {
+    const user = userEvent.setup();
     render(<Harness />);
 
-    expect((screen.getByRole("option", { name: "Kenya" }) as HTMLOptionElement).disabled).toBe(
-      true,
-    );
+    await user.click(trigger());
+    const kenya = screen.getByRole("option", { name: "Kenya" });
+    await user.click(kenya);
+
+    expect(kenya.getAttribute("aria-disabled")).toBe("true");
+    expect(latest).toBe("");
   });
 });
 
@@ -143,7 +150,7 @@ describe("SelectInput mode=searchable", () => {
 
     await user.keyboard("{Escape}");
     expect(combobox().value).toBe("");
-    expect(latest).toBe("");
+    expect(latest).toBeNull();
   });
 
   it("selects an option by mouse without losing focus", async () => {
@@ -178,13 +185,13 @@ describe("SelectInput mode=searchable", () => {
     expect(latest).toBe("ng");
   });
 
-  it("shows a message when nothing matches", async () => {
+  it("shows nothingFoundMessage when nothing matches", async () => {
     const user = userEvent.setup();
-    render(<Harness mode="searchable" />);
+    render(<Harness mode="searchable" nothingFoundMessage="No results" />);
 
     await user.type(combobox(), "zzz");
 
-    expect(screen.getByText("No results")).toBeTruthy();
+    expect(screen.getByRole("status").textContent).toBe("No results");
     expect(screen.queryByRole("option")).toBeNull();
   });
 
@@ -270,7 +277,7 @@ describe("SelectInput mode=searchable", () => {
 
     await user.clear(combobox());
 
-    expect(latest).toBe("");
+    expect(latest).toBeNull();
   });
 
   it("does not pick a disabled match with Enter", async () => {
@@ -281,15 +288,6 @@ describe("SelectInput mode=searchable", () => {
 
     expect(latest).toBe("");
     expect(combobox().hasAttribute("aria-activedescendant")).toBe(false);
-  });
-
-  it("uses a custom empty message", async () => {
-    const user = userEvent.setup();
-    render(<Harness mode="searchable" emptyMessage="Nothing here" />);
-
-    await user.type(combobox(), "zzz");
-
-    expect(screen.getByRole("status").textContent).toBe("Nothing here");
   });
 
   it("follows the form when the value is changed from outside", () => {

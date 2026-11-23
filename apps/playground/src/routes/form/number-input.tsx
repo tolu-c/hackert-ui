@@ -67,19 +67,13 @@ function NumberInputPage() {
       >
         <form.AppField name="amount">
           {(field) => (
-            <FormField className="flex w-full max-w-xs flex-col gap-1">
-              <FormField.Label className="text-sm font-medium">Amount</FormField.Label>
-              <div className="flex items-center gap-2">
-                <field.NumberInput
-                  {...props}
-                  currency={currencyProp}
-                  className="rounded-md border border-line px-3 py-2 text-sm"
-                />
-              </div>
-              <FormField.Description className="text-xs text-fg-muted">
+            <FormField className="w-full max-w-xs">
+              <FormField.Label>Amount</FormField.Label>
+              <field.NumberInput {...props} currency={currencyProp} />
+              <FormField.Description>
                 Value: <span>{String(field.state.value)}</span>
               </FormField.Description>
-              <FormField.Error className="text-xs text-red-600" />
+              <FormField.Error />
             </FormField>
           )}
         </form.AppField>
@@ -91,6 +85,14 @@ function NumberInputPage() {
         source={`useAppForm({\n  defaultValues: { amount: null as number | null },\n  validators: {\n    onChange: ({ value }) =>\n      value.amount !== null && value.amount < 100\n        ? { fields: { amount: "Minimum is 100" } }\n        : undefined,\n  },\n});`}
       >
         <MinimumDemo />
+      </Demo>
+
+      <Demo
+        title="Symbol position"
+        description="The currency symbol sits inside the input, on the side the locale writes it: before the number in en-US, after it in de-DE. It is decorative, so name the currency in the label."
+        source={'<field.NumberInput currency="EUR" locale="de-DE" />'}
+      >
+        <EuroDemo />
       </Demo>
     </div>
   );
@@ -110,13 +112,25 @@ function MinimumDemo() {
   return (
     <form.AppField name="amount">
       {(field) => (
-        <FormField className="flex w-full max-w-xs flex-col gap-1">
-          <FormField.Label className="text-sm font-medium">Top-up</FormField.Label>
-          <field.NumberInput
-            currency="USD"
-            className="rounded-md border border-line px-3 py-2 text-sm aria-invalid:border-red-500"
-          />
-          <FormField.Error className="text-xs text-red-600" />
+        <FormField className="w-full max-w-xs">
+          <FormField.Label>Top-up</FormField.Label>
+          <field.NumberInput currency="USD" />
+          <FormField.Error />
+        </FormField>
+      )}
+    </form.AppField>
+  );
+}
+
+function EuroDemo() {
+  const form = useAppForm({ defaultValues: { price: 1234.5 as number | null } });
+
+  return (
+    <form.AppField name="price">
+      {(field) => (
+        <FormField className="w-full max-w-xs">
+          <FormField.Label>Price (EUR)</FormField.Label>
+          <field.NumberInput currency="EUR" locale="de-DE" />
         </FormField>
       )}
     </form.AppField>
