@@ -1,6 +1,9 @@
 # @hackert-ui/ui
 
-## 0.2.0
+## 0.2.1
+
+First release of these changes. The `v0.2.0` release published nothing: npm
+already had 0.2.0, the build published by mistake before 0.0.1.
 
 ### Minor Changes
 

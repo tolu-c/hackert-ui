@@ -172,3 +172,11 @@ Version PR published 0.2.0 straight to npm. The user wanted to start at 0.0.1:
 Version PR yields 0.0.1. Lesson: land a workflow change before merging anything
 that triggers the old one. 0.2.0 is permanently taken on npm, so 0.1.x must jump
 past it (0.2.1+) or go to 1.0.0.
+
+### The v0.2.0 release "succeeded" and published nothing
+
+The Version PR took the packages from 0.1.0 to 0.2.0, which npm already had
+(the accidental build above). `changeset publish` only warns ("already published
+on npm") and exits 0, so the Publish run was green while `latest` stayed 0.1.0.
+Fixed by moving to 0.2.1 (renaming the unreleased CHANGELOG section) and adding a
+Publish step that fails when the version is already on npm.
