@@ -8,6 +8,7 @@ import { ColorSchemeSwitcher } from "@/components/ColorSchemeSwitcher";
 import { GitHubIcon, GitHubLink } from "@/components/GitHubLink";
 import { Logo } from "@/components/Logo";
 import { NEW_ISSUE_URL, REPO_URL } from "@/repo";
+import { useScrolled } from "@/scrolled";
 
 import "../styles.css";
 
@@ -32,12 +33,19 @@ const NAV_LINK = {
   activeProps: { className: "font-medium text-fg" },
 } as const;
 
+// Solid at the top of the page; once content slides underneath, it turns
+// translucent and blurs what is behind it so the nav stays readable.
+const HEADER_CLASS =
+  "sticky top-0 z-40 border-b border-line bg-surface transition-[background-color,box-shadow] duration-200 data-scrolled:bg-surface/75 data-scrolled:shadow-[0_1px_12px_-6px_rgb(0_0_0/0.15)] data-scrolled:backdrop-blur-md data-scrolled:backdrop-saturate-150";
+
 function RootComponent() {
+  const scrolled = useScrolled();
+
   return (
     <AppProvider>
       <HeadContent />
       <div className="flex min-h-screen flex-col bg-surface text-fg">
-        <header className="border-b border-line">
+        <header className={HEADER_CLASS} data-scrolled={scrolled ? "" : undefined}>
           <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-6 gap-y-3 px-6 py-4">
             <Link to="/" aria-label="hackert-ui home" className="flex rounded-sm">
               <Logo />

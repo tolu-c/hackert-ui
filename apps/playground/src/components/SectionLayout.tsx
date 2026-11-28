@@ -12,7 +12,7 @@ export function SectionLayout({ section }: SectionLayoutProps) {
         <p className="mb-2 hidden text-xs font-semibold tracking-wide text-fg-muted uppercase md:block">
           {section.label}
         </p>
-        <ul className="-mx-4 flex gap-1 overflow-x-auto px-4 md:sticky md:top-6 md:mx-0 md:flex-col md:overflow-visible md:px-0">
+        <ul className="-mx-4 flex gap-1 overflow-x-auto px-4 md:sticky md:top-24 md:mx-0 md:flex-col md:overflow-visible md:px-0">
           {section.items.map((item) => (
             <li key={item.to} className="shrink-0">
               <Link
