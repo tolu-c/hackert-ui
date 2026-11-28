@@ -138,6 +138,12 @@ export const SECTIONS = {
           "A locale-aware number field that groups digits as you type, keeps the caret in place and shows the currency symbol as an affix. The field value is a number or null.",
       },
       {
+        to: "/form/phone-input",
+        label: "PhoneInput",
+        description:
+          "A phone number field with a searchable country picker. It formats as you type, recognises numbers typed with +, and stores the number in E.164.",
+      },
+      {
         to: "/form/select-input",
         label: "SelectInput",
         description:

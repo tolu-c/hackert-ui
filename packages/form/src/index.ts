@@ -8,6 +8,7 @@ export {
 } from "./FormField";
 export { FormError, type FormErrorProps } from "./FormError";
 export { NumberInput, type NumberInputProps } from "./NumberInput";
+export { PhoneInput, type PhoneInputProps } from "./PhoneInput";
 export {
   Select,
   SelectInput,

@@ -2,7 +2,7 @@
 
 Form components built on [TanStack Form](https://tanstack.com/form): `Form`,
 `FormField` (`.Label`, `.Description`, `.Error`), `TextInput`, `TextArea`,
-`NumberInput`, `SelectInput` (and the standalone `Select`), `SubmitButton` and
+`NumberInput`, `PhoneInput`, `SelectInput` (and the standalone `Select`), `SubmitButton` and
 `FormError`. They are themed from `@hackert-ui/core`, follow dark mode through
 `light-dark()`, and keep their styles in `@layer components`, so a `className`
 always wins. State is exposed as `data-*` attributes.
@@ -58,6 +58,15 @@ matching `FormField.Error`.
 `allowNegative`; its value is `number | null`. The currency symbol sits inside the
 input, on the side the locale writes it. It is decorative, so name the currency in
 the label.
+
+`PhoneInput` has a searchable country picker, formats the number as you type, and
+stores it in E.164 (`"+2348031234567"`, or `""` when empty). It takes
+`defaultCountry` (default `"US"`), `countries` to limit the list, and `locale` for
+country names. A number typed with `+` switches to its country. Validate with
+`isValidPhoneNumber` from `libphonenumber-js`.
+
+An invalid field turns its border, label, description and error message the
+theme's `danger` colour.
 
 `SelectInput` (bound to a field) and `Select` (controlled with `value` and
 `onChange`) take `options` and `mode`: `"select"` (a styled dropdown),
