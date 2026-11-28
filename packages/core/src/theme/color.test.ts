@@ -32,8 +32,14 @@ describe("parseColor", () => {
     expect(rgb?.b).toBeCloseTo(0, 2);
   });
 
+  it("reads CSS named colours, ignoring case", () => {
+    expect(parseColor("Red")).toEqual(parseColor("#ff0000"));
+    expect(parseColor("rebeccapurple")).toEqual(parseColor("#663399"));
+  });
+
   it("returns undefined for formats it does not support", () => {
-    expect(parseColor("red")).toBeUndefined();
+    expect(parseColor("notacolour")).toBeUndefined();
+    expect(parseColor("currentColor")).toBeUndefined();
     expect(parseColor("hsl(0 100% 50%)")).toBeUndefined();
     expect(parseColor("#ff000")).toBeUndefined();
   });
@@ -86,15 +92,44 @@ describe("deriveVariantColors", () => {
     expect(light.hoverBackground).not.toBe(dark.hoverBackground);
   });
 
-  it("names the variant and value when the format is unsupported", () => {
-    expect(() => deriveVariantColors("primary", "red")).toThrow(
-      '@hackert-ui/core: cannot derive colours for variant "primary" from "red"',
+  it("names the colour and value when the format is unsupported", () => {
+    expect(() => deriveVariantColors("primary", "hsl(0 100% 50%)")).toThrow(
+      '@hackert-ui/core: cannot derive colours for "primary" from "hsl(0 100% 50%)"',
     );
   });
 
   it("rejects translucent colours, whose contrast depends on what is behind them", () => {
     expect(() => deriveVariantColors("primary", "rgb(0 0 0 / 50%)")).toThrow(
-      'variant "primary" from "rgb(0 0 0 / 50%)" — the colour must be opaque',
+      '"primary" from "rgb(0 0 0 / 50%)" — the colour must be opaque',
+    );
+  });
+
+  it("keeps a colour that already reads on the page as the text colour", () => {
+    expect(deriveVariantColors("primary", "#2563eb").text).toBe("#2563eb");
+  });
+
+  it("darkens text that would be hard to read on a light page", () => {
+    const text = deriveVariantColors("warning", DEFAULT_THEME.colors.warning).text;
+
+    expect(channelSum(text)).toBeLessThan(channelSum(DEFAULT_THEME.colors.warning));
+  });
+
+  it("lightens text that would be hard to read on a dark page", () => {
+    const text = deriveVariantColors("primary", "#1e3a8a", "dark").text;
+
+    expect(channelSum(text)).toBeGreaterThan(channelSum("#1e3a8a"));
+  });
+
+  it("tints light backgrounds with the colour, stronger on hover", () => {
+    const colors = deriveVariantColors("primary", "#2563eb");
+
+    expect(colors.lightBackground).toBe("rgb(37 99 235 / 0.1)");
+    expect(colors.lightHoverBackground).toBe("rgb(37 99 235 / 0.16)");
+  });
+
+  it("tints more strongly on dark pages", () => {
+    expect(deriveVariantColors("primary", "#3b82f6", "dark").lightBackground).toBe(
+      "rgb(59 130 246 / 0.18)",
     );
   });
 });

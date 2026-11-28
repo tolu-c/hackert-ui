@@ -1,16 +1,14 @@
 import { useSafeAppTheme } from "../AppProvider";
 import {
-  type AppColorTheme,
+  type AppColor,
   type ColorScheme,
   deriveVariantColors,
+  schemeColors,
   type VariantColors,
 } from "../theme";
 
-export function useVariantColors(
-  variant: keyof AppColorTheme,
-  scheme: ColorScheme = "light",
-): VariantColors {
+// `color` is a theme key, read from the scheme's palette, or any CSS colour.
+export function useVariantColors(color: AppColor, scheme: ColorScheme = "light"): VariantColors {
   const theme = useSafeAppTheme();
-  const colors = scheme === "dark" ? theme.dark.colors : theme.colors;
-  return deriveVariantColors(variant, colors[variant], scheme);
+  return deriveVariantColors(color, schemeColors(theme, color)[scheme], scheme);
 }

@@ -32,3 +32,15 @@ describe("useVariantColors", () => {
     expect(result.current.background).toBe(DEFAULT_THEME.dark.colors.primary);
   });
 });
+
+describe("useVariantColors with a CSS colour", () => {
+  it("derives from the colour in both schemes", () => {
+    const { result } = renderHook(() => ({
+      light: useVariantColors("tomato"),
+      dark: useVariantColors("tomato", "dark"),
+    }));
+
+    expect(result.current.light.background).toBe("tomato");
+    expect(result.current.dark.background).toBe("tomato");
+  });
+});

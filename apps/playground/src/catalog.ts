@@ -56,7 +56,7 @@ export const SECTIONS = {
         to: "/ui/button",
         label: "Button",
         description:
-          "A themed button. Text, hover and pressed colours are derived from the variant's theme colour, and its styles sit in @layer components so your className always wins.",
+          "A themed button in six variants: filled, light, outline, subtle, transparent and a neutral default. color takes a theme key or any CSS colour, and text, hover and pressed colours are derived from it. It has left and right sections, full width, and a loading spinner, and its styles sit in @layer components so your className always wins.",
       },
       {
         to: "/ui/card",

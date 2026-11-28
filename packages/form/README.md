@@ -70,7 +70,7 @@ type (`Select<number>` hands back numbers). Also `nothingFoundMessage`,
 above the input when there is no room below.
 
 `SubmitButton` is `Button` from `@hackert-ui/ui`, disabled and `aria-busy` while
-the form submits; it takes `Button`'s `variant`, `size` and `radius`.
+the form submits; it takes `Button`'s `color`, `variant`, `size` and `radius`.
 
 To add your own components, call `createFormHook` with the exported `fieldContext`
 and `formContext`.

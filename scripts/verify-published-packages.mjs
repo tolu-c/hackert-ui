@@ -97,7 +97,7 @@ function Probe() {
 
 const markup = renderToStaticMarkup(h(AppProvider, null, h(Probe)));
 assert.match(markup, /^<style data-precedence="default" data-href="hui-button">@layer theme, base, components, utilities;/, markup);
-assert.match(markup, /<button type="button" class="hui-button" style="/, markup);
+assert.match(markup, /<button type="button"[^>]* class="hui-button" style="/, markup);
 assert.ok(
   markup.includes(\`--hui-bg:light-dark(\${DEFAULT_THEME.colors.primary}, \${DEFAULT_THEME.dark.colors.primary})\`),
   markup,
@@ -124,7 +124,7 @@ assert.match(formMarkup, /<label [^>]*for="[^"]+-control"/, formMarkup);
 // Server rendering merges same-precedence styles into one tag: data-href="hui-form hui-button".
 assert.match(formMarkup, /data-href="[^"]*\\bhui-form\\b/, formMarkup);
 assert.match(formMarkup, /aria-label="Show password"/, formMarkup);
-assert.match(formMarkup, /<button type="submit" class="hui-button"/, formMarkup);
+assert.match(formMarkup, /<button type="submit"[^>]* class="hui-button"/, formMarkup);
 console.log("smoke ok for react@${version}");
 `,
     );

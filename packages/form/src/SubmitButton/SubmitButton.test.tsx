@@ -14,11 +14,11 @@ let finish: () => void = () => {};
 function Harness({
   disabled,
   name = "Ada",
-  variant,
+  color,
 }: {
   readonly disabled?: boolean;
   readonly name?: string;
-  readonly variant?: "primary" | "danger";
+  readonly color?: "primary" | "danger";
 }) {
   const form = useAppForm({
     defaultValues: { name },
@@ -30,7 +30,7 @@ function Harness({
 
   return (
     <Form form={form}>
-      <form.SubmitButton disabled={disabled} variant={variant}>
+      <form.SubmitButton disabled={disabled} color={color}>
         Save
       </form.SubmitButton>
     </Form>
@@ -79,7 +79,7 @@ describe("SubmitButton", () => {
   });
 
   it("renders the themed Button from @hackert-ui/ui", () => {
-    render(<Harness variant="danger" />);
+    render(<Harness color="danger" />);
 
     expect(button().className).toContain("hui-button");
     expect(button().style.getPropertyValue("--hui-bg")).not.toBe("");

@@ -1,5 +1,5 @@
 import {
-  type AppColorTheme,
+  type AppColor,
   type AppRadiusTheme,
   type AppSpacingTheme,
   useSafeAppTheme,
@@ -7,18 +7,29 @@ import {
 } from "@hackert-ui/core";
 import { cn } from "@hackert-ui/utils";
 import type { ComponentPropsWithoutRef, CSSProperties, ReactNode } from "react";
+import { Loader, type LoaderProps } from "../Loader";
 import { BUTTON_CSS } from "./button-styles";
+import { type ButtonVariant, VARIANT_VARS } from "./button-variants";
 
-export type ButtonVariant = keyof AppColorTheme;
+export type { ButtonVariant } from "./button-variants";
+export type ButtonColor = AppColor;
 export type ButtonSize = keyof AppSpacingTheme;
 export type ButtonRadius = keyof AppRadiusTheme;
+export type ButtonJustify = "center" | "space-between";
 
-export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
+export interface ButtonProps extends Omit<ComponentPropsWithoutRef<"button">, "color"> {
   readonly children: ReactNode;
+  // A theme colour key or any CSS colour.
+  readonly color?: ButtonColor | undefined;
   readonly variant?: ButtonVariant | undefined;
   readonly size?: ButtonSize | undefined;
   readonly radius?: ButtonRadius | undefined;
   readonly loading?: boolean | undefined;
+  readonly loaderProps?: LoaderProps | undefined;
+  readonly leftSection?: ReactNode;
+  readonly rightSection?: ReactNode;
+  readonly justify?: ButtonJustify | undefined;
+  readonly fullWidth?: boolean | undefined;
 }
 
 // Vertical padding sits one spacing step below the horizontal padding.
@@ -31,27 +42,31 @@ const BLOCK_PADDING: Readonly<Record<ButtonSize, ButtonSize>> = {
   "2xl": "xl",
 };
 
-const FONT_SIZE: Readonly<Record<ButtonSize, string>> = {
-  xs: "12px",
-  sm: "14px",
-  md: "16px",
-  lg: "18px",
-  xl: "20px",
-  "2xl": "24px",
+const FONT_SIZE: Readonly<Record<ButtonSize, number>> = {
+  xs: 12,
+  sm: 14,
+  md: 16,
+  lg: 18,
+  xl: 20,
+  "2xl": 24,
 };
 
-// light-dark() resolves against the page's CSS color-scheme, so dark mode needs
-// no React state and server-rendered markup is right on first paint.
-function byScheme(light: string, dark: string): string {
-  return light === dark ? light : `light-dark(${light}, ${dark})`;
+function hasContent(node: ReactNode): boolean {
+  return node !== undefined && node !== null && node !== false;
 }
 
 export function Button({
   type = "button",
-  variant = "primary",
+  color = "primary",
+  variant = "filled",
   size = "md",
   radius = "md",
   loading = false,
+  loaderProps,
+  leftSection,
+  rightSection,
+  justify = "center",
+  fullWidth = false,
   disabled,
   className,
   style,
@@ -59,18 +74,15 @@ export function Button({
   ...buttonProps
 }: ButtonProps) {
   const theme = useSafeAppTheme();
-  const light = useVariantColors(variant, "light");
-  const dark = useVariantColors(variant, "dark");
+  const light = useVariantColors(color, "light");
+  const dark = useVariantColors(color, "dark");
+  const fontSize = FONT_SIZE[size];
 
   const themed = {
-    "--hui-bg": byScheme(light.background, dark.background),
-    "--hui-fg": byScheme(light.foreground, dark.foreground),
-    "--hui-bg-hover": byScheme(light.hoverBackground, dark.hoverBackground),
-    "--hui-fg-hover": byScheme(light.hoverForeground, dark.hoverForeground),
-    "--hui-bg-active": byScheme(light.activeBackground, dark.activeBackground),
+    ...VARIANT_VARS[variant]({ light, dark }),
     "--hui-radius": theme.radius[radius],
     "--hui-font": theme.fontFamily,
-    "--hui-font-size": FONT_SIZE[size],
+    "--hui-font-size": `${fontSize}px`,
     "--hui-py": theme.spacing[BLOCK_PADDING[size]],
     "--hui-px": theme.spacing[size],
   } as CSSProperties;
@@ -85,11 +97,32 @@ export function Button({
         type={type}
         disabled={disabled || loading}
         aria-busy={loading || undefined}
+        data-variant={variant}
+        data-justify={justify}
         data-loading={loading ? "" : undefined}
+        data-full-width={fullWidth ? "" : undefined}
         className={cn("hui-button", className)}
         style={{ ...themed, ...style }}
       >
-        {children}
+        <span className="hui-button-inner">
+          {hasContent(leftSection) ? (
+            <span className="hui-button-section" data-position="left">
+              {leftSection}
+            </span>
+          ) : null}
+          <span className="hui-button-label">{children}</span>
+          {hasContent(rightSection) ? (
+            <span className="hui-button-section" data-position="right">
+              {rightSection}
+            </span>
+          ) : null}
+        </span>
+        {loading ? (
+          // aria-busy already says it is working; the label stays the accessible name.
+          <span className="hui-button-loader" aria-hidden="true">
+            <Loader size={Math.round(fontSize * 1.15)} {...loaderProps} />
+          </span>
+        ) : null}
       </button>
     </>
   );
