@@ -20,7 +20,6 @@ const NO_PAGE_YET = new Set([
   "DateInput (@hackert-ui/dates)",
   "EmptyState (@hackert-ui/ui)",
   "CopyButton (@hackert-ui/ui)",
-  "Notification (@hackert-ui/ui)",
   "Tabs (@hackert-ui/ui)",
 ]);
 

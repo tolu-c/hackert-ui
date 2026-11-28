@@ -36,6 +36,7 @@ import { Route as UiCardRouteImport } from './routes/ui/card'
 import { Route as UiCloseButtonRouteImport } from './routes/ui/close-button'
 import { Route as UiChar91loaderChar93RouteImport } from './routes/ui/[loader]'
 import { Route as UiModalRouteImport } from './routes/ui/modal'
+import { Route as UiNotificationRouteImport } from './routes/ui/notification'
 import { Route as UiSkeletonRouteImport } from './routes/ui/skeleton'
 
 const IndexRoute = IndexRouteImport.update({
@@ -173,6 +174,11 @@ const UiModalRoute = UiModalRouteImport.update({
   path: '/modal',
   getParentRoute: () => UiRouteRoute,
 } as any)
+const UiNotificationRoute = UiNotificationRouteImport.update({
+  id: '/notification',
+  path: '/notification',
+  getParentRoute: () => UiRouteRoute,
+} as any)
 const UiSkeletonRoute = UiSkeletonRouteImport.update({
   id: '/skeleton',
   path: '/skeleton',
@@ -203,6 +209,7 @@ export interface FileRoutesByFullPath {
   '/ui/close-button': typeof UiCloseButtonRoute
   '/ui/loader': typeof UiChar91loaderChar93Route
   '/ui/modal': typeof UiModalRoute
+  '/ui/notification': typeof UiNotificationRoute
   '/ui/skeleton': typeof UiSkeletonRoute
   '/form/': typeof FormIndexRoute
   '/hooks/': typeof HooksIndexRoute
@@ -229,6 +236,7 @@ export interface FileRoutesByTo {
   '/ui/close-button': typeof UiCloseButtonRoute
   '/ui/loader': typeof UiChar91loaderChar93Route
   '/ui/modal': typeof UiModalRoute
+  '/ui/notification': typeof UiNotificationRoute
   '/ui/skeleton': typeof UiSkeletonRoute
   '/form': typeof FormIndexRoute
   '/hooks': typeof HooksIndexRoute
@@ -260,6 +268,7 @@ export interface FileRoutesById {
   '/ui/close-button': typeof UiCloseButtonRoute
   '/ui/loader': typeof UiChar91loaderChar93Route
   '/ui/modal': typeof UiModalRoute
+  '/ui/notification': typeof UiNotificationRoute
   '/ui/skeleton': typeof UiSkeletonRoute
   '/form/': typeof FormIndexRoute
   '/hooks/': typeof HooksIndexRoute
@@ -292,6 +301,7 @@ export interface FileRouteTypes {
     | '/ui/close-button'
     | '/ui/loader'
     | '/ui/modal'
+    | '/ui/notification'
     | '/ui/skeleton'
     | '/form/'
     | '/hooks/'
@@ -318,6 +328,7 @@ export interface FileRouteTypes {
     | '/ui/close-button'
     | '/ui/loader'
     | '/ui/modal'
+    | '/ui/notification'
     | '/ui/skeleton'
     | '/form'
     | '/hooks'
@@ -348,6 +359,7 @@ export interface FileRouteTypes {
     | '/ui/close-button'
     | '/ui/loader'
     | '/ui/modal'
+    | '/ui/notification'
     | '/ui/skeleton'
     | '/form/'
     | '/hooks/'
@@ -554,6 +566,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UiModalRouteImport
       parentRoute: typeof UiRouteRoute
     }
+    '/ui/notification': {
+      id: '/ui/notification'
+      path: '/notification'
+      fullPath: '/ui/notification'
+      preLoaderRoute: typeof UiNotificationRouteImport
+      parentRoute: typeof UiRouteRoute
+    }
     '/ui/skeleton': {
       id: '/ui/skeleton'
       path: '/skeleton'
@@ -632,6 +651,7 @@ interface UiRouteRouteChildren {
   UiCloseButtonRoute: typeof UiCloseButtonRoute
   UiChar91loaderChar93Route: typeof UiChar91loaderChar93Route
   UiModalRoute: typeof UiModalRoute
+  UiNotificationRoute: typeof UiNotificationRoute
   UiSkeletonRoute: typeof UiSkeletonRoute
   UiIndexRoute: typeof UiIndexRoute
 }
@@ -642,6 +662,7 @@ const UiRouteRouteChildren: UiRouteRouteChildren = {
   UiCloseButtonRoute: UiCloseButtonRoute,
   UiChar91loaderChar93Route: UiChar91loaderChar93Route,
   UiModalRoute: UiModalRoute,
+  UiNotificationRoute: UiNotificationRoute,
   UiSkeletonRoute: UiSkeletonRoute,
   UiIndexRoute: UiIndexRoute,
 }

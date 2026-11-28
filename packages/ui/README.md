@@ -1,11 +1,17 @@
 # @hackert-ui/ui
 
-Component primitives: `Button`, `Card`.
+Component primitives: `Button`, `Card`, `CloseButton`, `Loader`, `Skeleton`,
+`Modal` (with `Modal.Stack`), and notifications (`<Notifications />`,
+`notifications.show()`, `Notification`).
 
-Also exported, as placeholders that are not implemented yet: `CloseButton`,
-`CopyButton`, `EmptyState`, `Loader`, `Modal`, `Notification`, `Skeleton` and
-`Tabs`. They render a stand-in element and their props will change, so don't
-build on them yet.
+`Button` takes a `color` (a theme key or any CSS colour) and a `variant`
+(`filled`, `light`, `outline`, `subtle`, `transparent` or the neutral `default`),
+plus `leftSection`, `rightSection`, `justify`, `fullWidth`, and `loading` with
+`loaderProps`.
+
+Also exported, as placeholders that are not implemented yet: `CopyButton`,
+`EmptyState` and `Tabs`. They render a stand-in element and their props will
+change, so don't build on them yet.
 
 ```sh
 pnpm add @hackert-ui/ui @hackert-ui/core @hackert-ui/utils

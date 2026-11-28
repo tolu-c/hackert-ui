@@ -70,7 +70,7 @@ try {
 import { createElement as h } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { AppProvider, DEFAULT_THEME, useAppTheme } from "@hackert-ui/core";
-import { Button, Card } from "@hackert-ui/ui";
+import { Button, Card, Loader, Modal, Notifications } from "@hackert-ui/ui";
 import { FormField, useAppForm } from "@hackert-ui/form";
 import { useDebouncedValue, useDisclosure } from "@hackert-ui/hooks";
 import { cn } from "@hackert-ui/utils";
@@ -125,6 +125,20 @@ assert.match(formMarkup, /<label [^>]*for="[^"]+-control"/, formMarkup);
 assert.match(formMarkup, /data-href="[^"]*\\bhui-form\\b/, formMarkup);
 assert.match(formMarkup, /aria-label="Show password"/, formMarkup);
 assert.match(formMarkup, /<button type="submit"[^>]* class="hui-button"/, formMarkup);
+
+// Components that touch document or the dialog API must still render on the server.
+const uiMarkup = renderToStaticMarkup(
+  h(
+    AppProvider,
+    null,
+    h(Loader, { type: "dots" }),
+    h(Modal, { opened: true, onClose() {}, title: "Hi" }, "Body"),
+    h(Notifications),
+  ),
+);
+assert.match(uiMarkup, /<span role="status" aria-label="Loading" data-type="dots"/, uiMarkup);
+assert.match(uiMarkup, /<dialog [^>]*class="hui-modal"/, uiMarkup);
+assert.ok(!uiMarkup.includes("hui-notifications"), uiMarkup);
 console.log("smoke ok for react@${version}");
 `,
     );

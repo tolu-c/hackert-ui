@@ -52,11 +52,13 @@
   "devDependencies": {
     "@hackert-ui/core": "workspace:*",
     "@hackert-ui/utils": "workspace:*",
-    "react": "19.2.8"
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
   },
   "peerDependencies": {
     "@hackert-ui/core": ">=0.0.0 <1.0.0",
     "@hackert-ui/utils": ">=0.0.0 <1.0.0",
-    "react": "^19.0.0"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   }
 }
