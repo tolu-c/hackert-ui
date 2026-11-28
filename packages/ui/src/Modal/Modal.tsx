@@ -91,10 +91,12 @@ function ModalRoot({
 
   // Read by the native event handlers. Updated before the open/close effect below
   // runs, so a close event fired by that effect sees the new value.
-  const latest = useRef({ opened, onClose });
+  const latest = useRef({ opened, onClose, closeOnEscape });
   useEffect(() => {
-    latest.current = { opened, onClose };
+    latest.current = { opened, onClose, closeOnEscape };
   });
+  // Bumped when the browser closes the dialog while still opened, to re-run the open effect.
+  const [forcedClose, setForcedClose] = useState(0);
 
   useEffect(() => {
     const dialog = ref.current;
@@ -106,7 +108,7 @@ function ModalRoot({
     if (dialog.open) dialog.close();
     const timer = setTimeout(() => setRendered(false), EXIT_MS);
     return () => clearTimeout(timer);
-  }, [opened]);
+  }, [opened, forcedClose]);
 
   const context = useMemo(
     () => ({
@@ -146,9 +148,12 @@ function ModalRoot({
           event.preventDefault();
           if (closeOnEscape) onClose();
         }}
-        // The browser can still force a close (repeated Escape); keep the owner in sync.
+        // The browser can still force a close (repeated Escape). Tell the owner unless
+        // Escape is disabled, then reopen if they keep it opened.
         onClose={() => {
-          if (latest.current.opened) latest.current.onClose();
+          if (!latest.current.opened) return;
+          if (latest.current.closeOnEscape) latest.current.onClose();
+          setForcedClose((count) => count + 1);
         }}
         // A click whose press and release both land on the dialog itself is on the
         // backdrop: the content fills the dialog, so nothing inside targets it.

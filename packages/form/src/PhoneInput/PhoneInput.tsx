@@ -13,6 +13,7 @@ import { InputBase } from "../styles/InputBase";
 import { cx } from "../styles/theme-vars";
 import {
   caretAfterDigits,
+  deleteDigitAfter,
   deleteDigitBefore,
   describeCountry,
   digitsOf,
@@ -194,11 +195,14 @@ export function PhoneInput({
         onChange={(event) => {
           const input = event.target;
           const caret = input.selectionStart ?? input.value.length;
-          const deleting = (event.nativeEvent as InputEvent).inputType?.startsWith("delete");
-          const raw =
-            deleting && digitsOf(input.value) === digitsOf(state.text)
-              ? deleteDigitBefore(input.value, caret)
-              : input.value;
+          const inputType = (event.nativeEvent as InputEvent).inputType;
+          const formattingOnly =
+            inputType?.startsWith("delete") && digitsOf(input.value) === digitsOf(state.text);
+          const raw = !formattingOnly
+            ? input.value
+            : inputType === "deleteContentForward"
+              ? deleteDigitAfter(input.value, caret)
+              : deleteDigitBefore(input.value, caret);
           const digitsBeforeCaret = digitsOf(raw.slice(0, caret)).length;
           const next = apply(raw, state.country);
           pendingCaret.current = caretAfterDigits(next.text, digitsBeforeCaret);

@@ -122,6 +122,25 @@ describe("Notifications", () => {
     expect(screen.queryByText("Brief")).toBeNull();
   });
 
+  it("resumes auto-closing after the focused notification closes", () => {
+    render(<Notifications />);
+    act(() => {
+      notifications.show({ message: "First", autoClose: false });
+    });
+    const close = screen.getByRole("button");
+    act(() => close.focus());
+    fireEvent.click(close);
+    advance(200);
+    expect(screen.queryByText("First")).toBeNull();
+
+    act(() => {
+      notifications.show({ message: "Second", autoClose: 1000 });
+    });
+    advance(1000 + 200);
+
+    expect(screen.queryByText("Second")).toBeNull();
+  });
+
   it("waits four seconds by default", () => {
     render(<Notifications />);
     act(() => {

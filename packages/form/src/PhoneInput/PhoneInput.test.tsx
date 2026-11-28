@@ -87,6 +87,17 @@ describe("PhoneInput", () => {
     expect(phone().value).toBe("20");
   });
 
+  it("deletes the digit after a formatting character on forward delete", async () => {
+    const user = userEvent.setup();
+    render(<Harness />);
+
+    await user.type(phone(), "2025550123");
+    phone().setSelectionRange(4, 4);
+    await user.keyboard("{Delete}");
+
+    expect(phone().value).toBe("(202) 550-123");
+  });
+
   it("shows a stored number in its country's national format", () => {
     render(<Harness initial="+442079460000" />);
 

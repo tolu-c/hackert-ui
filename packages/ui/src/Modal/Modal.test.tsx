@@ -127,6 +127,24 @@ describe("Modal", () => {
     expect(onClose).toHaveBeenCalledOnce();
   });
 
+  it("ignores a forced close when closeOnEscape is false, and reopens", () => {
+    const onClose = vi.fn();
+    render(<Controlled onClose={onClose} closeOnEscape={false} />);
+
+    act(() => dialog().close());
+
+    expect(onClose).not.toHaveBeenCalled();
+    expect(dialog().open).toBe(true);
+  });
+
+  it("reopens after a forced close the owner leaves opened", () => {
+    render(<Controlled />);
+
+    act(() => dialog().close());
+
+    expect(dialog().open).toBe(true);
+  });
+
   it("drops the header without a close button or title", () => {
     render(<Controlled title={undefined} aria-label="Confirm" withCloseButton={false} />);
 
