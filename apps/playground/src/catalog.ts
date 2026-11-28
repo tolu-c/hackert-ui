@@ -77,6 +77,13 @@ export const SECTIONS = {
           'An icon button with an X, named "Close" for screen readers. Modal uses it in its header.',
       },
       {
+        to: "/ui/notification",
+        label: "Notification",
+        description:
+          "Toasts you can raise from anywhere. Mount <Notifications /> once, then call notifications.show(), update(), hide() or clean(). Timers pause on hover, focus and hidden tabs; extras queue past the limit. Notification is the card on its own.",
+        covers: ["Notifications", "notifications", "useNotify", "useNotifications"],
+      },
+      {
         to: "/ui/loader",
         label: "Loader",
         description:
