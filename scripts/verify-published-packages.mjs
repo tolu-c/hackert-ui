@@ -79,6 +79,9 @@ import { DateInput } from "@hackert-ui/dates";
 assert.deepEqual(Object.keys(await import("@hackert-ui/core")).sort(), [
   "AppProvider",
   "DEFAULT_THEME",
+  "byScheme",
+  "isThemeColor",
+  "schemeColors",
   "useAppTheme",
   "useSafeAppTheme",
   "useVariantColors",
