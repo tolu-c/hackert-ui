@@ -1,5 +1,26 @@
 # @hackert-ui/core
 
+## 0.2.0
+
+### Minor Changes
+
+- ca4dab4: **Breaking:** Button's theme colour moves from `variant` to `color`, and `variant` now picks the style.
+
+  Migrate by renaming the prop: `<Button variant="danger">` becomes `<Button color="danger">`. `SubmitButton` takes the same props.
+
+  - `color` takes a theme key (default `primary`) or any CSS colour: a name such as `tomato`, hex, `rgb()` or `oklch()`.
+  - `variant` is `filled` (default), `light`, `outline`, `subtle`, `transparent` or `default`. `default` is a neutral bordered button that ignores `color`.
+  - New props: `leftSection` and `rightSection`, `justify` (`center` or `space-between`), and `fullWidth`.
+  - While `loading`, the label is covered by a `Loader` spinner instead of the button greying out. The button keeps its width and colours, and it stays disabled with `aria-busy`. Pass `loaderProps` to choose the spinner.
+  - Button text is now medium weight. Every variant draws a 1px border (transparent when unused), so mixed variants line up.
+  - `@hackert-ui/core`: `useVariantColors(color)` and `deriveVariantColors` take a theme key or any CSS colour, and they parse CSS colour names. The result adds `text` (the colour adjusted to be readable on the page) plus `lightBackground` and `lightHoverBackground` (translucent tints). Error messages now name the colour rather than a "variant".
+
+- 41e9203: `Loader` and `Skeleton` are implemented.
+
+  - `Loader` draws a spinning `oval` (default), bouncing `bars` or pulsing `dots`. `size` takes a size key (`xs` 18px to `2xl` 72px) or a number of pixels. `color` takes a theme key or any CSS colour and defaults to the surrounding text colour. It renders `role="status"` with an `aria-label` of "Loading".
+  - `Skeleton` is a pulsing placeholder sized by `height`, `width` (numbers are pixels), `radius` (a radius key or CSS value) and `circle`. Wrap real content and toggle `visible`: the placeholder takes the content's size and covers it, and the content stays mounted underneath. Turn the pulse off with `animate={false}`.
+  - `@hackert-ui/core` exports `AppColor` (a theme key or any CSS colour), `isThemeColor`, `schemeColors` and `byScheme`.
+
 ## 0.1.0
 
 ## 0.0.1

@@ -1,5 +1,25 @@
 # @hackert-ui/form
 
+## 0.2.0
+
+### Minor Changes
+
+- ca4dab4: **Breaking:** Button's theme colour moves from `variant` to `color`, and `variant` now picks the style.
+
+  Migrate by renaming the prop: `<Button variant="danger">` becomes `<Button color="danger">`. `SubmitButton` takes the same props.
+
+  - `color` takes a theme key (default `primary`) or any CSS colour: a name such as `tomato`, hex, `rgb()` or `oklch()`.
+  - `variant` is `filled` (default), `light`, `outline`, `subtle`, `transparent` or `default`. `default` is a neutral bordered button that ignores `color`.
+  - New props: `leftSection` and `rightSection`, `justify` (`center` or `space-between`), and `fullWidth`.
+  - While `loading`, the label is covered by a `Loader` spinner instead of the button greying out. The button keeps its width and colours, and it stays disabled with `aria-busy`. Pass `loaderProps` to choose the spinner.
+  - Button text is now medium weight. Every variant draws a 1px border (transparent when unused), so mixed variants line up.
+  - `@hackert-ui/core`: `useVariantColors(color)` and `deriveVariantColors` take a theme key or any CSS colour, and they parse CSS colour names. The result adds `text` (the colour adjusted to be readable on the page) plus `lightBackground` and `lightHoverBackground` (translucent tints). Error messages now name the colour rather than a "variant".
+
+- ead570e: `PhoneInput`, and danger-coloured labels on invalid fields.
+
+  - `field.PhoneInput` is a phone number field with a searchable country picker (flag, name and dialling code; search by name or code). It formats the number as you type, and its field value is E.164 (`"+2348031234567"`), or `""` when empty. Props: `defaultCountry` (default `"US"`), `countries` to limit the list, `locale` for country names, plus `searchPlaceholder`, `searchLabel`, `nothingFoundMessage` and `countryLabel` for translation. A stored number opens in its own country's national format, and a number typed with `+` switches to its country. Backspace over a formatting character deletes the digit before it. It depends on `libphonenumber-js`.
+  - While a `FormField` shows an error, its `FormField.Label` and `FormField.Description` now turn the theme's `danger` colour, alongside the red border and message.
+
 ## 0.1.0
 
 ### Minor Changes
