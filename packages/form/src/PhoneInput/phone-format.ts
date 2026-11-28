@@ -95,6 +95,11 @@ export function deleteDigitBefore(text: string, caret: number): string {
   return before + text.slice(caret);
 }
 
+// Forward Delete over a formatting character: remove the first digit after the caret.
+export function deleteDigitAfter(text: string, caret: number): string {
+  return text.slice(0, caret) + text.slice(caret).replace(/\d/, "");
+}
+
 // The caret position just after the `count`th digit (or "+") of `text`.
 export function caretAfterDigits(text: string, count: number): number {
   if (count <= 0) return 0;

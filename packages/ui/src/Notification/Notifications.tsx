@@ -121,6 +121,12 @@ export function Notifications({
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
   const paused = hovered || focused || pageHidden;
+  const listRef = useRef<HTMLOListElement>(null);
+
+  // Blur never fires when the focused notification unmounts.
+  useEffect(() => {
+    if (focused && !listRef.current?.contains(document.activeElement)) setFocused(false);
+  }, [entries, focused]);
 
   if (!isClient) return null;
 
@@ -139,6 +145,7 @@ export function Notifications({
         data-position={position}
       >
         <ol
+          ref={listRef}
           className="hui-notifications-list"
           aria-live="polite"
           onPointerEnter={() => setHovered(true)}
