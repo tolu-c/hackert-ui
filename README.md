@@ -234,11 +234,15 @@ publishing happens only when you publish a GitHub Release.
 3. Publish a GitHub Release whose tag is `v<new version>`, for example:
 
    ```sh
-   gh release create v0.2.0 --target main --generate-notes
+   gh release create v0.2.1 --target main --generate-notes
    ```
 
-4. The **Publish** workflow checks that the tag matches the package version,
-   runs `pnpm verify`, and publishes every package to npm with provenance.
+4. The **Publish** workflow checks that the tag matches the package version
+   and that the version is not already on npm, runs `pnpm verify`, and
+   publishes every package to npm with provenance.
+
+npm never accepts a version twice, even after deprecating or unpublishing it.
+0.2.0 is taken by a build published by mistake, so the 0.2 line starts at 0.2.1.
 
 Publishing needs the `NPM_TOKEN` repository secret and a public repository
 (npm only accepts provenance from public repos). Consumers install with any

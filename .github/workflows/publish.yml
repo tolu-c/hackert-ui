@@ -37,6 +37,16 @@ jobs:
             exit 1
           fi
 
+      # npm never accepts a version twice, and `changeset publish` only warns and
+      # exits 0 when it skips one, so a taken version would "succeed" silently.
+      - name: Check the version is not already on npm
+        run: |
+          version="$(node -p "require('./packages/core/package.json').version")"
+          if [ "$(npm view "@hackert-ui/core@$version" version 2>/dev/null)" = "$version" ]; then
+            echo "::error::@hackert-ui/core@$version is already on npm, so nothing would be published. Bump past it (npm never reuses a version) and release that tag."
+            exit 1
+          fi
+
       - run: pnpm verify
 
       - run: pnpm release
