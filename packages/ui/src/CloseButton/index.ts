@@ -1,1 +1,1 @@
-export { CloseButton } from "./CloseButton";
+export { CloseButton, type CloseButtonProps, type CloseButtonSize } from "./CloseButton";

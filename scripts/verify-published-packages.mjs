@@ -137,7 +137,12 @@ console.log("smoke ok for react@${version}");
       "utf8",
     );
     assert.match(uiBundle, /from "@hackert-ui\/core"/, "ui must import core, not bundle it");
-    assert.doesNotMatch(uiBundle, /createContext/, "ui must not bundle core's ThemeContext");
+    // ui has contexts of its own (Modal), so look for core's registry key rather than createContext.
+    assert.doesNotMatch(
+      uiBundle,
+      /@hackert-ui\/core\/ThemeContext/,
+      "ui must not bundle core's ThemeContext",
+    );
 
     run("node", ["smoke.mjs"], fixtureDirectory);
   }

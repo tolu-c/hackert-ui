@@ -67,7 +67,14 @@ export const SECTIONS = {
       {
         to: "/ui/modal",
         label: "Modal",
-        description: "Modal dialog",
+        description:
+          "A dialog on the native <dialog> element: focus is trapped, the page behind is inert and locked, and only the body scrolls under a fixed header. Use the props or compose Modal.Root, Header, Title and Body yourself, and group modals with Modal.Stack.",
+      },
+      {
+        to: "/ui/close-button",
+        label: "CloseButton",
+        description:
+          'An icon button with an X, named "Close" for screen readers. Modal uses it in its header.',
       },
       {
         to: "/ui/loader",
@@ -154,6 +161,12 @@ export const SECTIONS = {
         to: "/hooks/use-copy",
         label: "useCopy",
         description: "Copies text to the clipboard and reports for a moment that it worked.",
+      },
+      {
+        to: "/hooks/use-modals-stack",
+        label: "useModalsStack",
+        description:
+          "Opened state for a group of modals by id, with open, close, toggle and closeAll. register(id) wires a Modal into Modal.Stack.",
       },
       {
         to: "/hooks/use-click-outside",

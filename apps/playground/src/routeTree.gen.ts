@@ -25,6 +25,7 @@ import { Route as HooksUseClickOutsideRouteImport } from './routes/hooks/use-cli
 import { Route as HooksUseCopyRouteImport } from './routes/hooks/use-copy'
 import { Route as HooksUseDebouncedValueRouteImport } from './routes/hooks/use-debounced-value'
 import { Route as HooksUseDisclosureRouteImport } from './routes/hooks/use-disclosure'
+import { Route as HooksUseModalsStackRouteImport } from './routes/hooks/use-modals-stack'
 import { Route as ThemeIndexRouteImport } from './routes/theme/index'
 import { Route as ThemeColorsRouteImport } from './routes/theme/colors'
 import { Route as ThemeRadiusRouteImport } from './routes/theme/radius'
@@ -32,6 +33,7 @@ import { Route as ThemeSpacingRouteImport } from './routes/theme/spacing'
 import { Route as UiIndexRouteImport } from './routes/ui/index'
 import { Route as UiButtonRouteImport } from './routes/ui/button'
 import { Route as UiCardRouteImport } from './routes/ui/card'
+import { Route as UiCloseButtonRouteImport } from './routes/ui/close-button'
 import { Route as UiChar91loaderChar93RouteImport } from './routes/ui/[loader]'
 import { Route as UiModalRouteImport } from './routes/ui/modal'
 import { Route as UiSkeletonRouteImport } from './routes/ui/skeleton'
@@ -116,6 +118,11 @@ const HooksUseDisclosureRoute = HooksUseDisclosureRouteImport.update({
   path: '/use-disclosure',
   getParentRoute: () => HooksRouteRoute,
 } as any)
+const HooksUseModalsStackRoute = HooksUseModalsStackRouteImport.update({
+  id: '/use-modals-stack',
+  path: '/use-modals-stack',
+  getParentRoute: () => HooksRouteRoute,
+} as any)
 const ThemeIndexRoute = ThemeIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -151,6 +158,11 @@ const UiCardRoute = UiCardRouteImport.update({
   path: '/card',
   getParentRoute: () => UiRouteRoute,
 } as any)
+const UiCloseButtonRoute = UiCloseButtonRouteImport.update({
+  id: '/close-button',
+  path: '/close-button',
+  getParentRoute: () => UiRouteRoute,
+} as any)
 const UiChar91loaderChar93Route = UiChar91loaderChar93RouteImport.update({
   id: '/loader',
   path: '/loader',
@@ -182,11 +194,13 @@ export interface FileRoutesByFullPath {
   '/hooks/use-copy': typeof HooksUseCopyRoute
   '/hooks/use-debounced-value': typeof HooksUseDebouncedValueRoute
   '/hooks/use-disclosure': typeof HooksUseDisclosureRoute
+  '/hooks/use-modals-stack': typeof HooksUseModalsStackRoute
   '/theme/colors': typeof ThemeColorsRoute
   '/theme/radius': typeof ThemeRadiusRoute
   '/theme/spacing': typeof ThemeSpacingRoute
   '/ui/button': typeof UiButtonRoute
   '/ui/card': typeof UiCardRoute
+  '/ui/close-button': typeof UiCloseButtonRoute
   '/ui/loader': typeof UiChar91loaderChar93Route
   '/ui/modal': typeof UiModalRoute
   '/ui/skeleton': typeof UiSkeletonRoute
@@ -206,11 +220,13 @@ export interface FileRoutesByTo {
   '/hooks/use-copy': typeof HooksUseCopyRoute
   '/hooks/use-debounced-value': typeof HooksUseDebouncedValueRoute
   '/hooks/use-disclosure': typeof HooksUseDisclosureRoute
+  '/hooks/use-modals-stack': typeof HooksUseModalsStackRoute
   '/theme/colors': typeof ThemeColorsRoute
   '/theme/radius': typeof ThemeRadiusRoute
   '/theme/spacing': typeof ThemeSpacingRoute
   '/ui/button': typeof UiButtonRoute
   '/ui/card': typeof UiCardRoute
+  '/ui/close-button': typeof UiCloseButtonRoute
   '/ui/loader': typeof UiChar91loaderChar93Route
   '/ui/modal': typeof UiModalRoute
   '/ui/skeleton': typeof UiSkeletonRoute
@@ -235,11 +251,13 @@ export interface FileRoutesById {
   '/hooks/use-copy': typeof HooksUseCopyRoute
   '/hooks/use-debounced-value': typeof HooksUseDebouncedValueRoute
   '/hooks/use-disclosure': typeof HooksUseDisclosureRoute
+  '/hooks/use-modals-stack': typeof HooksUseModalsStackRoute
   '/theme/colors': typeof ThemeColorsRoute
   '/theme/radius': typeof ThemeRadiusRoute
   '/theme/spacing': typeof ThemeSpacingRoute
   '/ui/button': typeof UiButtonRoute
   '/ui/card': typeof UiCardRoute
+  '/ui/close-button': typeof UiCloseButtonRoute
   '/ui/loader': typeof UiChar91loaderChar93Route
   '/ui/modal': typeof UiModalRoute
   '/ui/skeleton': typeof UiSkeletonRoute
@@ -265,11 +283,13 @@ export interface FileRouteTypes {
     | '/hooks/use-copy'
     | '/hooks/use-debounced-value'
     | '/hooks/use-disclosure'
+    | '/hooks/use-modals-stack'
     | '/theme/colors'
     | '/theme/radius'
     | '/theme/spacing'
     | '/ui/button'
     | '/ui/card'
+    | '/ui/close-button'
     | '/ui/loader'
     | '/ui/modal'
     | '/ui/skeleton'
@@ -289,11 +309,13 @@ export interface FileRouteTypes {
     | '/hooks/use-copy'
     | '/hooks/use-debounced-value'
     | '/hooks/use-disclosure'
+    | '/hooks/use-modals-stack'
     | '/theme/colors'
     | '/theme/radius'
     | '/theme/spacing'
     | '/ui/button'
     | '/ui/card'
+    | '/ui/close-button'
     | '/ui/loader'
     | '/ui/modal'
     | '/ui/skeleton'
@@ -317,11 +339,13 @@ export interface FileRouteTypes {
     | '/hooks/use-copy'
     | '/hooks/use-debounced-value'
     | '/hooks/use-disclosure'
+    | '/hooks/use-modals-stack'
     | '/theme/colors'
     | '/theme/radius'
     | '/theme/spacing'
     | '/ui/button'
     | '/ui/card'
+    | '/ui/close-button'
     | '/ui/loader'
     | '/ui/modal'
     | '/ui/skeleton'
@@ -453,6 +477,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HooksUseDisclosureRouteImport
       parentRoute: typeof HooksRouteRoute
     }
+    '/hooks/use-modals-stack': {
+      id: '/hooks/use-modals-stack'
+      path: '/use-modals-stack'
+      fullPath: '/hooks/use-modals-stack'
+      preLoaderRoute: typeof HooksUseModalsStackRouteImport
+      parentRoute: typeof HooksRouteRoute
+    }
     '/theme/': {
       id: '/theme/'
       path: '/'
@@ -500,6 +531,13 @@ declare module '@tanstack/react-router' {
       path: '/card'
       fullPath: '/ui/card'
       preLoaderRoute: typeof UiCardRouteImport
+      parentRoute: typeof UiRouteRoute
+    }
+    '/ui/close-button': {
+      id: '/ui/close-button'
+      path: '/close-button'
+      fullPath: '/ui/close-button'
+      preLoaderRoute: typeof UiCloseButtonRouteImport
       parentRoute: typeof UiRouteRoute
     }
     '/ui/loader': {
@@ -553,6 +591,7 @@ interface HooksRouteRouteChildren {
   HooksUseCopyRoute: typeof HooksUseCopyRoute
   HooksUseDebouncedValueRoute: typeof HooksUseDebouncedValueRoute
   HooksUseDisclosureRoute: typeof HooksUseDisclosureRoute
+  HooksUseModalsStackRoute: typeof HooksUseModalsStackRoute
   HooksIndexRoute: typeof HooksIndexRoute
 }
 
@@ -561,6 +600,7 @@ const HooksRouteRouteChildren: HooksRouteRouteChildren = {
   HooksUseCopyRoute: HooksUseCopyRoute,
   HooksUseDebouncedValueRoute: HooksUseDebouncedValueRoute,
   HooksUseDisclosureRoute: HooksUseDisclosureRoute,
+  HooksUseModalsStackRoute: HooksUseModalsStackRoute,
   HooksIndexRoute: HooksIndexRoute,
 }
 
@@ -589,6 +629,7 @@ const ThemeRouteRouteWithChildren = ThemeRouteRoute._addFileChildren(
 interface UiRouteRouteChildren {
   UiButtonRoute: typeof UiButtonRoute
   UiCardRoute: typeof UiCardRoute
+  UiCloseButtonRoute: typeof UiCloseButtonRoute
   UiChar91loaderChar93Route: typeof UiChar91loaderChar93Route
   UiModalRoute: typeof UiModalRoute
   UiSkeletonRoute: typeof UiSkeletonRoute
@@ -598,6 +639,7 @@ interface UiRouteRouteChildren {
 const UiRouteRouteChildren: UiRouteRouteChildren = {
   UiButtonRoute: UiButtonRoute,
   UiCardRoute: UiCardRoute,
+  UiCloseButtonRoute: UiCloseButtonRoute,
   UiChar91loaderChar93Route: UiChar91loaderChar93Route,
   UiModalRoute: UiModalRoute,
   UiSkeletonRoute: UiSkeletonRoute,
