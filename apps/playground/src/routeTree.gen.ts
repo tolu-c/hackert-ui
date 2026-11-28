@@ -32,7 +32,9 @@ import { Route as ThemeSpacingRouteImport } from './routes/theme/spacing'
 import { Route as UiIndexRouteImport } from './routes/ui/index'
 import { Route as UiButtonRouteImport } from './routes/ui/button'
 import { Route as UiCardRouteImport } from './routes/ui/card'
+import { Route as UiChar91loaderChar93RouteImport } from './routes/ui/[loader]'
 import { Route as UiModalRouteImport } from './routes/ui/modal'
+import { Route as UiSkeletonRouteImport } from './routes/ui/skeleton'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -149,9 +151,19 @@ const UiCardRoute = UiCardRouteImport.update({
   path: '/card',
   getParentRoute: () => UiRouteRoute,
 } as any)
+const UiChar91loaderChar93Route = UiChar91loaderChar93RouteImport.update({
+  id: '/loader',
+  path: '/loader',
+  getParentRoute: () => UiRouteRoute,
+} as any)
 const UiModalRoute = UiModalRouteImport.update({
   id: '/modal',
   path: '/modal',
+  getParentRoute: () => UiRouteRoute,
+} as any)
+const UiSkeletonRoute = UiSkeletonRouteImport.update({
+  id: '/skeleton',
+  path: '/skeleton',
   getParentRoute: () => UiRouteRoute,
 } as any)
 
@@ -175,7 +187,9 @@ export interface FileRoutesByFullPath {
   '/theme/spacing': typeof ThemeSpacingRoute
   '/ui/button': typeof UiButtonRoute
   '/ui/card': typeof UiCardRoute
+  '/ui/loader': typeof UiChar91loaderChar93Route
   '/ui/modal': typeof UiModalRoute
+  '/ui/skeleton': typeof UiSkeletonRoute
   '/form/': typeof FormIndexRoute
   '/hooks/': typeof HooksIndexRoute
   '/theme/': typeof ThemeIndexRoute
@@ -197,7 +211,9 @@ export interface FileRoutesByTo {
   '/theme/spacing': typeof ThemeSpacingRoute
   '/ui/button': typeof UiButtonRoute
   '/ui/card': typeof UiCardRoute
+  '/ui/loader': typeof UiChar91loaderChar93Route
   '/ui/modal': typeof UiModalRoute
+  '/ui/skeleton': typeof UiSkeletonRoute
   '/form': typeof FormIndexRoute
   '/hooks': typeof HooksIndexRoute
   '/theme': typeof ThemeIndexRoute
@@ -224,7 +240,9 @@ export interface FileRoutesById {
   '/theme/spacing': typeof ThemeSpacingRoute
   '/ui/button': typeof UiButtonRoute
   '/ui/card': typeof UiCardRoute
+  '/ui/loader': typeof UiChar91loaderChar93Route
   '/ui/modal': typeof UiModalRoute
+  '/ui/skeleton': typeof UiSkeletonRoute
   '/form/': typeof FormIndexRoute
   '/hooks/': typeof HooksIndexRoute
   '/theme/': typeof ThemeIndexRoute
@@ -252,7 +270,9 @@ export interface FileRouteTypes {
     | '/theme/spacing'
     | '/ui/button'
     | '/ui/card'
+    | '/ui/loader'
     | '/ui/modal'
+    | '/ui/skeleton'
     | '/form/'
     | '/hooks/'
     | '/theme/'
@@ -274,7 +294,9 @@ export interface FileRouteTypes {
     | '/theme/spacing'
     | '/ui/button'
     | '/ui/card'
+    | '/ui/loader'
     | '/ui/modal'
+    | '/ui/skeleton'
     | '/form'
     | '/hooks'
     | '/theme'
@@ -300,7 +322,9 @@ export interface FileRouteTypes {
     | '/theme/spacing'
     | '/ui/button'
     | '/ui/card'
+    | '/ui/loader'
     | '/ui/modal'
+    | '/ui/skeleton'
     | '/form/'
     | '/hooks/'
     | '/theme/'
@@ -478,11 +502,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UiCardRouteImport
       parentRoute: typeof UiRouteRoute
     }
+    '/ui/loader': {
+      id: '/ui/loader'
+      path: '/loader'
+      fullPath: '/ui/loader'
+      preLoaderRoute: typeof UiChar91loaderChar93RouteImport
+      parentRoute: typeof UiRouteRoute
+    }
     '/ui/modal': {
       id: '/ui/modal'
       path: '/modal'
       fullPath: '/ui/modal'
       preLoaderRoute: typeof UiModalRouteImport
+      parentRoute: typeof UiRouteRoute
+    }
+    '/ui/skeleton': {
+      id: '/ui/skeleton'
+      path: '/skeleton'
+      fullPath: '/ui/skeleton'
+      preLoaderRoute: typeof UiSkeletonRouteImport
       parentRoute: typeof UiRouteRoute
     }
   }
@@ -551,14 +589,18 @@ const ThemeRouteRouteWithChildren = ThemeRouteRoute._addFileChildren(
 interface UiRouteRouteChildren {
   UiButtonRoute: typeof UiButtonRoute
   UiCardRoute: typeof UiCardRoute
+  UiChar91loaderChar93Route: typeof UiChar91loaderChar93Route
   UiModalRoute: typeof UiModalRoute
+  UiSkeletonRoute: typeof UiSkeletonRoute
   UiIndexRoute: typeof UiIndexRoute
 }
 
 const UiRouteRouteChildren: UiRouteRouteChildren = {
   UiButtonRoute: UiButtonRoute,
   UiCardRoute: UiCardRoute,
+  UiChar91loaderChar93Route: UiChar91loaderChar93Route,
   UiModalRoute: UiModalRoute,
+  UiSkeletonRoute: UiSkeletonRoute,
   UiIndexRoute: UiIndexRoute,
 }
 

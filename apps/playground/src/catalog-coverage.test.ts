@@ -21,9 +21,7 @@ const NO_PAGE_YET = new Set([
   "CloseButton (@hackert-ui/ui)",
   "EmptyState (@hackert-ui/ui)",
   "CopyButton (@hackert-ui/ui)",
-  "Loader (@hackert-ui/ui)",
   "Notification (@hackert-ui/ui)",
-  "Skeleton (@hackert-ui/ui)",
   "Tabs (@hackert-ui/ui)",
 ]);
 

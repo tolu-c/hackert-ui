@@ -69,6 +69,18 @@ export const SECTIONS = {
         label: "Modal",
         description: "Modal dialog",
       },
+      {
+        to: "/ui/loader",
+        label: "Loader",
+        description:
+          "A spinning oval, bouncing bars or pulsing dots. It paints with the surrounding text colour unless given a theme key or CSS colour, and takes a size key or a number of pixels.",
+      },
+      {
+        to: "/ui/skeleton",
+        label: "Skeleton",
+        description:
+          "A placeholder for content that is still loading. Size it with height and width, or wrap the real content and toggle visible: the content keeps its size and state underneath.",
+      },
     ],
   },
   form: {
