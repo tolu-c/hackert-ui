@@ -17,6 +17,7 @@ import { Route as UiRouteRouteImport } from './routes/ui/route'
 import { Route as FormIndexRouteImport } from './routes/form/index'
 import { Route as FormFormRouteImport } from './routes/form/form'
 import { Route as FormNumberInputRouteImport } from './routes/form/number-input'
+import { Route as FormPhoneInputRouteImport } from './routes/form/phone-input'
 import { Route as FormSelectInputRouteImport } from './routes/form/select-input'
 import { Route as FormTextAreaRouteImport } from './routes/form/text-area'
 import { Route as FormTextInputRouteImport } from './routes/form/text-input'
@@ -77,6 +78,11 @@ const FormFormRoute = FormFormRouteImport.update({
 const FormNumberInputRoute = FormNumberInputRouteImport.update({
   id: '/number-input',
   path: '/number-input',
+  getParentRoute: () => FormRouteRoute,
+} as any)
+const FormPhoneInputRoute = FormPhoneInputRouteImport.update({
+  id: '/phone-input',
+  path: '/phone-input',
   getParentRoute: () => FormRouteRoute,
 } as any)
 const FormSelectInputRoute = FormSelectInputRouteImport.update({
@@ -193,6 +199,7 @@ export interface FileRoutesByFullPath {
   '/ui': typeof UiRouteRouteWithChildren
   '/form/form': typeof FormFormRoute
   '/form/number-input': typeof FormNumberInputRoute
+  '/form/phone-input': typeof FormPhoneInputRoute
   '/form/select-input': typeof FormSelectInputRoute
   '/form/text-area': typeof FormTextAreaRoute
   '/form/text-input': typeof FormTextInputRoute
@@ -220,6 +227,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/form/form': typeof FormFormRoute
   '/form/number-input': typeof FormNumberInputRoute
+  '/form/phone-input': typeof FormPhoneInputRoute
   '/form/select-input': typeof FormSelectInputRoute
   '/form/text-area': typeof FormTextAreaRoute
   '/form/text-input': typeof FormTextInputRoute
@@ -252,6 +260,7 @@ export interface FileRoutesById {
   '/ui': typeof UiRouteRouteWithChildren
   '/form/form': typeof FormFormRoute
   '/form/number-input': typeof FormNumberInputRoute
+  '/form/phone-input': typeof FormPhoneInputRoute
   '/form/select-input': typeof FormSelectInputRoute
   '/form/text-area': typeof FormTextAreaRoute
   '/form/text-input': typeof FormTextInputRoute
@@ -285,6 +294,7 @@ export interface FileRouteTypes {
     | '/ui'
     | '/form/form'
     | '/form/number-input'
+    | '/form/phone-input'
     | '/form/select-input'
     | '/form/text-area'
     | '/form/text-input'
@@ -312,6 +322,7 @@ export interface FileRouteTypes {
     | '/'
     | '/form/form'
     | '/form/number-input'
+    | '/form/phone-input'
     | '/form/select-input'
     | '/form/text-area'
     | '/form/text-input'
@@ -343,6 +354,7 @@ export interface FileRouteTypes {
     | '/ui'
     | '/form/form'
     | '/form/number-input'
+    | '/form/phone-input'
     | '/form/select-input'
     | '/form/text-area'
     | '/form/text-input'
@@ -431,6 +443,13 @@ declare module '@tanstack/react-router' {
       path: '/number-input'
       fullPath: '/form/number-input'
       preLoaderRoute: typeof FormNumberInputRouteImport
+      parentRoute: typeof FormRouteRoute
+    }
+    '/form/phone-input': {
+      id: '/form/phone-input'
+      path: '/phone-input'
+      fullPath: '/form/phone-input'
+      preLoaderRoute: typeof FormPhoneInputRouteImport
       parentRoute: typeof FormRouteRoute
     }
     '/form/select-input': {
@@ -586,6 +605,7 @@ declare module '@tanstack/react-router' {
 interface FormRouteRouteChildren {
   FormFormRoute: typeof FormFormRoute
   FormNumberInputRoute: typeof FormNumberInputRoute
+  FormPhoneInputRoute: typeof FormPhoneInputRoute
   FormSelectInputRoute: typeof FormSelectInputRoute
   FormTextAreaRoute: typeof FormTextAreaRoute
   FormTextInputRoute: typeof FormTextInputRoute
@@ -595,6 +615,7 @@ interface FormRouteRouteChildren {
 const FormRouteRouteChildren: FormRouteRouteChildren = {
   FormFormRoute: FormFormRoute,
   FormNumberInputRoute: FormNumberInputRoute,
+  FormPhoneInputRoute: FormPhoneInputRoute,
   FormSelectInputRoute: FormSelectInputRoute,
   FormTextAreaRoute: FormTextAreaRoute,
   FormTextInputRoute: FormTextInputRoute,

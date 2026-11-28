@@ -23,6 +23,7 @@ export const FORM_CSS = `@layer theme, base, components, utilities;
     font-size: 14px;
     font-weight: 500;
     color: var(--hui-text);
+    transition: color 150ms ease;
   }
   .hui-description {
     margin: 0;
@@ -32,6 +33,10 @@ export const FORM_CSS = `@layer theme, base, components, utilities;
   .hui-error {
     margin: 0;
     font-size: 12px;
+    color: var(--hui-danger);
+  }
+  .hui-field[data-invalid] > .hui-label,
+  .hui-field[data-invalid] > .hui-description {
     color: var(--hui-danger);
   }
   .hui-field > .hui-error:empty {
@@ -202,6 +207,61 @@ export const FORM_CSS = `@layer theme, base, components, utilities;
   .hui-option[data-check-position="right"] > .hui-option-check {
     order: 1;
     margin-inline-start: auto;
+  }
+  .hui-country-trigger {
+    gap: 4px;
+    width: auto;
+    height: 28px;
+    padding-inline: 6px;
+    font: inherit;
+    font-size: 14px;
+    font-variant-numeric: tabular-nums;
+    color: var(--hui-text);
+  }
+  .hui-country-trigger > svg {
+    color: var(--hui-muted);
+  }
+  .hui-country-trigger:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+  .hui-country-flag {
+    font-size: 16px;
+    line-height: 1;
+  }
+  .hui-dropdown.hui-country-dropdown {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow: hidden;
+  }
+  .hui-country-search {
+    flex: none;
+    padding: 4px;
+    border-bottom: 1px solid var(--hui-border);
+  }
+  .hui-country-search > .hui-input {
+    min-height: 32px;
+    border-color: transparent;
+    box-shadow: none;
+  }
+  .hui-country-list {
+    flex: 1;
+    min-height: 0;
+    padding: 4px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .hui-country-list > .hui-option {
+    gap: 10px;
+  }
+  .hui-option[data-selected] > .hui-country-name {
+    font-weight: 500;
+  }
+  .hui-country-dial {
+    margin-inline-start: auto;
+    color: var(--hui-muted);
+    font-variant-numeric: tabular-nums;
   }
   .hui-nothing-found {
     padding: 8px 10px;

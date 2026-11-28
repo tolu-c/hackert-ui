@@ -73,4 +73,13 @@ describe("form styles", () => {
     expect(screen.getByLabelText("First").className).toBe("hui-input mt-2");
     expect(screen.getByText("First").className).toBe("hui-label");
   });
+
+  it("colours an invalid field's label and description with the danger colour", () => {
+    render(<Fields />);
+    const css = document.head.querySelector('style[data-href="hui-form"]')?.textContent ?? "";
+
+    expect(css).toMatch(
+      /\.hui-field\[data-invalid\] > \.hui-label,\s*\.hui-field\[data-invalid\] > \.hui-description \{\s*color: var\(--hui-danger\);/,
+    );
+  });
 });

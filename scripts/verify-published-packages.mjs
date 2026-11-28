@@ -139,6 +139,14 @@ const uiMarkup = renderToStaticMarkup(
 assert.match(uiMarkup, /<span role="status" aria-label="Loading" data-type="dots"/, uiMarkup);
 assert.match(uiMarkup, /<dialog [^>]*class="hui-modal"/, uiMarkup);
 assert.ok(!uiMarkup.includes("hui-notifications"), uiMarkup);
+
+function PhoneProbe() {
+  const form = useAppForm({ defaultValues: { phone: "+2348031234567" } });
+  return h(form.AppField, { name: "phone" }, (field) => h(field.PhoneInput));
+}
+const phoneMarkup = renderToStaticMarkup(h(AppProvider, null, h(PhoneProbe)));
+assert.match(phoneMarkup, /aria-label="Country: Nigeria [+]234"/, phoneMarkup);
+assert.match(phoneMarkup, /type="tel"/, phoneMarkup);
 console.log("smoke ok for react@${version}");
 `,
     );
