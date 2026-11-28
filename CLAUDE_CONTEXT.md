@@ -27,6 +27,37 @@ guessing config.
 Comparing `import.meta.url` to the URL that registered the context separates a
 real duplicate from an HMR re-run.
 
+### `loader.tsx` is a reserved route file name
+
+TanStack Router's generator treats `loader.tsx` as a code-split loader for its
+directory and rewrote `createFileRoute("/ui/loader")` to `"/ui"`. Escape the
+segment: `routes/ui/[loader].tsx` serves `/ui/loader`.
+
+### jsdom has no `<dialog>.showModal()`
+
+`packages/ui/vitest.setup.ts` polyfills `showModal`/`close` (open attribute plus
+the `close` event). Real top-layer, focus and `::backdrop` behaviour can only be
+checked in a browser.
+
+### A fixed `<dialog>` with `height: auto` fills the viewport
+
+With `inset: 0`, `height: auto` stretches; the UA uses `fit-content` for that
+reason. A `flex: 1` body inside a fit-content column also collapsed to nothing
+(the centred modal cut off its buttons). Fix: `height: fit-content`,
+`max-height: 75dvh`, body `flex: 0 1 auto; min-height: 0; overflow-y: auto`.
+
+### Headless Chrome skips focus events unless told otherwise
+
+Blur-driven behaviour (closing a dropdown, showing a field error) did nothing
+over CDP until `Emulation.setFocusEmulationEnabled({ enabled: true })`.
+
+### libphonenumber-js `AsYouType` quirks
+
+Partial US input drops parentheses (`"(20"` formats as `"20"`); backspacing over
+`)` re-adds it, so PhoneInput deletes the digit before the caret instead; and
+`+44 7911 123456` resolves to Guernsey, not the UK. Count `+` with the digits
+when restoring the caret, or typing after a leading `+` lands in front of it.
+
 ## Decisions and redirections from the user
 
 - Theme colours are derived by a calculator (text, hover and active from one
@@ -40,6 +71,23 @@ real duplicate from an HMR re-run.
 - Library CSS is delivered via a React 19 hoisted `<style>`, not a shipped
   `.css` file or Tailwind classes.
 - Internal peer range: `>=0.0.0 <1.0.0` rather than releasing 1.0.0.
+- Button: `color` (theme key or any CSS colour, names included) is separate from
+  `variant` (filled, light, outline, subtle, transparent, default). The user
+  chose a clean break over a deprecation shim for `variant="danger"`.
+- Loading buttons keep their colours and show a `Loader`; only real `disabled`
+  greys out.
+- Notifications are built in-house (globalThis store + `useSyncExternalStore`),
+  not wrapped around Sonner (user's choice).
+- PhoneInput lives in `@hackert-ui/form` and uses `libphonenumber-js` (user's
+  choice over a hand-kept country list).
+- Invalid form fields colour the label and description too (the user's reading
+  of "form errors don't show the appropriate ui visual").
+- Modal is a native `<dialog>` with `showModal()`. With `::backdrop` there is no
+  `Modal.Overlay`/`Modal.Content`; style the backdrop with Tailwind's
+  `backdrop:` variant. `withCloseButton={false}` drops the header only when
+  there is no title or description.
+- Redirection: the modal must size to its content with a 75dvh cap (the first
+  version used `5dvh` offsets for the max height and clipped centred modals).
 
 ## Lessons learned (playground)
 
