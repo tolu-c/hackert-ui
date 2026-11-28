@@ -16,8 +16,8 @@ afterEach(cleanup);
 const CONTROLS = defineControls([
   {
     kind: "swatches",
-    prop: "variant",
-    label: "Variant",
+    prop: "color",
+    label: "Color",
     options: ["primary", "danger"],
     defaultValue: "primary",
   },
@@ -49,7 +49,7 @@ describe("Configurator", () => {
     expect(preview.style.getPropertyValue("--hui-bg")).toBe(
       `light-dark(${DEFAULT_THEME.colors.danger}, ${DEFAULT_THEME.dark.colors.danger})`,
     );
-    expect(screen.getByText('<Button variant="danger">Preview</Button>')).toBeTruthy();
+    expect(screen.getByText('<Button color="danger">Preview</Button>')).toBeTruthy();
   });
 
   it("toggles a boolean prop from its switch", () => {

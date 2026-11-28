@@ -53,12 +53,12 @@ function CardPage() {
         title="With nested components"
         description="Children can be any ReactNode, including other components."
         source={
-          '<Card className="space-y-3 rounded-lg border border-line p-6">\n  <p>Unsaved changes</p>\n  <Button variant="success">Save</Button>\n</Card>'
+          '<Card className="space-y-3 rounded-lg border border-line p-6">\n  <p>Unsaved changes</p>\n  <Button color="success">Save</Button>\n</Card>'
         }
       >
         <Card className="space-y-3 rounded-lg border border-line p-6">
           <p className="text-sm text-fg-soft">Unsaved changes</p>
-          <Button variant="success">Save</Button>
+          <Button color="success">Save</Button>
         </Card>
       </Demo>
     </div>

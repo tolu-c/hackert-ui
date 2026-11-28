@@ -34,9 +34,17 @@ This note records the design discussion. What shipped:
   hover and press lighten. A `.dark` class toggle needs
   `.dark { color-scheme: dark }`. Requires `light-dark()` (Baseline 2024).
 - **Foreground gap: closed by derivation, not tokens.** `core`'s
-  `useVariantColors(variant)` parses the theme colour (hex, `rgb()` or
-  `oklch()`; anything else throws) and derives text, hover and active colours
-  for WCAG contrast. See `packages/core/src/theme/color.ts`.
+  `useVariantColors(color)` takes a theme key or any CSS colour, parses it (hex,
+  `rgb()`, `oklch()` or a CSS colour name; anything else throws) and derives
+  text, hover and active colours for WCAG contrast, plus a page-readable `text`
+  colour and translucent tints for the light, outline and subtle styles. See
+  `packages/core/src/theme/color.ts`.
+- **Colour and style are separate Button props.** `color` picks the palette (a
+  theme key or a CSS colour); `variant` picks how it is drawn (`filled`,
+  `light`, `outline`, `subtle`, `transparent`, or the neutral `default`). Each
+  variant is one entry in `VARIANT_VARS`
+  (`packages/ui/src/Button/button-variants.ts`). The section below shows the
+  original, variant-as-colour design.
 - **Duplicate core: cannot split the context.** `ThemeContext` is stored on
   `globalThis` under `Symbol.for("@hackert-ui/core/ThemeContext")`, so every
   copy shares it, and a copy loaded from a different file logs a

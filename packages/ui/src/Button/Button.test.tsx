@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 
 import { AppProvider, DEFAULT_THEME } from "@hackert-ui/core";
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, render, screen, within } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vite-plus/test";
 
 import { Button } from "./Button";
@@ -12,11 +12,17 @@ function variable(name: string) {
   return screen.getByRole("button").style.getPropertyValue(name);
 }
 
+// The light-scheme half of a variable, whether or not it is a light-dark() pair.
+function lightVariable(name: string) {
+  const value = variable(name);
+  return /^light-dark\((.*?), (?:rgb|#|[a-z]).*\)$/.exec(value)?.[1] ?? value;
+}
+
 describe("Button", () => {
-  it("paints the resolved theme colour for its variant", () => {
+  it("paints the resolved theme colour for its color", () => {
     render(
       <AppProvider theme={{ colors: { danger: "rgb(1, 2, 3)" } }}>
-        <Button variant="danger">Delete</Button>
+        <Button color="danger">Delete</Button>
       </AppProvider>,
     );
 
@@ -34,8 +40,8 @@ describe("Button", () => {
   it("derives readable text from the background", () => {
     render(
       <>
-        <Button variant="primary">Save</Button>
-        <Button variant="warning">Careful</Button>
+        <Button color="primary">Save</Button>
+        <Button color="warning">Careful</Button>
       </>,
     );
     const [primary, warning] = screen.getAllByRole("button");
@@ -117,6 +123,33 @@ describe("Button", () => {
     expect(screen.getByRole("button").getAttribute("type")).toBe("button");
   });
 
+  it("shows a spinner in place of its content while loading", () => {
+    render(<Button loading>Save</Button>);
+    const button = screen.getByRole("button");
+
+    expect(button.querySelector(".hui-loader")).not.toBeNull();
+    expect(button.querySelector(".hui-button-loader")?.getAttribute("aria-hidden")).toBe("true");
+    expect(button.textContent).toBe("Save");
+  });
+
+  it("passes loaderProps to its spinner", () => {
+    render(
+      <Button loading loaderProps={{ type: "dots" }}>
+        Save
+      </Button>,
+    );
+
+    expect(screen.getByRole("button").querySelector<HTMLElement>(".hui-loader")?.dataset.type).toBe(
+      "dots",
+    );
+  });
+
+  it("has no spinner when idle", () => {
+    render(<Button>Save</Button>);
+
+    expect(screen.getByRole("button").querySelector(".hui-loader")).toBeNull();
+  });
+
   it("disables itself and reports busy while loading", () => {
     render(<Button loading>Save</Button>);
     const button = screen.getByRole("button") as HTMLButtonElement;
@@ -138,5 +171,122 @@ describe("Button", () => {
 
     expect(button.disabled).toBe(false);
     expect(button.hasAttribute("aria-busy")).toBe(false);
+  });
+
+  it("is filled by default", () => {
+    render(<Button>Save</Button>);
+
+    expect(screen.getByRole("button").dataset.variant).toBe("filled");
+  });
+
+  it("accepts any CSS colour, named or not", () => {
+    render(
+      <>
+        <Button color="tomato">Named</Button>
+        <Button color="#0ea5e9">Hex</Button>
+      </>,
+    );
+    const [named, hex] = screen.getAllByRole("button");
+
+    expect(named?.style.getPropertyValue("--hui-bg")).toBe("tomato");
+    expect(hex?.style.getPropertyValue("--hui-bg")).toBe("#0ea5e9");
+  });
+
+  it("tints the background and colours the text for the light variant", () => {
+    render(
+      <Button variant="light" color="#2563eb">
+        Save
+      </Button>,
+    );
+
+    expect(lightVariable("--hui-bg")).toBe("rgb(37 99 235 / 0.1)");
+    expect(lightVariable("--hui-fg")).toBe("#2563eb");
+  });
+
+  it("draws a coloured border on a clear background for the outline variant", () => {
+    render(
+      <Button variant="outline" color="#2563eb">
+        Save
+      </Button>,
+    );
+
+    expect(variable("--hui-bg")).toBe("transparent");
+    expect(lightVariable("--hui-bd")).toBe("#2563eb");
+    expect(lightVariable("--hui-bg-hover")).toBe("rgb(37 99 235 / 0.1)");
+  });
+
+  it("shows a tint only on hover for the subtle variant", () => {
+    render(
+      <Button variant="subtle" color="#2563eb">
+        Save
+      </Button>,
+    );
+
+    expect(variable("--hui-bg")).toBe("transparent");
+    expect(lightVariable("--hui-bg-hover")).toBe("rgb(37 99 235 / 0.1)");
+  });
+
+  it("never paints a background for the transparent variant", () => {
+    render(
+      <Button variant="transparent" color="#2563eb">
+        Save
+      </Button>,
+    );
+
+    expect(variable("--hui-bg")).toBe("transparent");
+    expect(variable("--hui-bg-hover")).toBe("transparent");
+    expect(lightVariable("--hui-fg")).toBe("#2563eb");
+  });
+
+  it("ignores color for the neutral default variant", () => {
+    render(
+      <>
+        <Button variant="default">One</Button>
+        <Button variant="default" color="danger">
+          Two
+        </Button>
+      </>,
+    );
+    const [one, two] = screen.getAllByRole("button");
+
+    expect(one?.style.getPropertyValue("--hui-bg")).toBe(two?.style.getPropertyValue("--hui-bg"));
+    expect(one?.style.getPropertyValue("--hui-fg")).toBe(two?.style.getPropertyValue("--hui-fg"));
+  });
+
+  it("renders left and right sections around the label", () => {
+    render(
+      <Button leftSection={<span>L</span>} rightSection={<span>R</span>}>
+        Save
+      </Button>,
+    );
+    const button = screen.getByRole("button");
+
+    expect(
+      within(button).getByText("L").closest("[data-position]")?.getAttribute("data-position"),
+    ).toBe("left");
+    expect(
+      within(button).getByText("R").closest("[data-position]")?.getAttribute("data-position"),
+    ).toBe("right");
+    expect(button.textContent).toBe("LSaveR");
+  });
+
+  it("centres its content unless told to space it out", () => {
+    const { rerender } = render(<Button>Save</Button>);
+    expect(screen.getByRole("button").dataset.justify).toBe("center");
+
+    rerender(<Button justify="space-between">Save</Button>);
+    expect(screen.getByRole("button").dataset.justify).toBe("space-between");
+  });
+
+  it("stretches to its container with fullWidth", () => {
+    render(<Button fullWidth>Save</Button>);
+
+    expect(screen.getByRole("button").hasAttribute("data-full-width")).toBe(true);
+  });
+
+  it("keeps color off the DOM element", () => {
+    render(<Button color="danger">Delete</Button>);
+
+    expect(screen.getByRole("button").hasAttribute("color")).toBe(false);
   });
 });

@@ -125,7 +125,7 @@ import { Button } from "@hackert-ui/ui";
 export function App() {
   return (
     <AppProvider theme={{ colors: { primary: "#0f766e" } }}>
-      <Button variant="primary">Save</Button>
+      <Button color="primary">Save</Button>
     </AppProvider>
   );
 }

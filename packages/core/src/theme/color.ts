@@ -1,4 +1,5 @@
-import type { AppColorTheme, ColorScheme } from "./types";
+import { namedColorHex } from "./named-colors";
+import type { ColorScheme } from "./types";
 
 export interface Rgba {
   readonly r: number;
@@ -13,6 +14,11 @@ export interface VariantColors {
   readonly hoverBackground: string;
   readonly hoverForeground: string;
   readonly activeBackground: string;
+  // The colour as text or a border on the page, adjusted until it is readable.
+  readonly text: string;
+  // Translucent tints of the colour, for light, outline and subtle buttons.
+  readonly lightBackground: string;
+  readonly lightHoverBackground: string;
 }
 
 const LIGHT_TEXT = "#ffffff";
@@ -21,6 +27,12 @@ const BLACK = { r: 0, g: 0, b: 0, alpha: 1 } as const;
 const WHITE = { r: 1, g: 1, b: 1, alpha: 1 } as const;
 const NEAR_BLACK_LUMINANCE = 0.05;
 const NEAR_WHITE_LUMINANCE = 0.85;
+// Pages the text colour is checked against: white, and the dark surface.
+const LIGHT_PAGE = { r: 1, g: 1, b: 1, alpha: 1 } as const;
+const DARK_PAGE = { r: 0x18 / 255, g: 0x18 / 255, b: 0x1b / 255, alpha: 1 } as const;
+// WCAG AA for body text.
+const MIN_TEXT_CONTRAST = 4.5;
+const TINT = { light: { rest: 0.1, hover: 0.16 }, dark: { rest: 0.18, hover: 0.26 } } as const;
 
 // Parsers are tried in order; adding a format means adding one entry.
 const PARSERS: readonly {
@@ -30,6 +42,7 @@ const PARSERS: readonly {
   { pattern: /^#([0-9a-f]{3,4}|[0-9a-f]{6}|[0-9a-f]{8})$/i, parse: parseHex },
   { pattern: /^rgba?\((.*)\)$/i, parse: parseRgb },
   { pattern: /^oklch\((.*)\)$/i, parse: parseOklch },
+  { pattern: /^([a-z]+)$/i, parse: parseNamed },
 ];
 
 export function parseColor(input: string): Rgba | undefined {
@@ -47,8 +60,9 @@ export function parseColor(input: string): Rgba | undefined {
 
 const cache = new Map<string, VariantColors>();
 
+// `name` is the theme key or colour the caller asked for; it only appears in errors.
 export function deriveVariantColors(
-  variant: keyof AppColorTheme,
+  name: string,
   color: string,
   scheme: ColorScheme = "light",
 ): VariantColors {
@@ -61,12 +75,12 @@ export function deriveVariantColors(
   const rgb = parseColor(color);
   if (!rgb) {
     throw new Error(
-      `@hackert-ui/core: cannot derive colours for variant "${variant}" from "${color}" — use hex, rgb() or oklch()`,
+      `@hackert-ui/core: cannot derive colours for "${name}" from "${color}" — use hex, rgb(), oklch() or a CSS colour name`,
     );
   }
   if (rgb.alpha < 1) {
     throw new Error(
-      `@hackert-ui/core: cannot derive colours for variant "${variant}" from "${color}" — the colour must be opaque`,
+      `@hackert-ui/core: cannot derive colours for "${name}" from "${color}" — the colour must be opaque`,
     );
   }
 
@@ -86,6 +100,9 @@ export function deriveVariantColors(
     hoverBackground: toHex(hover),
     hoverForeground: readableTextOn(hover),
     activeBackground: toHex(active),
+    text: readableTextColor(color, rgb, scheme),
+    lightBackground: withAlpha(rgb, TINT[scheme].rest),
+    lightHoverBackground: withAlpha(rgb, TINT[scheme].hover),
   });
 
   cache.set(key, colors);
@@ -97,6 +114,11 @@ function parseHex(digits: string): Rgba {
   const channel = (index: number) => Number.parseInt(full.slice(index, index + 2), 16) / 255;
 
   return { r: channel(0), g: channel(2), b: channel(4), alpha: full.length === 8 ? channel(6) : 1 };
+}
+
+function parseNamed(name: string): Rgba | undefined {
+  const hex = namedColorHex(name);
+  return hex === undefined ? undefined : parseHex(hex);
 }
 
 function parseRgb(body: string): Rgba | undefined {
@@ -202,6 +224,26 @@ function readableTextOn(background: Rgba): string {
   const light = parseHex(LIGHT_TEXT.slice(1));
   const dark = parseHex(DARK_TEXT.slice(1));
   return contrast(background, light) >= contrast(background, dark) ? LIGHT_TEXT : DARK_TEXT;
+}
+
+// Steps the colour toward black (light pages) or white (dark pages) until it
+// reads as text on the page, keeping the original string when it already does.
+function readableTextColor(color: string, rgb: Rgba, scheme: ColorScheme): string {
+  const page = scheme === "dark" ? DARK_PAGE : LIGHT_PAGE;
+  const target = scheme === "dark" ? WHITE : BLACK;
+
+  for (let step = 0; step <= 10; step++) {
+    const candidate = mix(rgb, target, step / 10);
+    if (contrast(candidate, page) >= MIN_TEXT_CONTRAST) {
+      return step === 0 ? color : toHex(candidate);
+    }
+  }
+  return toHex(target);
+}
+
+function withAlpha({ r, g, b }: Rgba, alpha: number): string {
+  const channels = [r, g, b].map((channel) => Math.round(channel * 255)).join(" ");
+  return `rgb(${channels} / ${alpha})`;
 }
 
 function mix(from: Rgba, to: Rgba, amount: number): Rgba {

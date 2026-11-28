@@ -56,10 +56,10 @@ function DisclosureDemo({ initial }: { readonly initial: boolean }) {
     <div className="w-full max-w-sm">
       <div className="flex flex-wrap gap-2">
         <Button onClick={handlers.open}>open</Button>
-        <Button variant="secondary" onClick={handlers.close}>
+        <Button variant="default" onClick={handlers.close}>
           close
         </Button>
-        <Button variant="secondary" onClick={handlers.toggle}>
+        <Button variant="default" onClick={handlers.toggle}>
           toggle
         </Button>
       </div>
